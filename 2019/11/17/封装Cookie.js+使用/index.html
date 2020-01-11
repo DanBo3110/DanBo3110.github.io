@@ -1,0 +1,56 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta name="generator" content="Hexo 3.9.0"><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="GISer加油站"><meta name="keywords" content="DanBoCode, 代码, 程序, gis, js, 前端"><link rel="stylesheet" type="text/css" href="//fonts.loli.net/css?family=Source+Code+Pro"><link rel="stylesheet" type="text/css" href="/css/style.css?v=2.0.4"><link rel="stylesheet" type="text/css" href="/css/highlight.css?v=2.0.4"><link rel="Shortcut Icon" href="/favicon.ico"><link rel="bookmark" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><link rel="alternate" type="application/atom+xml" href="/atom.xml"><title>封装Cookie.js+使用 | DanBoCode</title></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">封装Cookie.js+使用</h1><a id="logo" href="/.">DanBoCode</a><p class="description">句子跟标点落入四个区间，有人能懂真理，有人读出文艺。</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div><div id="search-form"><div id="result-mask" class="hide"></div><label><input id="search-key" type="text" autocomplete="off" placeholder="搜索"></label><div id="result-wrap" class="hide"><div id="search-result"></div></div><div class="hide"><template id="search-tpl"><div class="item"><a href="/{path}" title="{title}"><div class="title">{title}</div><div class="time">{date}</div><div class="tags">{tags}</div></a></div></template></div></div></div><div id="layout" class="layout-g"><div class="layout-l"><div class="content_container"><div class="post"><h1 class="post-title">封装Cookie.js+使用</h1><div class="post-meta"><a href="/2019/11/17/封装Cookie.js+使用/#comments" class="comment-count"></a><p><span class="date">Nov 17, 2019</span><span><i id="busuanzi_container_page_pv"><i id="busuanzi_value_page_pv"></i><i>点击</i></i></span></p></div><div class="post-content"><h2 id="Cookie"><a href="#Cookie" class="headerlink" title="Cookie"></a>Cookie</h2><hr>
+<h3 id="1-添加"><a href="#1-添加" class="headerlink" title="1. 添加"></a>1. 添加</h3><pre><code>function addCookie(key, value, day, path, domain) {
+    // 1.处理默认保存的路径
+    var index = window.location.pathname.lastIndexOf(&quot;/&quot;)
+    var currentPath = window.location.pathname.slice(0, index);
+    path = path || currentPath;
+    // 2.处理默认保存的domain
+    domain = domain || document.domain;
+    // 3.处理默认的过期时间
+    if (!day) {
+        document.cookie = key + &quot;=&quot; + value + &quot;;path=&quot; + path + &quot;;domain=&quot; + domain + &quot;;&quot;;
+    } else {
+        var date = new Date();
+        date.setDate(date.getDate() + day);
+        document.cookie = key + &quot;=&quot; + value + &quot;;expires=&quot; + date.toGMTString() + &quot;;path=&quot; + path + &quot;;domain=&quot; + domain + &quot;;&quot;;
+    }
+}</code></pre><p>虽然参数有很多，实际使用的时候并不需要这么麻烦。</p>
+<p>最简单：<code>addCookie(&quot;city&quot;,&quot;北京&quot;,);</code> 这样就创建了一个Cookie，它的名字为<code>city</code>，值为<code>北京</code></p>
+<p>参数依此为：键名，键值，生存周期，有效路径，域名白名单</p>
+<ul>
+<li>键名：名称，不可修改</li>
+<li>键值：值，Unicode字符，需要字符编码。二进制数据，需要BASE64编码</li>
+<li>生存周期：失效时间，单位为秒，默认为关闭浏览器失效</li>
+<li>有效路径：可以访问该Cookie的路径，默认和创建路径相同，设置为<code>&quot;/&quot;</code>代表本域名之下所有文件都可以访问，类似与全局变量</li>
+<li>域名白名单：可以访问这条Cookie的域名</li>
+</ul>
+<h3 id="2-获取"><a href="#2-获取" class="headerlink" title="2. 获取"></a>2. 获取</h3><pre><code>function getCookie(key) {
+        // console.log(document.cookie);
+        var res = document.cookie.split(&quot;;&quot;);
+        // console.log(res);
+        for(var i = 0; i &lt; res.length; i++){
+            // console.log(res[i]);
+            var temp = res[i].split(&quot;=&quot;);
+            // console.log(temp);
+            if(temp[0].trim() === key){
+                return temp[1];
+            }
+        }
+    }</code></pre><ul>
+<li><code>getCookie(key)</code>参数为键名</li>
+</ul>
+<h3 id="3-删除"><a href="#3-删除" class="headerlink" title="3. 删除"></a>3. 删除</h3><ul>
+<li>只要生存时间过期了，这条Cookie就没有了</li>
+<li>默认情况下只能删除默认路径中保存的cookie,。</li>
+<li>如果想删除指定路径保存的cookie, 那么必须在删除的时候指定路径才可以</li>
+</ul>
+<pre><code>function delCookie(key, path) {
+        addCookie(key, getCookie(key), -1, path);
+    }</code></pre><ul>
+<li><code>path</code>参数可不写</li>
+<li><code>delCookie(&quot;city&quot;)</code>即可删除创建的那条Cookie</li>
+</ul>
+<hr>
+<p>创建固定生存周期，删除，按需修改即可</p>
+<h2 id="怎么查看呢？"><a href="#怎么查看呢？" class="headerlink" title="怎么查看呢？"></a>怎么查看呢？</h2><h5 id="F12-gt-Application-gt-Cookies-gt-（域名）-gt-result"><a href="#F12-gt-Application-gt-Cookies-gt-（域名）-gt-result" class="headerlink" title="F12 --&gt; Application --&gt; Cookies --&gt; （域名）--&gt; result"></a><code>F12 --&gt; Application --&gt; Cookies --&gt; （域名）--&gt; result</code></h5><p><img src="https://img-blog.csdnimg.cn/20191117212325306.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0RhbkJvX0M=,size_16,color_FFFFFF,t_70" alt></p>
+<h3 id="封装好了，可别忘记引入哦"><a href="#封装好了，可别忘记引入哦" class="headerlink" title="封装好了，可别忘记引入哦"></a>封装好了，可别忘记引入哦</h3></div><div class="post-copyright"><blockquote><p>原文作者: 冯亚杰(DanBoard·Feng)</p><p>原文链接: <a href="http://yoursite.com/2019/11/17/封装Cookie.js+使用/">http://yoursite.com/2019/11/17/封装Cookie.js+使用/</a></p><p>版权声明: 转载请注明出处(必须保留作者署名及链接)</p></blockquote></div><div class="tags"></div><div class="post-share"><div class="social-share"><span>分享到:</span></div></div><div class="post-nav"><a href="/2019/11/23/Express+multer+Ajax 上传图片并加载/" class="pre">Express+multer+Ajax 上传图片并加载</a><a href="/2019/11/13/Nodejs自动重启工具配置 [ nodemon ]/" class="next">Nodejs自动重启工具配置 [ nodemon ]</a></div><div id="comments"></div></div></div></div><div class="layout-r"><div id="sidebar"><div class="search-pla"></div><div id="toc" class="widget"><div class="widget-title"><i class="fa fa-fei">文章目录</i></div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Cookie"><span class="toc-text">Cookie</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-添加"><span class="toc-text">1. 添加</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-获取"><span class="toc-text">2. 获取</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-删除"><span class="toc-text">3. 删除</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#怎么查看呢？"><span class="toc-text">怎么查看呢？</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#F12-gt-Application-gt-Cookies-gt-（域名）-gt-result"><span class="toc-text">F12 --&gt; Application --&gt; Cookies --&gt; （域名）--&gt; result</span></a></li></ol></li></ol><li class="toc-item toc-level-3"><a class="toc-link" href="#封装好了，可别忘记引入哦"><span class="toc-text">封装好了，可别忘记引入哦</span></a></li></div><div class="widget"><div class="widget-title"><i class="fa fa-xie"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/计算机地图制图 知识总结/">计算机地图制图 知识总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/GIS程序设计 知识总结/">GIS程序设计 知识总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/空间数据库总结/">空间数据库总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/GPS测量原理及应用 知识总结/">GPS测量原理及应用 知识总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/github码云操作---合并分支，推送/">github/码云操作---合并分支，推送</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/IDEA连接Mysql数据库没有jar包，报错/">IDEA连接Mysql数据库没有jar包报错</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/07/Vue工程化环境(模块化规范、webpack、单文件组件、脚手架、Element-UI)/">Vue工程化</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/03/解决nodejs报错 Cannot find module/">完美解决nodejs报错 Cannot find module './application'</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/25/AE - 04.专题图绘制及打印功能实现/">AE - 04.专题图绘制及打印功能实现</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/25/AE - 01.空间书签的创建及调用/">AE - 01.空间书签的创建及调用</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-biao"> 标签</i></div><div class="tagcloud"></div></div><div class="widget"><div class="widget-title"><i class="fa fa-archive"> 归档</i></div><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-you"> 友情链接</i></div><ul></ul><a href="https://blog.csdn.net/DanBo_C" title="CSDN" target="_blank">CSDN</a></div></div></div></div><a id="totop" href="#top"></a><div id="footer"><div class="footer-info"><p><a href="/baidusitemap.xml">网站地图</a> |  <a href="/atom.xml">订阅本站</a> |  <a href="/about/">联系博主</a></p><p>本站总访问量：<i id="busuanzi_container_site_pv"><i id="busuanzi_value_site_pv"></i></i>次，本站总访客数:<i id="busuanzi_container_site_uv"><i id="busuanzi_value_site_uv"></i></i>人</p><p><span> Copyright &copy;<a href="/." rel="nofollow">冯亚杰(DanBoard·Feng).</a></span><span> Theme by<a rel="nofollow" target="_blank" href="https://github.com/chaooo/hexo-theme-BlueLake"> BlueLake.</a></span><span> Count by<a href="http://busuanzi.ibruce.info/"> busuanzi.</a></span><span> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a></span></p></div></div></div><script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script><script type="text/javascript" src="/js/search.json.js?v=2.0.4"></script><script type="text/javascript" src="/js/toctotop.js?v=2.0.4" async></script><link rel="stylesheet" type="text/css" href="/share/css/share.css"><script type="text/javascript" src="/share/js/social-share.js" charset="utf-8"></script><script type="text/javascript" src="/share/js/qrcode.js" charset="utf-8"></script></body></html>

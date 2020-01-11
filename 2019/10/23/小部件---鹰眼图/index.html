@@ -1,0 +1,100 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta name="generator" content="Hexo 3.9.0"><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="GISer加油站"><meta name="keywords" content="DanBoCode, 代码, 程序, gis, js, 前端"><link rel="stylesheet" type="text/css" href="//fonts.loli.net/css?family=Source+Code+Pro"><link rel="stylesheet" type="text/css" href="/css/style.css?v=2.0.4"><link rel="stylesheet" type="text/css" href="/css/highlight.css?v=2.0.4"><link rel="Shortcut Icon" href="/favicon.ico"><link rel="bookmark" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><link rel="alternate" type="application/atom+xml" href="/atom.xml"><title>小部件---鹰眼图 | DanBoCode</title></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">小部件---鹰眼图</h1><a id="logo" href="/.">DanBoCode</a><p class="description">句子跟标点落入四个区间，有人能懂真理，有人读出文艺。</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div><div id="search-form"><div id="result-mask" class="hide"></div><label><input id="search-key" type="text" autocomplete="off" placeholder="搜索"></label><div id="result-wrap" class="hide"><div id="search-result"></div></div><div class="hide"><template id="search-tpl"><div class="item"><a href="/{path}" title="{title}"><div class="title">{title}</div><div class="time">{date}</div><div class="tags">{tags}</div></a></div></template></div></div></div><div id="layout" class="layout-g"><div class="layout-l"><div class="content_container"><div class="post"><h1 class="post-title">小部件---鹰眼图</h1><div class="post-meta"><a href="/2019/10/23/小部件---鹰眼图/#comments" class="comment-count"></a><p><span class="date">Oct 23, 2019</span><span><i id="busuanzi_container_page_pv"><i id="busuanzi_value_page_pv"></i><i>点击</i></i></span></p></div><div class="post-content"><h5 id="1-效果图"><a href="#1-效果图" class="headerlink" title="1. 效果图"></a>1. 效果图</h5><p><img src="https://img-blog.csdnimg.cn/20190809185602811.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0RhbkJvX0M=,size_16,color_FFFFFF,t_70" alt></p>
+<h5 id="2-引用模块"><a href="#2-引用模块" class="headerlink" title="2. 引用模块"></a>2. 引用模块</h5><p>鹰眼图<code>&quot;esri/dijit/OverviewMap&quot;,</code></p>
+<h5 id="3-增加了一个鹰眼图，div的布局会不会有什么变化？"><a href="#3-增加了一个鹰眼图，div的布局会不会有什么变化？" class="headerlink" title="3. 增加了一个鹰眼图，div的布局会不会有什么变化？"></a>3. 增加了一个鹰眼图，div的布局会不会有什么变化？</h5><pre><code>&lt;body&gt;
+    &lt;div id=&quot;map&quot; style=&quot;height: 800px;&quot;&gt;&lt;/div&gt;
+    &lt;button&gt;拉框放大&lt;/button&gt;
+    &lt;button&gt;拉框缩小&lt;/button&gt;
+    &lt;button&gt;平移&lt;/button&gt;
+    &lt;button&gt;全图&lt;/button&gt;
+    &lt;button&gt;漫游&lt;/button&gt;
+
+&lt;/body&gt;</code></pre><p>嗯，，，似乎是没有任何变化</p>
+<p>这样看来。鹰眼图就像是map的属性一样，本身便存在，需要设置它的setVisibleXX来控制它的可见性。我猜是这样</p>
+<h5 id="4-看一下JS代码证实一下猜想"><a href="#4-看一下JS代码证实一下猜想" class="headerlink" title="4. 看一下JS代码证实一下猜想"></a>4. 看一下JS代码证实一下猜想</h5><pre><code>var overviewMapDijit = new OverviewMap({
+      map: map,
+      //LOOK LOOK 
+      visible: true
+});
+overviewMapDijit.startup();</code></pre><p>OverviewMap就是创建鹰眼图的类。<br>创建参数中第一个绑定地图。第二个就是设置鹰眼图的可见性。<br>并且它的可见性默认是false（亲测）</p>
+<h5 id="5-试试在上一篇中的绑定小部件上加上鹰眼图，贴代码"><a href="#5-试试在上一篇中的绑定小部件上加上鹰眼图，贴代码" class="headerlink" title="5. 试试在上一篇中的绑定小部件上加上鹰眼图，贴代码"></a>5. 试试在上一篇中的<a href="https://blog.csdn.net/DanBo_C/article/details/98677151" target="_blank" rel="noopener">绑定小部件</a>上加上鹰眼图，贴代码</h5><pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot;&gt;
+
+    &lt;meta name=&quot;viewport&quot; content=&quot;initial-scale=1, maximum-scale=1,user-scalable=no&quot;&gt; 
+    &lt;title&gt;Overview Map&lt;/title&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://js.arcgis.com/3.28/esri/css/esri.css&quot;/&gt;
+    &lt;style&gt;
+      html, body { height: 100%; width: 100%; margin: 0; padding: 0; }
+    &lt;/style&gt;
+
+    &lt;script src=&quot;https://js.arcgis.com/3.29/&quot;&gt;&lt;/script&gt;
+    &lt;script&gt;
+      var map;
+
+      require([
+        &quot;esri/map&quot;, &quot;esri/dijit/OverviewMap&quot;,
+        &quot;dojo/parser&quot;, 
+        &quot;esri/layers/ArcGISDynamicMapServiceLayer&quot;,
+        &quot;dojo/query&quot;,&quot;esri/toolbars/navigation&quot;,
+
+        &quot;dijit/layout/BorderContainer&quot;, &quot;dijit/layout/ContentPane&quot;, &quot;dojo/domReady!&quot;
+      ], function (
+        Map, OverviewMap, parser,ArcGISDynamicMapServiceLayer,query,Navigation) {
+        parser.parse(); 
+
+        map = new Map(&quot;map&quot;);
+
+        var layer = new ArcGISDynamicMapServiceLayer
+                (&quot;http://localhost:6080/arcgis/rest/services/ecology/beijing_2012_3/MapServer&quot;);
+        map.addLayer(layer);
+
+
+        var overviewMapDijit = new OverviewMap({
+          map: map,
+          visible: true
+        });
+        overviewMapDijit.startup();
+
+        //创建地图操作对象
+                var navToolbar = new Navigation(map);
+                //给按钮添加绑定事件
+                query(&quot;button&quot;).on(&quot;click&quot;,function(event){
+                    //获得按钮的文本信息
+                    var value=this.innerHTML;
+                    switch(value){
+                        case &quot;平移&quot;:
+                            navToolbar.activate(Navigation.PAN);
+                            break;                            
+                        case &quot;拉框缩小&quot;:
+                            navToolbar.activate(Navigation.ZOOM_OUT);
+                            break;
+                        case &quot;拉框放大&quot;:
+                            navToolbar.activate(Navigation.ZOOM_IN);
+                            break;
+                        case &quot;全图&quot;:
+                            navToolbar.zoomToFullExtent();
+                            break;
+                        case &quot;漫游&quot;:
+                            //默认是漫游操作
+                            navToolbar.deactivate();
+                            break;
+                    }
+                });
+
+      });
+    &lt;/script&gt;
+  &lt;/head&gt;
+
+  &lt;body&gt;
+      &lt;div id=&quot;map&quot; style=&quot;height: 800px;&quot;&gt;&lt;/div&gt;
+
+    &lt;button&gt;拉框放大&lt;/button&gt;
+    &lt;button&gt;拉框缩小&lt;/button&gt;
+    &lt;button&gt;平移&lt;/button&gt;
+    &lt;button&gt;全图&lt;/button&gt;
+    &lt;button&gt;漫游&lt;/button&gt;
+
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre><h5 id="6-结果"><a href="#6-结果" class="headerlink" title="6. 结果"></a>6. 结果</h5><p><img src="https://img-blog.csdnimg.cn/20190809192253797.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0RhbkJvX0M=,size_16,color_FFFFFF,t_70" alt></p>
+<h5 id="7-拓展：尝试设置重新鹰眼图的位置"><a href="#7-拓展：尝试设置重新鹰眼图的位置" class="headerlink" title="7. 拓展：尝试设置重新鹰眼图的位置"></a>7. 拓展：尝试设置重新鹰眼图的位置</h5></div><div class="post-copyright"><blockquote><p>原文作者: 冯亚杰(DanBoard·Feng)</p><p>原文链接: <a href="http://yoursite.com/2019/10/23/小部件---鹰眼图/">http://yoursite.com/2019/10/23/小部件---鹰眼图/</a></p><p>版权声明: 转载请注明出处(必须保留作者署名及链接)</p></blockquote></div><div class="tags"></div><div class="post-share"><div class="social-share"><span>分享到:</span></div></div><div class="post-nav"><a href="/2019/10/23/小操作/" class="pre">小操作</a><a href="/2019/10/23/小部件---图例/" class="next">小部件---图例</a></div><div id="comments"></div></div></div></div><div class="layout-r"><div id="sidebar"><div class="search-pla"></div><div id="toc" class="widget"><div class="widget-title"><i class="fa fa-fei">文章目录</i></div><ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-效果图"><span class="toc-text">1. 效果图</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-引用模块"><span class="toc-text">2. 引用模块</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-增加了一个鹰眼图，div的布局会不会有什么变化？"><span class="toc-text">3. 增加了一个鹰眼图，div的布局会不会有什么变化？</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-看一下JS代码证实一下猜想"><span class="toc-text">4. 看一下JS代码证实一下猜想</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#5-试试在上一篇中的绑定小部件上加上鹰眼图，贴代码"><span class="toc-text">5. 试试在上一篇中的绑定小部件上加上鹰眼图，贴代码</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#6-结果"><span class="toc-text">6. 结果</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#7-拓展：尝试设置重新鹰眼图的位置"><span class="toc-text">7. 拓展：尝试设置重新鹰眼图的位置</span></a></li></ol></div><div class="widget"><div class="widget-title"><i class="fa fa-xie"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/计算机地图制图 知识总结/">计算机地图制图 知识总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/GIS程序设计 知识总结/">GIS程序设计 知识总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/空间数据库总结/">空间数据库总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/GPS测量原理及应用 知识总结/">GPS测量原理及应用 知识总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/github码云操作---合并分支，推送/">github/码云操作---合并分支，推送</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/IDEA连接Mysql数据库没有jar包，报错/">IDEA连接Mysql数据库没有jar包报错</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/07/Vue工程化环境(模块化规范、webpack、单文件组件、脚手架、Element-UI)/">Vue工程化</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/03/解决nodejs报错 Cannot find module/">完美解决nodejs报错 Cannot find module './application'</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/25/AE - 04.专题图绘制及打印功能实现/">AE - 04.专题图绘制及打印功能实现</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/25/AE - 01.空间书签的创建及调用/">AE - 01.空间书签的创建及调用</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-biao"> 标签</i></div><div class="tagcloud"></div></div><div class="widget"><div class="widget-title"><i class="fa fa-archive"> 归档</i></div><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-you"> 友情链接</i></div><ul></ul><a href="https://blog.csdn.net/DanBo_C" title="CSDN" target="_blank">CSDN</a></div></div></div></div><a id="totop" href="#top"></a><div id="footer"><div class="footer-info"><p><a href="/baidusitemap.xml">网站地图</a> |  <a href="/atom.xml">订阅本站</a> |  <a href="/about/">联系博主</a></p><p>本站总访问量：<i id="busuanzi_container_site_pv"><i id="busuanzi_value_site_pv"></i></i>次，本站总访客数:<i id="busuanzi_container_site_uv"><i id="busuanzi_value_site_uv"></i></i>人</p><p><span> Copyright &copy;<a href="/." rel="nofollow">冯亚杰(DanBoard·Feng).</a></span><span> Theme by<a rel="nofollow" target="_blank" href="https://github.com/chaooo/hexo-theme-BlueLake"> BlueLake.</a></span><span> Count by<a href="http://busuanzi.ibruce.info/"> busuanzi.</a></span><span> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a></span></p></div></div></div><script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script><script type="text/javascript" src="/js/search.json.js?v=2.0.4"></script><script type="text/javascript" src="/js/toctotop.js?v=2.0.4" async></script><link rel="stylesheet" type="text/css" href="/share/css/share.css"><script type="text/javascript" src="/share/js/social-share.js" charset="utf-8"></script><script type="text/javascript" src="/share/js/qrcode.js" charset="utf-8"></script></body></html>

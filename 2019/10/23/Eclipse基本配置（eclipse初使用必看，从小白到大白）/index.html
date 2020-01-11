@@ -1,0 +1,192 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta name="generator" content="Hexo 3.9.0"><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="GISer加油站"><meta name="keywords" content="DanBoCode, 代码, 程序, gis, js, 前端"><link rel="stylesheet" type="text/css" href="//fonts.loli.net/css?family=Source+Code+Pro"><link rel="stylesheet" type="text/css" href="/css/style.css?v=2.0.4"><link rel="stylesheet" type="text/css" href="/css/highlight.css?v=2.0.4"><link rel="Shortcut Icon" href="/favicon.ico"><link rel="bookmark" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><link rel="alternate" type="application/atom+xml" href="/atom.xml"><title>Eclipse基本配置（eclipse初使用必看，从小白到大白） | DanBoCode</title></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">Eclipse基本配置（eclipse初使用必看，从小白到大白）</h1><a id="logo" href="/.">DanBoCode</a><p class="description">句子跟标点落入四个区间，有人能懂真理，有人读出文艺。</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div><div id="search-form"><div id="result-mask" class="hide"></div><label><input id="search-key" type="text" autocomplete="off" placeholder="搜索"></label><div id="result-wrap" class="hide"><div id="search-result"></div></div><div class="hide"><template id="search-tpl"><div class="item"><a href="/{path}" title="{title}"><div class="title">{title}</div><div class="time">{date}</div><div class="tags">{tags}</div></a></div></template></div></div></div><div id="layout" class="layout-g"><div class="layout-l"><div class="content_container"><div class="post"><h1 class="post-title">Eclipse基本配置（eclipse初使用必看，从小白到大白）</h1><div class="post-meta"><a href="/2019/10/23/Eclipse基本配置（eclipse初使用必看，从小白到大白）/#comments" class="comment-count"></a><p><span class="date">Oct 23, 2019</span><span><i id="busuanzi_container_page_pv"><i id="busuanzi_value_page_pv"></i><i>点击</i></i></span></p></div><div class="post-content"><blockquote>
+<p>一个好的集成开发工具能够让你的开发更加方便，熟练使用集成开发工具，能让你的开发事半功倍！</p>
+</blockquote>
+<h3 id="Eclipse的视窗和视图概述-了解"><a href="#Eclipse的视窗和视图概述-了解" class="headerlink" title="(Eclipse的视窗和视图概述)(了解)"></a>(Eclipse的视窗和视图概述)(了解)</h3><ul>
+<li>A:视窗  每一个基本的窗体被称为视窗<ul>
+<li>PackageExplorer  显示项目结构，包，类，及资源</li>
+<li>Outline   显示类的结构，方便查找，识别，修改</li>
+<li>Console  程序运行的结果在该窗口显示</li>
+<li>Hierarchy 显示Java继承层次结构，选中类后F4</li>
+</ul>
+</li>
+<li>B:视图  是由某些视窗的组合而成的<ul>
+<li>Java视图</li>
+<li>Debug视图</li>
+</ul>
+</li>
+</ul>
+<h3 id="Eclipse工作空间的基本配置-掌握"><a href="#Eclipse工作空间的基本配置-掌握" class="headerlink" title="(Eclipse工作空间的基本配置)(掌握)"></a>(Eclipse工作空间的基本配置)(掌握)</h3><ul>
+<li>A:程序的编译和运行的环境配置(一般不改)<ul>
+<li>window – Preferences – Java</li>
+<li>编译环境：Compiler    默认选中的就是最高版本。</li>
+<li>运行环境：Installed JREs    默认会找你安装的那个JDK。建议配置了Java的环境变量。</li>
+<li>问题：<ul>
+<li>低编译，高运行。可以。</li>
+<li>高编译，低运行。不可以。</li>
+<li>建议，编译和运行的版本一致。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>B:如何去掉默认注释?<ul>
+<li>window – Preferences – Java – Code Style – Code Templates</li>
+<li>选择你不想要的内容，通过右边Edit编辑。</li>
+<li>注意：请只删除注释部分，不是注释部分的不要删除。</li>
+</ul>
+</li>
+<li>C:行号的显示和隐藏<ul>
+<li>显示：在代码区域的最左边的空白区域，右键 – Show Line Numbers即可。</li>
+<li>隐藏：把上面的动作再做一次。</li>
+</ul>
+</li>
+<li>D:字体大小及颜色<ul>
+<li>a:Java代码区域的字体大小和颜色：<ul>
+<li>window – Preferences – General – Appearance – Colors And Fonts –Java修改 – Java Edit Text Font</li>
+</ul>
+</li>
+<li>b:控制台<ul>
+<li>window – Preferences – General – Appearance – Colors And Fonts – Debug – Console font</li>
+</ul>
+</li>
+<li>c:其他文件<ul>
+<li>window – Preferences – General – Appearance – Colors And Fonts – Basic – Text Font</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>E:窗体给弄乱了，怎么办?<ul>
+<li>window – Reset Perspective</li>
+</ul>
+</li>
+<li>F:控制台找不到了，怎么办?<ul>
+<li>Window–Show View—Console</li>
+</ul>
+</li>
+<li>G:取消悬浮提示<ul>
+<li>window – Preferences – Java–Editor–Hovers。右边将Combined Hover勾去掉。</li>
+<li>这样代码的悬浮框就不会自动出现了。如果想看提示，将光标悬浮在代码上，按F2即可。</li>
+</ul>
+</li>
+</ul>
+<h3 id="Eclipse中内容辅助键的使用-掌握"><a href="#Eclipse中内容辅助键的使用-掌握" class="headerlink" title="(Eclipse中内容辅助键的使用)(掌握)"></a>(Eclipse中内容辅助键的使用)(掌握)</h3><ul>
+<li>A:Alt+/ 起提示作用</li>
+<li>B:main+alt+/,syso+alt+/,给出其他提示</li>
+<li>C:补充输出语句,选中需要输出的部分,alt+/选择最后一项即可</li>
+<li>C:定义自己的alt + /<ul>
+<li>windows–perference-Java-Editor-Templates–New</li>
+</ul>
+</li>
+</ul>
+<h3 id="Eclipse中快捷键的使用-掌握"><a href="#Eclipse中快捷键的使用-掌握" class="headerlink" title="(Eclipse中快捷键的使用)(掌握)"></a>(Eclipse中快捷键的使用)(掌握)</h3><ul>
+<li>A:新建 ctrl + n</li>
+<li>B:格式化  ctrl+shift+f</li>
+<li>C:导入包  ctrl+shift+o </li>
+<li>D:注释  ctrl+/,ctrl+shift+/,ctrl+shift+\</li>
+<li>E:代码上下移动 选中代码alt+上/下箭头</li>
+<li>F:查看源码  选中类名(F3或者Ctrl+鼠标点击)</li>
+<li>G:查找具体的类 ctrl + shift + t</li>
+<li>H:查找具体类的具体方法 ctrl + o</li>
+<li>I:给建议 ctrl+1,根据右边生成左边的数据类型,生成方法</li>
+<li>J:删除代码 ctrl + d</li>
+<li>K:抽取方法alt + shift + m </li>
+<li>L:改名alt + shift + r </li>
+<li></li>
+</ul>
+<h3 id="Eclipse中如何提高开发效率-掌握"><a href="#Eclipse中如何提高开发效率-掌握" class="headerlink" title="(Eclipse中如何提高开发效率)(掌握)"></a>(Eclipse中如何提高开发效率)(掌握)</h3><ul>
+<li>alt + shift + s</li>
+<li>A:自动生成构造方法</li>
+<li>B:自动生成get/set方法</li>
+</ul>
+<h3 id="Eclipse中如何生成jar包并导入到项目中-了解"><a href="#Eclipse中如何生成jar包并导入到项目中-了解" class="headerlink" title="(Eclipse中如何生成jar包并导入到项目中)(了解)"></a>(Eclipse中如何生成jar包并导入到项目中)(了解)</h3><ul>
+<li>A:jar是什么?<ul>
+<li>jar是多个class文件的压缩包。</li>
+</ul>
+</li>
+<li>B:jar有什么用?<ul>
+<li>用别人写好的东西    </li>
+</ul>
+</li>
+<li>C:打jar包<ul>
+<li>选中项目–右键–Export–Java–Jar–自己指定一个路径和一个名称–Finish</li>
+</ul>
+</li>
+<li>D:导入jar包<ul>
+<li>复制到项目路径下并添加至构建路径。</li>
+</ul>
+</li>
+</ul>
+<h3 id="Eclipse中如何删除项目和导入项目-掌握"><a href="#Eclipse中如何删除项目和导入项目-掌握" class="headerlink" title="(Eclipse中如何删除项目和导入项目)(掌握)"></a>(Eclipse中如何删除项目和导入项目)(掌握)</h3><ul>
+<li>A:删除项目<ul>
+<li>选中项目 – 右键 – 删除<ul>
+<li>从项目区域中删除</li>
+<li>从硬盘上删除</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>B:导入项目<ul>
+<li>在项目区域右键找到import</li>
+<li>找到General，展开，并找到</li>
+<li>Existing Projects into Workspace</li>
+<li>点击next,然后选择你要导入的项目</li>
+<li>注意：这里选择的是项目名称</li>
+</ul>
+</li>
+</ul>
+<h3 id="Eclipse中断点调试的基本使用-了解"><a href="#Eclipse中断点调试的基本使用-了解" class="headerlink" title="(Eclipse中断点调试的基本使用)(了解)"></a>(Eclipse中断点调试的基本使用)(了解)</h3><ul>
+<li><p>A:Debug的作用</p>
+<ul>
+<li>调试程序</li>
+<li>查看程序执行流程</li>
+</ul>
+</li>
+<li><p>B:如何查看程序执行流程        </p>
+<ul>
+<li><p>什么是断点：</p>
+<ul>
+<li>就是一个标记，从哪里开始。</li>
+</ul>
+</li>
+<li><p>如何设置断点：</p>
+<ul>
+<li>你想看哪里的程序，你就在那个有效程序的左边双击即可。</li>
+</ul>
+</li>
+<li><p>在哪里设置断点：</p>
+<ul>
+<li>哪里不会点哪里。</li>
+<li>目前：我们就在每个方法的第一条有效语句上都加。</li>
+</ul>
+</li>
+<li><p>如何运行设置断点后的程序：</p>
+<ul>
+<li>右键 – Debug as – Java Application</li>
+</ul>
+</li>
+<li><p>看哪些地方：</p>
+<ul>
+<li>Debug：断点测试的地方<ul>
+<li>在这个地方，记住F6，或者点击也可以。一次看一行的执行过程。</li>
+</ul>
+</li>
+<li>Variables：查看程序的变量变化</li>
+<li>ForDemo：被查看的源文件</li>
+<li>Console：控制台</li>
+</ul>
+</li>
+<li><p>如何去断点：</p>
+<ul>
+<li>a:再次双击即可</li>
+<li>b:找到Debug视图，Variables界面，找到Breakpoints，并点击，然后看到所有的断点，最后点击那个双叉。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Eclipse查看Java中参数传递问题-了解"><a href="#Eclipse查看Java中参数传递问题-了解" class="headerlink" title="(Eclipse查看Java中参数传递问题)(了解)"></a>(Eclipse查看Java中参数传递问题)(了解)</h3><ul>
+<li>A:断点演示<ul>
+<li>断点查看Java中参数传递问题</li>
+</ul>
+</li>
+</ul>
+</div><div class="post-copyright"><blockquote><p>原文作者: 冯亚杰(DanBoard·Feng)</p><p>原文链接: <a href="http://yoursite.com/2019/10/23/Eclipse基本配置（eclipse初使用必看，从小白到大白）/">http://yoursite.com/2019/10/23/Eclipse基本配置（eclipse初使用必看，从小白到大白）/</a></p><p>版权声明: 转载请注明出处(必须保留作者署名及链接)</p></blockquote></div><div class="tags"></div><div class="post-share"><div class="social-share"><span>分享到:</span></div></div><div class="post-nav"><a href="/2019/10/23/GIS-Experiment3/" class="pre">GIS-Experiment3</a><a href="/2019/10/23/Colletion集合/" class="next">Colletion集合</a></div><div id="comments"></div></div></div></div><div class="layout-r"><div id="sidebar"><div class="search-pla"></div><div id="toc" class="widget"><div class="widget-title"><i class="fa fa-fei">文章目录</i></div><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Eclipse的视窗和视图概述-了解"><span class="toc-text">(Eclipse的视窗和视图概述)(了解)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Eclipse工作空间的基本配置-掌握"><span class="toc-text">(Eclipse工作空间的基本配置)(掌握)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Eclipse中内容辅助键的使用-掌握"><span class="toc-text">(Eclipse中内容辅助键的使用)(掌握)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Eclipse中快捷键的使用-掌握"><span class="toc-text">(Eclipse中快捷键的使用)(掌握)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Eclipse中如何提高开发效率-掌握"><span class="toc-text">(Eclipse中如何提高开发效率)(掌握)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Eclipse中如何生成jar包并导入到项目中-了解"><span class="toc-text">(Eclipse中如何生成jar包并导入到项目中)(了解)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Eclipse中如何删除项目和导入项目-掌握"><span class="toc-text">(Eclipse中如何删除项目和导入项目)(掌握)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Eclipse中断点调试的基本使用-了解"><span class="toc-text">(Eclipse中断点调试的基本使用)(了解)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Eclipse查看Java中参数传递问题-了解"><span class="toc-text">(Eclipse查看Java中参数传递问题)(了解)</span></a></li></ol></div><div class="widget"><div class="widget-title"><i class="fa fa-xie"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/计算机地图制图 知识总结/">计算机地图制图 知识总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/GIS程序设计 知识总结/">GIS程序设计 知识总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/空间数据库总结/">空间数据库总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/GPS测量原理及应用 知识总结/">GPS测量原理及应用 知识总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/github码云操作---合并分支，推送/">github/码云操作---合并分支，推送</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/IDEA连接Mysql数据库没有jar包，报错/">IDEA连接Mysql数据库没有jar包报错</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/07/Vue工程化环境(模块化规范、webpack、单文件组件、脚手架、Element-UI)/">Vue工程化</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/03/解决nodejs报错 Cannot find module/">完美解决nodejs报错 Cannot find module './application'</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/25/AE - 04.专题图绘制及打印功能实现/">AE - 04.专题图绘制及打印功能实现</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/25/AE - 01.空间书签的创建及调用/">AE - 01.空间书签的创建及调用</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-biao"> 标签</i></div><div class="tagcloud"></div></div><div class="widget"><div class="widget-title"><i class="fa fa-archive"> 归档</i></div><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-you"> 友情链接</i></div><ul></ul><a href="https://blog.csdn.net/DanBo_C" title="CSDN" target="_blank">CSDN</a></div></div></div></div><a id="totop" href="#top"></a><div id="footer"><div class="footer-info"><p><a href="/baidusitemap.xml">网站地图</a> |  <a href="/atom.xml">订阅本站</a> |  <a href="/about/">联系博主</a></p><p>本站总访问量：<i id="busuanzi_container_site_pv"><i id="busuanzi_value_site_pv"></i></i>次，本站总访客数:<i id="busuanzi_container_site_uv"><i id="busuanzi_value_site_uv"></i></i>人</p><p><span> Copyright &copy;<a href="/." rel="nofollow">冯亚杰(DanBoard·Feng).</a></span><span> Theme by<a rel="nofollow" target="_blank" href="https://github.com/chaooo/hexo-theme-BlueLake"> BlueLake.</a></span><span> Count by<a href="http://busuanzi.ibruce.info/"> busuanzi.</a></span><span> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a></span></p></div></div></div><script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script><script type="text/javascript" src="/js/search.json.js?v=2.0.4"></script><script type="text/javascript" src="/js/toctotop.js?v=2.0.4" async></script><link rel="stylesheet" type="text/css" href="/share/css/share.css"><script type="text/javascript" src="/share/js/social-share.js" charset="utf-8"></script><script type="text/javascript" src="/share/js/qrcode.js" charset="utf-8"></script></body></html>

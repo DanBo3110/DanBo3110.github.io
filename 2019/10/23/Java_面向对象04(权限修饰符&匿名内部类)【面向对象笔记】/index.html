@@ -1,0 +1,288 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta name="generator" content="Hexo 3.9.0"><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="GISer加油站"><meta name="keywords" content="DanBoCode, 代码, 程序, gis, js, 前端"><link rel="stylesheet" type="text/css" href="//fonts.loli.net/css?family=Source+Code+Pro"><link rel="stylesheet" type="text/css" href="/css/style.css?v=2.0.4"><link rel="stylesheet" type="text/css" href="/css/highlight.css?v=2.0.4"><link rel="Shortcut Icon" href="/favicon.ico"><link rel="bookmark" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><link rel="alternate" type="application/atom+xml" href="/atom.xml"><title>Java_面向对象04(权限修饰符&amp;匿名内部类)【面向对象笔记】 | DanBoCode</title></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">Java_面向对象04(权限修饰符&amp;匿名内部类)【面向对象笔记】</h1><a id="logo" href="/.">DanBoCode</a><p class="description">句子跟标点落入四个区间，有人能懂真理，有人读出文艺。</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div><div id="search-form"><div id="result-mask" class="hide"></div><label><input id="search-key" type="text" autocomplete="off" placeholder="搜索"></label><div id="result-wrap" class="hide"><div id="search-result"></div></div><div class="hide"><template id="search-tpl"><div class="item"><a href="/{path}" title="{title}"><div class="title">{title}</div><div class="time">{date}</div><div class="tags">{tags}</div></a></div></template></div></div></div><div id="layout" class="layout-g"><div class="layout-l"><div class="content_container"><div class="post"><h1 class="post-title">Java_面向对象04(权限修饰符&amp;匿名内部类)【面向对象笔记】</h1><div class="post-meta"><a href="/2019/10/23/Java_面向对象04(权限修饰符&amp;匿名内部类)【面向对象笔记】/#comments" class="comment-count"></a><p><span class="date">Oct 23, 2019</span><span><i id="busuanzi_container_page_pv"><i id="busuanzi_value_page_pv"></i><i>点击</i></i></span></p></div><div class="post-content"><h3 id="package关键字的概述及作用-了解"><a href="#package关键字的概述及作用-了解" class="headerlink" title="(package关键字的概述及作用)(了解)"></a>(package关键字的概述及作用)(了解)</h3><ul>
+<li><p>A:为什么要有包</p>
+<ul>
+<li>将字节码(.class)进行分类存放 </li>
+<li>包其实就是文件夹</li>
+</ul>
+</li>
+<li><p>B:包的概述</p>
+</li>
+<li><p>  举例：</p>
+<pre><code>学生：增加，删除，修改，查询
+老师：增加，删除，修改，查询
+...
+
+方案1：按照功能分
+    com.heima.add
+        AddStudent
+        AddTeacher
+    com.heima.delete
+        DeleteStudent
+        DeleteTeacher
+    com.heima.update
+        UpdateStudent
+        UpdateTeacher
+    com.heima.find
+        FindStudent
+        FindTeacher
+
+方案2：按照模块分
+    com.heima.teacher
+        AddTeacher
+        DeleteTeacher
+        UpdateTeacher
+        FindTeacher
+    com.heima.student
+        AddStudent
+        DeleteStudent
+        UpdateStudent
+        FindStudent</code></pre><h3 id="包的定义及注意事项-掌握"><a href="#包的定义及注意事项-掌握" class="headerlink" title="(包的定义及注意事项)(掌握)"></a>(包的定义及注意事项)(掌握)</h3></li>
+<li><p>A:定义包的格式</p>
+<ul>
+<li>package 包名;</li>
+<li>多级包用.分开即可</li>
+</ul>
+</li>
+<li><p>B:定义包的注意事项</p>
+<ul>
+<li>A:package语句必须是程序的第一条可执行的代码</li>
+<li>B:package语句在一个java文件中只能有一个</li>
+<li>C:如果没有package，默认表示无包名</li>
+</ul>
+</li>
+<li><p>C:案例演示</p>
+<ul>
+<li>包的定义及注意事项</li>
+</ul>
+</li>
+</ul>
+<h3 id="带包的类编译和运行-掌握"><a href="#带包的类编译和运行-掌握" class="headerlink" title="(带包的类编译和运行)(掌握)"></a>(带包的类编译和运行)(掌握)</h3><ul>
+<li>A:如何编译运行带包的类<ul>
+<li>a:javac编译的时候带上-d即可<ul>
+<li>javac -d . HelloWorld.java</li>
+</ul>
+</li>
+<li>b:通过java命令执行。<ul>
+<li>java 包名.HellWord<h3 id="不同包下类之间的访问-掌握"><a href="#不同包下类之间的访问-掌握" class="headerlink" title="(不同包下类之间的访问)(掌握)"></a>(不同包下类之间的访问)(掌握)</h3></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>A:案例演示<ul>
+<li>不同包下类之间的访问</li>
+</ul>
+</li>
+</ul>
+<h3 id="import关键字的概述和使用-掌握"><a href="#import关键字的概述和使用-掌握" class="headerlink" title="(import关键字的概述和使用)(掌握)"></a>(import关键字的概述和使用)(掌握)</h3><ul>
+<li>A:案例演示<ul>
+<li>为什么要有import<ul>
+<li>其实就是让有包的类对调用者可见,不用写全类名了 </li>
+</ul>
+</li>
+</ul>
+</li>
+<li>B:导包格式<ul>
+<li>import 包名;</li>
+<li>注意：</li>
+<li>这种方式导入是到类的名称。</li>
+<li>虽然可以最后写*，但是不建议。</li>
+</ul>
+</li>
+<li>C:package,import,class有没有顺序关系(面试题)</li>
+</ul>
+<p>###10.06_面向对象(四种权限修饰符的测试)(掌握)</p>
+<ul>
+<li>A:案例演示<ul>
+<li>四种权限修饰符</li>
+</ul>
+</li>
+<li>B:结论</li>
+<li><pre><code>            本类     同一个包下(子类和无关类)    不同包下(子类)    不同包下(无关类)
+private     Y        
+默认            Y        Y
+protected    Y        Y                            Y
+public        Y        Y                            Y                Y</code></pre></li>
+</ul>
+<h3 id="10-07-面向对象-类及其组成所使用的常见修饰符-掌握"><a href="#10-07-面向对象-类及其组成所使用的常见修饰符-掌握" class="headerlink" title="10.07_面向对象(类及其组成所使用的常见修饰符)(掌握)"></a>10.07_面向对象(类及其组成所使用的常见修饰符)(掌握)</h3><ul>
+<li><p>A:修饰符：</p>
+<ul>
+<li>权限修饰符：private，默认的，protected，public</li>
+<li>状态修饰符：static，final</li>
+<li>抽象修饰符：abstract</li>
+</ul>
+</li>
+<li><p>B:类：</p>
+<ul>
+<li><p>权限修饰符：默认修饰符，public</p>
+</li>
+<li><p>状态修饰符：final</p>
+</li>
+<li><p>抽象修饰符：abstract</p>
+</li>
+<li><p>用的最多的就是：public</p>
+</li>
+</ul>
+</li>
+<li><p>C:成员变量：</p>
+<ul>
+<li><p>权限修饰符：private，默认的，protected，public</p>
+</li>
+<li><p>状态修饰符：static，final</p>
+</li>
+<li><p>用的最多的就是：private</p>
+</li>
+</ul>
+</li>
+<li><p>D:构造方法：</p>
+<ul>
+<li><p>权限修饰符：private，默认的，protected，public</p>
+</li>
+<li><p>用的最多的就是：public</p>
+</li>
+</ul>
+</li>
+<li><p>E:成员方法：</p>
+<ul>
+<li><p>权限修饰符：private，默认的，protected，public</p>
+</li>
+<li><p>状态修饰符：static，final</p>
+</li>
+<li><p>抽象修饰符：abstract</p>
+</li>
+<li><p>用的最多的就是：public</p>
+</li>
+</ul>
+</li>
+<li><p>F:除此以外的组合规则：</p>
+<ul>
+<li>成员变量：public static final 接口</li>
+<li>成员方法：<ul>
+<li>public static </li>
+<li>public abstract</li>
+<li>public final</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="内部类概述和访问特点-了解"><a href="#内部类概述和访问特点-了解" class="headerlink" title="(内部类概述和访问特点)(了解)"></a>(内部类概述和访问特点)(了解)</h3><ul>
+<li>A:内部类概述</li>
+<li>B:内部类访问特点<ul>
+<li>a:内部类可以直接访问外部类的成员，包括私有。</li>
+<li>b:外部类要访问内部类的成员，必须创建对象。</li>
+<li>外部类名.内部类名 对象名 = 外部类对象.内部类对象;</li>
+</ul>
+</li>
+<li>C:案例演示<ul>
+<li>内部类极其访问特点</li>
+</ul>
+</li>
+</ul>
+<h3 id="成员内部类私有使用-了解"><a href="#成员内部类私有使用-了解" class="headerlink" title="(成员内部类私有使用)(了解)"></a>(成员内部类私有使用)(了解)</h3><ul>
+<li>private</li>
+</ul>
+<h3 id="静态成员内部类-了解"><a href="#静态成员内部类-了解" class="headerlink" title="(静态成员内部类)(了解)"></a>(静态成员内部类)(了解)</h3><ul>
+<li>static</li>
+<li>B:成员内部类被静态修饰后的访问方式是:<ul>
+<li>外部类名.内部类名 对象名 = 外部类名.内部类对象;</li>
+</ul>
+</li>
+</ul>
+<h3 id="成员内部类的面试题-掌握"><a href="#成员内部类的面试题-掌握" class="headerlink" title="(成员内部类的面试题)(掌握)"></a>(成员内部类的面试题)(掌握)</h3><ul>
+<li><p>A:面试题</p>
+</li>
+<li><pre><code>要求：使用已知的变量，在控制台输出30，20，10。
+
+class Outer {
+    public int num = 10;
+    class Inner {
+        public int num = 20;
+        public void show() {
+            int num = 30;
+            System.out.println(?);
+            System.out.println(??);
+            System.out.println(???);
+        }
+    }
+}
+class InnerClassTest {
+    public static void main(String[] args) {
+        Outer.Inner oi = new Outer().new Inner();
+        oi.show();
+    }    
+}</code></pre></li>
+</ul>
+<h3 id="局部内部类访问局部变量的问题-掌握"><a href="#局部内部类访问局部变量的问题-掌握" class="headerlink" title="(局部内部类访问局部变量的问题)(掌握)"></a>(局部内部类访问局部变量的问题)(掌握)</h3><ul>
+<li><p>A:案例演示</p>
+<ul>
+<li><p>局部内部类访问局部变量必须用final修饰</p>
+</li>
+<li><p>局部内部类在访问他所在方法中的局部变量必须用final修饰,为什么?<br>  因为当调用这个方法时,局部变量如果没有用final修饰,他的生命周期和方法的生命周期是一样的,当方法弹栈,这个局部变量也会消失,那么如果局部内部类对象还没有马上消失想用这个局部变量,就没有了,如果用final修饰会在类加载的时候进入常量池,即使方法弹栈,常量池的常量还在,也可以继续使用</p>
+<p>  但是jdk1.8取消了这个事情,所以我认为这是个bug,虽然取消,如果在书写代码时候,没有手动添加,系统底层也会默给你final</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="匿名内部类的格式和理解"><a href="#匿名内部类的格式和理解" class="headerlink" title="(匿名内部类的格式和理解)"></a>(匿名内部类的格式和理解)</h3><ul>
+<li>A:匿名内部类<ul>
+<li>就是内部类的简化写法。</li>
+</ul>
+</li>
+<li>B:前提：存在一个类或者接口<ul>
+<li>这里的类可以是具体类也可以是抽象类。</li>
+</ul>
+</li>
+<li>C:格式：</li>
+<li><pre><code>new 类名或者接口名(){
+    重写方法;
+}</code></pre></li>
+<li>D:本质是什么呢?<ul>
+<li>是一个继承了该类或者实现了该接口的子类匿名对象。</li>
+</ul>
+</li>
+<li>E:案例演示<ul>
+<li>按照要求来一个匿名内部类</li>
+</ul>
+</li>
+</ul>
+<h3 id="匿名内部类重写多个方法调用"><a href="#匿名内部类重写多个方法调用" class="headerlink" title="(匿名内部类重写多个方法调用)"></a>(匿名内部类重写多个方法调用)</h3><ul>
+<li>A:案例演示<ul>
+<li>匿名内部类的方法调用</li>
+</ul>
+</li>
+</ul>
+<h3 id="匿名内部类在开发中的应用"><a href="#匿名内部类在开发中的应用" class="headerlink" title="(匿名内部类在开发中的应用)"></a>(匿名内部类在开发中的应用)</h3><ul>
+<li><p>A:代码如下</p>
+</li>
+<li><pre><code>//这里写抽象类，接口都行
+abstract class Person {
+    public abstract void show();
+}
+
+class PersonDemo {
+    public void method(Person p) {
+        p.show();
+    }
+}
+
+class PersonTest {
+    public static void main(String[] args) {
+        //如何调用PersonDemo中的method方法呢?
+        PersonDemo pd = new PersonDemo ();
+
+    }
+}</code></pre></li>
+</ul>
+<h3 id="匿名内部类的面试题"><a href="#匿名内部类的面试题" class="headerlink" title="(匿名内部类的面试题)"></a>(匿名内部类的面试题)</h3><ul>
+<li>A:面试题</li>
+<li><pre><code>按照要求，补齐代码
+interface Inter { void show(); }
+class Outer { //补齐代码 }
+class OuterDemo {
+    public static void main(String[] args) {
+          Outer.method().show();
+      }
+}
+要求在控制台输出”HelloWorld”</code></pre></li>
+</ul>
+</div><div class="post-copyright"><blockquote><p>原文作者: 冯亚杰(DanBoard·Feng)</p><p>原文链接: <a href="http://yoursite.com/2019/10/23/Java_面向对象04(权限修饰符&amp;匿名内部类)【面向对象笔记】/">http://yoursite.com/2019/10/23/Java_面向对象04(权限修饰符&amp;匿名内部类)【面向对象笔记】/</a></p><p>版权声明: 转载请注明出处(必须保留作者署名及链接)</p></blockquote></div><div class="tags"></div><div class="post-share"><div class="social-share"><span>分享到:</span></div></div><div class="post-nav"><a href="/2019/10/23/JavaSE实战——网络编程【客户端上传文件到服务端】/" class="pre">JavaSE实战——网络编程【客户端上传文件到服务端】</a><a href="/2019/10/23/Java_面向对象03（ 多态&amp;抽象类&amp;接口 ）【面向对象笔记】/" class="next">Java_面向对象03（ 多态&amp;抽象类&amp;接口 ）【面向对象笔记】</a></div><div id="comments"></div></div></div></div><div class="layout-r"><div id="sidebar"><div class="search-pla"></div><div id="toc" class="widget"><div class="widget-title"><i class="fa fa-fei">文章目录</i></div><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#package关键字的概述及作用-了解"><span class="toc-text">(package关键字的概述及作用)(了解)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#包的定义及注意事项-掌握"><span class="toc-text">(包的定义及注意事项)(掌握)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#带包的类编译和运行-掌握"><span class="toc-text">(带包的类编译和运行)(掌握)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#不同包下类之间的访问-掌握"><span class="toc-text">(不同包下类之间的访问)(掌握)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#import关键字的概述和使用-掌握"><span class="toc-text">(import关键字的概述和使用)(掌握)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-07-面向对象-类及其组成所使用的常见修饰符-掌握"><span class="toc-text">10.07_面向对象(类及其组成所使用的常见修饰符)(掌握)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#内部类概述和访问特点-了解"><span class="toc-text">(内部类概述和访问特点)(了解)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#成员内部类私有使用-了解"><span class="toc-text">(成员内部类私有使用)(了解)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#静态成员内部类-了解"><span class="toc-text">(静态成员内部类)(了解)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#成员内部类的面试题-掌握"><span class="toc-text">(成员内部类的面试题)(掌握)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#局部内部类访问局部变量的问题-掌握"><span class="toc-text">(局部内部类访问局部变量的问题)(掌握)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#匿名内部类的格式和理解"><span class="toc-text">(匿名内部类的格式和理解)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#匿名内部类重写多个方法调用"><span class="toc-text">(匿名内部类重写多个方法调用)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#匿名内部类在开发中的应用"><span class="toc-text">(匿名内部类在开发中的应用)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#匿名内部类的面试题"><span class="toc-text">(匿名内部类的面试题)</span></a></li></ol></div><div class="widget"><div class="widget-title"><i class="fa fa-xie"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/计算机地图制图 知识总结/">计算机地图制图 知识总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/GIS程序设计 知识总结/">GIS程序设计 知识总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/空间数据库总结/">空间数据库总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/GPS测量原理及应用 知识总结/">GPS测量原理及应用 知识总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/github码云操作---合并分支，推送/">github/码云操作---合并分支，推送</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/IDEA连接Mysql数据库没有jar包，报错/">IDEA连接Mysql数据库没有jar包报错</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/07/Vue工程化环境(模块化规范、webpack、单文件组件、脚手架、Element-UI)/">Vue工程化</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/03/解决nodejs报错 Cannot find module/">完美解决nodejs报错 Cannot find module './application'</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/25/AE - 04.专题图绘制及打印功能实现/">AE - 04.专题图绘制及打印功能实现</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/25/AE - 01.空间书签的创建及调用/">AE - 01.空间书签的创建及调用</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-biao"> 标签</i></div><div class="tagcloud"></div></div><div class="widget"><div class="widget-title"><i class="fa fa-archive"> 归档</i></div><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-you"> 友情链接</i></div><ul></ul><a href="https://blog.csdn.net/DanBo_C" title="CSDN" target="_blank">CSDN</a></div></div></div></div><a id="totop" href="#top"></a><div id="footer"><div class="footer-info"><p><a href="/baidusitemap.xml">网站地图</a> |  <a href="/atom.xml">订阅本站</a> |  <a href="/about/">联系博主</a></p><p>本站总访问量：<i id="busuanzi_container_site_pv"><i id="busuanzi_value_site_pv"></i></i>次，本站总访客数:<i id="busuanzi_container_site_uv"><i id="busuanzi_value_site_uv"></i></i>人</p><p><span> Copyright &copy;<a href="/." rel="nofollow">冯亚杰(DanBoard·Feng).</a></span><span> Theme by<a rel="nofollow" target="_blank" href="https://github.com/chaooo/hexo-theme-BlueLake"> BlueLake.</a></span><span> Count by<a href="http://busuanzi.ibruce.info/"> busuanzi.</a></span><span> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a></span></p></div></div></div><script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script><script type="text/javascript" src="/js/search.json.js?v=2.0.4"></script><script type="text/javascript" src="/js/toctotop.js?v=2.0.4" async></script><link rel="stylesheet" type="text/css" href="/share/css/share.css"><script type="text/javascript" src="/share/js/social-share.js" charset="utf-8"></script><script type="text/javascript" src="/share/js/qrcode.js" charset="utf-8"></script></body></html>

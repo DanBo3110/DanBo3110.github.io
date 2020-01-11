@@ -1,0 +1,105 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta name="generator" content="Hexo 3.9.0"><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="GISer加油站"><meta name="keywords" content="DanBoCode, 代码, 程序, gis, js, 前端"><link rel="stylesheet" type="text/css" href="//fonts.loli.net/css?family=Source+Code+Pro"><link rel="stylesheet" type="text/css" href="/css/style.css?v=2.0.4"><link rel="stylesheet" type="text/css" href="/css/highlight.css?v=2.0.4"><link rel="Shortcut Icon" href="/favicon.ico"><link rel="bookmark" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><link rel="alternate" type="application/atom+xml" href="/atom.xml"><title>小部件---绑定小部件 | DanBoCode</title></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">小部件---绑定小部件</h1><a id="logo" href="/.">DanBoCode</a><p class="description">句子跟标点落入四个区间，有人能懂真理，有人读出文艺。</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div><div id="search-form"><div id="result-mask" class="hide"></div><label><input id="search-key" type="text" autocomplete="off" placeholder="搜索"></label><div id="result-wrap" class="hide"><div id="search-result"></div></div><div class="hide"><template id="search-tpl"><div class="item"><a href="/{path}" title="{title}"><div class="title">{title}</div><div class="time">{date}</div><div class="tags">{tags}</div></a></div></template></div></div></div><div id="layout" class="layout-g"><div class="layout-l"><div class="content_container"><div class="post"><h1 class="post-title">小部件---绑定小部件</h1><div class="post-meta"><a href="/2019/10/23/小部件---绑定小部件/#comments" class="comment-count"></a><p><span class="date">Oct 23, 2019</span><span><i id="busuanzi_container_page_pv"><i id="busuanzi_value_page_pv"></i><i>点击</i></i></span></p></div><div class="post-content"><p>鼠标滚轮的放大缩小是地图的加载就有的操作方法，绑定的是拉框放大，缩小，全图等方法。</p>
+<h5 id="先看看效果图（拉框放大为例）"><a href="#先看看效果图（拉框放大为例）" class="headerlink" title="先看看效果图（拉框放大为例）"></a>先看看效果图（拉框放大为例）</h5><h6 id="放大前："><a href="#放大前：" class="headerlink" title="放大前："></a>放大前：</h6><p><img src="https://img-blog.csdnimg.cn/20190807000850496.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0RhbkJvX0M=,size_16,color_FFFFFF,t_70" alt></p>
+<h6 id="拉框放大："><a href="#拉框放大：" class="headerlink" title="拉框放大："></a>拉框放大：</h6><p><img src="https://img-blog.csdnimg.cn/20190807000940338.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0RhbkJvX0M=,size_16,color_FFFFFF,t_70" alt></p>
+<h6 id="放大后："><a href="#放大后：" class="headerlink" title="放大后："></a>放大后：</h6><p><img src="https://img-blog.csdnimg.cn/20190807001002224.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0RhbkJvX0M=,size_16,color_FFFFFF,t_70" alt></p>
+<h5 id="新添加模块：”dojo-query”-“esri-toolbars-navigation”"><a href="#新添加模块：”dojo-query”-“esri-toolbars-navigation”" class="headerlink" title="新添加模块：”dojo/query”   “esri/toolbars/navigation”"></a>新添加模块：”dojo/query”   “esri/toolbars/navigation”</h5><ol>
+<li><p><code>&quot;dojo/query&quot;</code>绑定点击事件，<strong>注意：该点击事件凡是操作地图的要用query不能用on绑定</strong><br> 例如：<code>query(&quot;button&quot;).on(&quot;click&quot;,function(event){}</code>✔<br> <code>on(dom.byId(&quot;button&quot;),&quot;click&quot;,function(event){}</code>❌</p>
+</li>
+<li><p><code>&quot;esri/toolbars/navigation&quot;</code>实现对地图的操作<br>首先创建地图操作对象，给but等绑定该对象的方法。例如放大、缩小等。</p>
+</li>
+</ol>
+<h5 id="步骤："><a href="#步骤：" class="headerlink" title="步骤："></a>步骤：</h5><ol>
+<li><p>加载地图</p>
+<pre><code>var map = new Map(&quot;mapDiv&quot;);
+var layer = new ArcGISDynamicMapServiceLayer
+            (&quot;http://localhost:6080/arcgis/rest/services/ecology/beijing_2012_3/MapServer&quot;);
+map.addLayer(layer);</code></pre></li>
+<li><p>创建地图操作对象</p>
+<pre><code>var navToolbar = new Navigation(map);</code></pre></li>
+<li><p>为btn绑定事件</p>
+</li>
+</ol>
+<pre><code>query(&quot;button&quot;).on(&quot;click&quot;,function(event){</code></pre><ol start="4">
+<li>获取btn的识别信息</li>
+</ol>
+<pre><code>var value=this.innerHTML;</code></pre><ol start="5">
+<li><p>switch选择合适的操作方法</p>
+<pre><code>switch(value){
+    case &quot;平移&quot;:
+        navToolbar.activate(Navigation.PAN);
+        break;                            
+    case &quot;拉框缩小&quot;:
+        navToolbar.activate(Navigation.ZOOM_OUT);
+        break;
+    case &quot;拉框放大&quot;:
+        navToolbar.activate(Navigation.ZOOM_IN);
+        break;
+}</code></pre></li>
+</ol>
+<h5 id="贴代码："><a href="#贴代码：" class="headerlink" title="贴代码："></a>贴代码：</h5><pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+
+&lt;head lang=&quot;en&quot;&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;title&gt;&lt;/title&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://js.arcgis.com/3.28/esri/css/esri.css&quot;/&gt;
+    &lt;script src=&quot;https://js.arcgis.com/3.28/&quot;&gt;&lt;/script&gt;
+    &lt;style type=&quot;text/css&quot;&gt;
+        .MapClass{
+            width:100%;
+            height:600px;
+            border:1px solid #000;
+        }
+    &lt;/style&gt;
+    &lt;script type=&quot;text/javascript&quot;&gt;
+
+        require([&quot;esri/map&quot;,
+            &quot;esri/layers/ArcGISDynamicMapServiceLayer&quot;,
+            &quot;dojo/query&quot;,&quot;esri/toolbars/navigation&quot;,
+            &quot;dojo/domReady!&quot;],
+            function (Map,ArcGISDynamicMapServiceLayer,query,Navigation) {
+                var map = new Map(&quot;mapDiv&quot;);
+                var layer = new ArcGISDynamicMapServiceLayer
+                (&quot;http://localhost:6080/arcgis/rest/services/ecology/beijing_2012_3/MapServer&quot;);
+                map.addLayer(layer);
+                //创建地图操作对象
+                var navToolbar = new Navigation(map);
+                //为btn绑定事件
+                query(&quot;button&quot;).on(&quot;click&quot;,function(event){
+                    //获得btn的识别信息
+                    var value=this.innerHTML;
+                    switch(value){
+                        case &quot;平移&quot;:
+                            navToolbar.activate(Navigation.PAN);
+                            break;                            
+                        case &quot;拉框缩小&quot;:
+                            navToolbar.activate(Navigation.ZOOM_OUT);
+                            break;
+                        case &quot;拉框放大&quot;:
+                            navToolbar.activate(Navigation.ZOOM_IN);
+                            break;
+                        case &quot;全图&quot;:
+                            navToolbar.zoomToFullExtent();
+                            break;
+                        case &quot;漫游&quot;:
+                            //默认是漫游操作
+                            navToolbar.deactivate();
+                            break;
+                    }
+                })
+
+            });
+
+
+    &lt;/script&gt;
+&lt;/head&gt;
+&lt;body class=&quot;tundra&quot;&gt;
+    &lt;div id=&quot;mapDiv&quot; class=&quot;MapClass&quot;&gt;&lt;/div&gt;
+    &lt;button&gt;拉框放大&lt;/button&gt;
+    &lt;button&gt;拉框缩小&lt;/button&gt;
+    &lt;button&gt;平移&lt;/button&gt;
+    &lt;button&gt;全图&lt;/button&gt; 
+    &lt;button&gt;漫游&lt;/button&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre><h5 id="结果图"><a href="#结果图" class="headerlink" title="结果图"></a>结果图</h5><p><img src="https://img-blog.csdnimg.cn/20190809192436288.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0RhbkJvX0M=,size_16,color_FFFFFF,t_70" alt></p>
+</div><div class="post-copyright"><blockquote><p>原文作者: 冯亚杰(DanBoard·Feng)</p><p>原文链接: <a href="http://yoursite.com/2019/10/23/小部件---绑定小部件/">http://yoursite.com/2019/10/23/小部件---绑定小部件/</a></p><p>版权声明: 转载请注明出处(必须保留作者署名及链接)</p></blockquote></div><div class="tags"></div><div class="post-share"><div class="social-share"><span>分享到:</span></div></div><div class="post-nav"><a href="/2019/10/23/小部件---图例/" class="pre">小部件---图例</a><a href="/2019/10/23/数据分析 PyDay05/" class="next">数据分析 PyDay05</a></div><div id="comments"></div></div></div></div><div class="layout-r"><div id="sidebar"><div class="search-pla"></div><div id="toc" class="widget"><div class="widget-title"><i class="fa fa-fei">文章目录</i></div><ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#先看看效果图（拉框放大为例）"><span class="toc-text">先看看效果图（拉框放大为例）</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#放大前："><span class="toc-text">放大前：</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#拉框放大："><span class="toc-text">拉框放大：</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#放大后："><span class="toc-text">放大后：</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#新添加模块：”dojo-query”-“esri-toolbars-navigation”"><span class="toc-text">新添加模块：”dojo/query”   “esri/toolbars/navigation”</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#步骤："><span class="toc-text">步骤：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#贴代码："><span class="toc-text">贴代码：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#结果图"><span class="toc-text">结果图</span></a></li></ol></div><div class="widget"><div class="widget-title"><i class="fa fa-xie"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/计算机地图制图 知识总结/">计算机地图制图 知识总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/GIS程序设计 知识总结/">GIS程序设计 知识总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/空间数据库总结/">空间数据库总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/GPS测量原理及应用 知识总结/">GPS测量原理及应用 知识总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/github码云操作---合并分支，推送/">github/码云操作---合并分支，推送</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/IDEA连接Mysql数据库没有jar包，报错/">IDEA连接Mysql数据库没有jar包报错</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/07/Vue工程化环境(模块化规范、webpack、单文件组件、脚手架、Element-UI)/">Vue工程化</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/03/解决nodejs报错 Cannot find module/">完美解决nodejs报错 Cannot find module './application'</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/25/AE - 04.专题图绘制及打印功能实现/">AE - 04.专题图绘制及打印功能实现</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/25/AE - 01.空间书签的创建及调用/">AE - 01.空间书签的创建及调用</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-biao"> 标签</i></div><div class="tagcloud"></div></div><div class="widget"><div class="widget-title"><i class="fa fa-archive"> 归档</i></div><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-you"> 友情链接</i></div><ul></ul><a href="https://blog.csdn.net/DanBo_C" title="CSDN" target="_blank">CSDN</a></div></div></div></div><a id="totop" href="#top"></a><div id="footer"><div class="footer-info"><p><a href="/baidusitemap.xml">网站地图</a> |  <a href="/atom.xml">订阅本站</a> |  <a href="/about/">联系博主</a></p><p>本站总访问量：<i id="busuanzi_container_site_pv"><i id="busuanzi_value_site_pv"></i></i>次，本站总访客数:<i id="busuanzi_container_site_uv"><i id="busuanzi_value_site_uv"></i></i>人</p><p><span> Copyright &copy;<a href="/." rel="nofollow">冯亚杰(DanBoard·Feng).</a></span><span> Theme by<a rel="nofollow" target="_blank" href="https://github.com/chaooo/hexo-theme-BlueLake"> BlueLake.</a></span><span> Count by<a href="http://busuanzi.ibruce.info/"> busuanzi.</a></span><span> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a></span></p></div></div></div><script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script><script type="text/javascript" src="/js/search.json.js?v=2.0.4"></script><script type="text/javascript" src="/js/toctotop.js?v=2.0.4" async></script><link rel="stylesheet" type="text/css" href="/share/css/share.css"><script type="text/javascript" src="/share/js/social-share.js" charset="utf-8"></script><script type="text/javascript" src="/share/js/qrcode.js" charset="utf-8"></script></body></html>

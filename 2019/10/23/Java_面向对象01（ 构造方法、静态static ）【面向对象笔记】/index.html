@@ -1,0 +1,237 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta name="generator" content="Hexo 3.9.0"><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="GISer加油站"><meta name="keywords" content="DanBoCode, 代码, 程序, gis, js, 前端"><link rel="stylesheet" type="text/css" href="//fonts.loli.net/css?family=Source+Code+Pro"><link rel="stylesheet" type="text/css" href="/css/style.css?v=2.0.4"><link rel="stylesheet" type="text/css" href="/css/highlight.css?v=2.0.4"><link rel="Shortcut Icon" href="/favicon.ico"><link rel="bookmark" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><link rel="alternate" type="application/atom+xml" href="/atom.xml"><title>Java_面向对象01（ 构造方法、静态static ）【面向对象笔记】 | DanBoCode</title></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">Java_面向对象01（ 构造方法、静态static ）【面向对象笔记】</h1><a id="logo" href="/.">DanBoCode</a><p class="description">句子跟标点落入四个区间，有人能懂真理，有人读出文艺。</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div><div id="search-form"><div id="result-mask" class="hide"></div><label><input id="search-key" type="text" autocomplete="off" placeholder="搜索"></label><div id="result-wrap" class="hide"><div id="search-result"></div></div><div class="hide"><template id="search-tpl"><div class="item"><a href="/{path}" title="{title}"><div class="title">{title}</div><div class="time">{date}</div><div class="tags">{tags}</div></a></div></template></div></div></div><div id="layout" class="layout-g"><div class="layout-l"><div class="content_container"><div class="post"><h1 class="post-title">Java_面向对象01（ 构造方法、静态static ）【面向对象笔记】</h1><div class="post-meta"><a href="/2019/10/23/Java_面向对象01（ 构造方法、静态static ）【面向对象笔记】/#comments" class="comment-count"></a><p><span class="date">Oct 23, 2019</span><span><i id="busuanzi_container_page_pv"><i id="busuanzi_value_page_pv"></i><i>点击</i></i></span></p></div><div class="post-content"><h3 id="构造方法Constructor概述和格式-掌握"><a href="#构造方法Constructor概述和格式-掌握" class="headerlink" title="(构造方法Constructor概述和格式)(掌握)"></a>(构造方法Constructor概述和格式)(掌握)</h3><ul>
+<li>A:构造方法概述和作用<ul>
+<li>给对象的数据(属性)进行初始化</li>
+</ul>
+</li>
+<li>B:构造方法格式特点<ul>
+<li>a:方法名与类名相同(大小也要与类名一致)</li>
+<li>b:没有返回值类型，连void都没有</li>
+<li>c:没有具体的返回值return;</li>
+</ul>
+</li>
+</ul>
+<h3 id="构造方法的重载及注意事项-掌握"><a href="#构造方法的重载及注意事项-掌握" class="headerlink" title="(构造方法的重载及注意事项)(掌握)"></a>(构造方法的重载及注意事项)(掌握)</h3><ul>
+<li>A:案例演示<ul>
+<li>构造方法的重载</li>
+<li>重载:方法名相同,与返回值类型无关(构造方法没有返回值),只看参数列表</li>
+</ul>
+</li>
+<li>B:构造方法注意事项<ul>
+<li>a:如果我们没有给出构造方法，系统将自动提供一个无参构造方法。</li>
+<li>b:如果我们给出了构造方法，系统将不再提供默认的无参构造方法。<ul>
+<li>注意：这个时候，如果我们还想使用无参构造方法，就必须自己给出。建议永远自己给出无参构造方法</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="给成员变量赋值的两种方式的区别"><a href="#给成员变量赋值的两种方式的区别" class="headerlink" title="(给成员变量赋值的两种方式的区别)"></a>(给成员变量赋值的两种方式的区别)</h3><ul>
+<li>A:setXxx()方法<ul>
+<li>修改属性值 </li>
+</ul>
+</li>
+<li>B:构造方法<ul>
+<li>给对象中属性进行初始化 </li>
+</ul>
+</li>
+</ul>
+<h3 id="创建一个对象的步骤-掌握"><a href="#创建一个对象的步骤-掌握" class="headerlink" title="(创建一个对象的步骤)(掌握)"></a>(创建一个对象的步骤)(掌握)</h3><ul>
+<li>A:画图演示<ul>
+<li>画图说明一个对象的创建过程做了哪些事情?</li>
+<li>Student s = new Student();</li>
+<li>1,Student.class加载进内存</li>
+<li>2,声明一个Student类型引用s</li>
+<li>3,在堆内存创建对象,</li>
+<li>4,给对象中属性默认初始化值</li>
+<li>5,属性进行显示初始化</li>
+<li>6,构造方法进栈,对对象中的属性赋值,构造方法弹栈</li>
+<li>7,将对象的地址值赋值给s</li>
+</ul>
+</li>
+</ul>
+<h3 id="长方形案例练习-掌握"><a href="#长方形案例练习-掌握" class="headerlink" title="(长方形案例练习)(掌握)"></a>(长方形案例练习)(掌握)</h3><ul>
+<li>A:案例演示<ul>
+<li>需求：<ul>
+<li>定义一个长方形类,定义 求周长和面积的方法，</li>
+<li>然后定义一个测试类进行测试。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="员工类案例练习-掌握"><a href="#员工类案例练习-掌握" class="headerlink" title="(员工类案例练习)(掌握)"></a>(员工类案例练习)(掌握)</h3><ul>
+<li>A:案例演示<ul>
+<li>需求：定义一个员工类Employee</li>
+<li>自己分析出几个成员，然后给出成员变量<ul>
+<li>姓名name,工号id,工资salary </li>
+</ul>
+</li>
+<li>构造方法，<ul>
+<li>空参和有参的</li>
+</ul>
+</li>
+<li>getXxx()setXxx()方法，</li>
+<li>以及一个显示所有成员信息的方法。并测试。<ul>
+<li>work </li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="static关键字的特点-掌握"><a href="#static关键字的特点-掌握" class="headerlink" title="(static关键字的特点)(掌握)"></a>(static关键字的特点)(掌握)</h3><ul>
+<li>A:static关键字的特点<ul>
+<li>a:随着类的加载而加载</li>
+<li>b:优先于对象存在</li>
+<li>c:被类的所有对象共享<ul>
+<li>举例：咱们班级的学生应该共用同一个班级编号。</li>
+<li>其实这个特点也是在告诉我们什么时候使用静态?<ul>
+<li>如果某个成员变量是被所有对象共享的，那么它就应该定义为静态的。</li>
+</ul>
+</li>
+<li>举例：<ul>
+<li>饮水机(用静态修饰)</li>
+<li>水杯(不能用静态修饰)</li>
+<li>共性用静态,特性用非静态</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>d:可以通过类名调用<ul>
+<li>其实它本身也可以通过对象名调用。</li>
+<li>推荐使用类名调用。</li>
+<li>静态修饰的内容一般我们称其为：与类相关的，类成员</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>B:案例演示<ul>
+<li>static关键字的特点</li>
+</ul>
+</li>
+</ul>
+<h3 id="static的注意事项-掌握"><a href="#static的注意事项-掌握" class="headerlink" title="(static的注意事项)(掌握)"></a>(static的注意事项)(掌握)</h3><ul>
+<li>A:static的注意事项<ul>
+<li>a:在静态方法中是没有this关键字的<ul>
+<li>如何理解呢?<ul>
+<li>静态是随着类的加载而加载，this是随着对象的创建而存在。</li>
+<li>静态比对象先存在。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>b:静态方法只能访问静态的成员变量和静态的成员方法<ul>
+<li>静态方法：<ul>
+<li>成员变量：只能访问静态变量</li>
+<li>成员方法：只能访问静态成员方法</li>
+</ul>
+</li>
+<li>非静态方法：<ul>
+<li>成员变量：可以是静态的，也可以是非静态的</li>
+<li>成员方法：可是是静态的成员方法，也可以是非静态的成员方法。</li>
+</ul>
+</li>
+<li>简单记：<ul>
+<li>静态只能访问静态。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>B:案例演示<ul>
+<li>static的注意事项</li>
+</ul>
+</li>
+</ul>
+<h3 id="静态变量和成员变量的区别-掌握"><a href="#静态变量和成员变量的区别-掌握" class="headerlink" title="(静态变量和成员变量的区别)(掌握)"></a>(静态变量和成员变量的区别)(掌握)</h3><ul>
+<li>静态变量也叫类变量  成员变量也叫对象变量</li>
+<li>A:所属不同<ul>
+<li>静态变量属于类，所以也称为为类变量</li>
+<li>成员变量属于对象，所以也称为实例变量(对象变量)</li>
+</ul>
+</li>
+<li>B:内存中位置不同<ul>
+<li>静态变量存储于方法区的静态区</li>
+<li>成员变量存储于堆内存</li>
+</ul>
+</li>
+<li>C:内存出现时间不同<ul>
+<li>静态变量随着类的加载而加载，随着类的消失而消失</li>
+<li>成员变量随着对象的创建而存在，随着对象的消失而消失</li>
+</ul>
+</li>
+<li>D:调用不同<ul>
+<li>静态变量可以通过类名调用，也可以通过对象调用</li>
+<li>成员变量只能通过对 象名调用</li>
+</ul>
+</li>
+</ul>
+<h3 id="main方法的格式详细解释-了解"><a href="#main方法的格式详细解释-了解" class="headerlink" title="(main方法的格式详细解释)(了解)"></a>(main方法的格式详细解释)(了解)</h3><ul>
+<li>A:格式<ul>
+<li>public static void main(String[] args) {}</li>
+</ul>
+</li>
+<li>B:针对格式的解释<ul>
+<li>public 被jvm调用，访问权限足够大。</li>
+<li>static 被jvm调用，不用创建对象，直接类名访问</li>
+<li>void被jvm调用，不需要给jvm返回值</li>
+<li>main 一个通用的名称，虽然不是关键字，但是被jvm识别</li>
+<li>String[] args 以前用于接收键盘录入的</li>
+</ul>
+</li>
+<li>C:演示案例<ul>
+<li>通过args接收键盘例如数据</li>
+</ul>
+</li>
+</ul>
+<h3 id="工具类中使用静态-了解"><a href="#工具类中使用静态-了解" class="headerlink" title="(工具类中使用静态)(了解)"></a>(工具类中使用静态)(了解)</h3><ul>
+<li>A:制作一个工具类<ul>
+<li>ArrayTool</li>
+<li>1,获取最大值</li>
+<li>2,数组的遍历</li>
+<li>3,数组的反转</li>
+</ul>
+</li>
+</ul>
+<h3 id="说明书的制作过程-了解"><a href="#说明书的制作过程-了解" class="headerlink" title="(说明书的制作过程)(了解)"></a>(说明书的制作过程)(了解)</h3><ul>
+<li>A:对工具类加入文档注释</li>
+<li>B:通过javadoc命令生成说明书<ul>
+<li>@author(提取作者内容)</li>
+<li>@version(提取版本内容)</li>
+<li>javadoc -d 指定的文件目录 -author -version ArrayTool.java</li>
+<li>@param 参数名称//形式参数的变量名称@return 函数运行完返回的数据</li>
+</ul>
+</li>
+</ul>
+<h3 id="使用JDK提供的帮助文档-了解"><a href="#使用JDK提供的帮助文档-了解" class="headerlink" title="(使用JDK提供的帮助文档)(了解)"></a>(使用JDK提供的帮助文档)(了解)</h3><ul>
+<li>A:找到文档，打开文档</li>
+<li>B:点击显示，找到索引，出现输入框</li>
+<li>C:你应该知道你找谁?举例：Scanner</li>
+<li>D:看这个类的结构(需不需要导包)<ul>
+<li>成员变量    字段</li>
+<li>构造方法    构造方法</li>
+<li>成员方法    方法</li>
+</ul>
+</li>
+</ul>
+<h3 id="Math类的随机数功能-了解"><a href="#Math类的随机数功能-了解" class="headerlink" title="(Math类的随机数功能)(了解)"></a>(Math类的随机数功能)(了解)</h3><ul>
+<li>打开JDK提供的帮助文档学习</li>
+<li>A:Math类概述<ul>
+<li>类包含用于执行基本数学运算的方法</li>
+</ul>
+</li>
+<li>B:Math类特点<ul>
+<li>由于Math类在java.lang包下，所以不需要导包。</li>
+<li>因为它的成员全部是静态的,所以私有了构造方法</li>
+</ul>
+</li>
+<li>C:获取随机数的方法<ul>
+<li>public static double random():返回带正号的 double 值，该值大于等于 0.0 且小于 1.0。</li>
+</ul>
+</li>
+<li>D:我要获取一个1-100之间的随机数<ul>
+<li>int number = (int)(Math.random()*100)+1;</li>
+</ul>
+</li>
+</ul>
+</div><div class="post-copyright"><blockquote><p>原文作者: 冯亚杰(DanBoard·Feng)</p><p>原文链接: <a href="http://yoursite.com/2019/10/23/Java_面向对象01（ 构造方法、静态static ）【面向对象笔记】/">http://yoursite.com/2019/10/23/Java_面向对象01（ 构造方法、静态static ）【面向对象笔记】/</a></p><p>版权声明: 转载请注明出处(必须保留作者署名及链接)</p></blockquote></div><div class="tags"></div><div class="post-share"><div class="social-share"><span>分享到:</span></div></div><div class="post-nav"><a href="/2019/10/23/Java_面向对象02（ 继承&amp;方法&amp;final) ）【面向对象笔记】/" class="pre">Java_面向对象02（ 继承&amp;方法&amp;final) ）【面向对象笔记】</a><a href="/2019/10/23/IO流 【超完整】/" class="next">IO流 【超完整】</a></div><div id="comments"></div></div></div></div><div class="layout-r"><div id="sidebar"><div class="search-pla"></div><div id="toc" class="widget"><div class="widget-title"><i class="fa fa-fei">文章目录</i></div><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#构造方法Constructor概述和格式-掌握"><span class="toc-text">(构造方法Constructor概述和格式)(掌握)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#构造方法的重载及注意事项-掌握"><span class="toc-text">(构造方法的重载及注意事项)(掌握)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#给成员变量赋值的两种方式的区别"><span class="toc-text">(给成员变量赋值的两种方式的区别)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建一个对象的步骤-掌握"><span class="toc-text">(创建一个对象的步骤)(掌握)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#长方形案例练习-掌握"><span class="toc-text">(长方形案例练习)(掌握)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#员工类案例练习-掌握"><span class="toc-text">(员工类案例练习)(掌握)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#static关键字的特点-掌握"><span class="toc-text">(static关键字的特点)(掌握)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#static的注意事项-掌握"><span class="toc-text">(static的注意事项)(掌握)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#静态变量和成员变量的区别-掌握"><span class="toc-text">(静态变量和成员变量的区别)(掌握)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#main方法的格式详细解释-了解"><span class="toc-text">(main方法的格式详细解释)(了解)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#工具类中使用静态-了解"><span class="toc-text">(工具类中使用静态)(了解)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#说明书的制作过程-了解"><span class="toc-text">(说明书的制作过程)(了解)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用JDK提供的帮助文档-了解"><span class="toc-text">(使用JDK提供的帮助文档)(了解)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Math类的随机数功能-了解"><span class="toc-text">(Math类的随机数功能)(了解)</span></a></li></ol></div><div class="widget"><div class="widget-title"><i class="fa fa-xie"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/计算机地图制图 知识总结/">计算机地图制图 知识总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/GIS程序设计 知识总结/">GIS程序设计 知识总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/空间数据库总结/">空间数据库总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/GPS测量原理及应用 知识总结/">GPS测量原理及应用 知识总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/github码云操作---合并分支，推送/">github/码云操作---合并分支，推送</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/IDEA连接Mysql数据库没有jar包，报错/">IDEA连接Mysql数据库没有jar包报错</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/07/Vue工程化环境(模块化规范、webpack、单文件组件、脚手架、Element-UI)/">Vue工程化</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/03/解决nodejs报错 Cannot find module/">完美解决nodejs报错 Cannot find module './application'</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/25/AE - 04.专题图绘制及打印功能实现/">AE - 04.专题图绘制及打印功能实现</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/25/AE - 01.空间书签的创建及调用/">AE - 01.空间书签的创建及调用</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-biao"> 标签</i></div><div class="tagcloud"></div></div><div class="widget"><div class="widget-title"><i class="fa fa-archive"> 归档</i></div><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-you"> 友情链接</i></div><ul></ul><a href="https://blog.csdn.net/DanBo_C" title="CSDN" target="_blank">CSDN</a></div></div></div></div><a id="totop" href="#top"></a><div id="footer"><div class="footer-info"><p><a href="/baidusitemap.xml">网站地图</a> |  <a href="/atom.xml">订阅本站</a> |  <a href="/about/">联系博主</a></p><p>本站总访问量：<i id="busuanzi_container_site_pv"><i id="busuanzi_value_site_pv"></i></i>次，本站总访客数:<i id="busuanzi_container_site_uv"><i id="busuanzi_value_site_uv"></i></i>人</p><p><span> Copyright &copy;<a href="/." rel="nofollow">冯亚杰(DanBoard·Feng).</a></span><span> Theme by<a rel="nofollow" target="_blank" href="https://github.com/chaooo/hexo-theme-BlueLake"> BlueLake.</a></span><span> Count by<a href="http://busuanzi.ibruce.info/"> busuanzi.</a></span><span> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a></span></p></div></div></div><script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script><script type="text/javascript" src="/js/search.json.js?v=2.0.4"></script><script type="text/javascript" src="/js/toctotop.js?v=2.0.4" async></script><link rel="stylesheet" type="text/css" href="/share/css/share.css"><script type="text/javascript" src="/share/js/social-share.js" charset="utf-8"></script><script type="text/javascript" src="/share/js/qrcode.js" charset="utf-8"></script></body></html>

@@ -1,0 +1,757 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta name="generator" content="Hexo 3.9.0"><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="GISer加油站"><meta name="keywords" content="DanBoCode, 代码, 程序, gis, js, 前端"><link rel="stylesheet" type="text/css" href="//fonts.loli.net/css?family=Source+Code+Pro"><link rel="stylesheet" type="text/css" href="/css/style.css?v=2.0.4"><link rel="stylesheet" type="text/css" href="/css/highlight.css?v=2.0.4"><link rel="Shortcut Icon" href="/favicon.ico"><link rel="bookmark" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><link rel="alternate" type="application/atom+xml" href="/atom.xml"><title>IO流 【超完整】 | DanBoCode</title></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">IO流 【超完整】</h1><a id="logo" href="/.">DanBoCode</a><p class="description">句子跟标点落入四个区间，有人能懂真理，有人读出文艺。</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div><div id="search-form"><div id="result-mask" class="hide"></div><label><input id="search-key" type="text" autocomplete="off" placeholder="搜索"></label><div id="result-wrap" class="hide"><div id="search-result"></div></div><div class="hide"><template id="search-tpl"><div class="item"><a href="/{path}" title="{title}"><div class="title">{title}</div><div class="time">{date}</div><div class="tags">{tags}</div></a></div></template></div></div></div><div id="layout" class="layout-g"><div class="layout-l"><div class="content_container"><div class="post"><h1 class="post-title">IO流 【超完整】</h1><div class="post-meta"><a href="/2019/10/23/IO流 【超完整】/#comments" class="comment-count"></a><p><span class="date">Oct 23, 2019</span><span><i id="busuanzi_container_page_pv"><i id="busuanzi_value_page_pv"></i><i>点击</i></i></span></p></div><div class="post-content"><p>文章较长，建议从目录选取感兴趣内容，然后Ctry+F搜索、跳转</p>
+<h3 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h3><p><strong>01_IO流(IO流概述及其分类)<br>02_IO流(FileInputStream)<br>03_IO流(read()方法返回值为什么是int)<br>04_IO流(FileOutputStream)<br>05_IO流(FileOutputStream追加)<br>06_IO流(拷贝图片)<br>07_IO流(拷贝音频文件画原理图)<br>08_IO流(字节数组拷贝之available()方法)<br>09_IO流(定义小数组)<br>10_IO流(定义小数组的标准格式)<br>11_IO流(BufferedInputStream和BufferOutputStream拷贝)<br>12_IO流(flush和close方法的区别)<br>13_IO流(字节流读写中文)<br>14_IO流(流的标准处理异常代码1.6版本及其以前)<br>15_IO流(流的标准处理异常代码1.7版本)<br>16_IO流(图片加密)<br>17_IO流(拷贝文件)<br>18_IO流(录入数据拷贝到文件)<br>19_IO流(字符流FileReader)<br>20_IO流(字符流FileWriter)<br>21_IO流(什么情况下使用字符流)<br>22_IO流(自定义字符数组的拷贝)<br>23_IO流(带缓冲的字符流)<br>24_IO流(readLine()和newLine()方法)<br>25_IO流(将文本反转)<br>26_IO流(装饰设计模式)<br>27_IO流(使用指定的码表读写字符)<br>28_IO流(转换流图解)<br>29_IO流(获取文本上字符出现的次数)&amp;&amp;(试用版软件)<br>30_File类(练习)<br>31_IO流(总结)<br>32_IO流(序列流)(了解)<br>33_IO流(序列流整合多个)(了解)34_IO流(内存输出流)(掌握)<br>35_IO流(内存输出流之黑马面试题)(掌握)<br>36_IO流(随机访问流概述和读写数据)(了解)<br>37_IO流(对象操作流ObjecOutputStream)(了解)<br>38_IO流(对象操作流ObjectInputStream)(了解)<br>39_IO流(对象操作流优化)(了解)<br>40_IO流(加上id号)(了解)<br>41_IO流(数据输入输出流)(了解)<br>42_IO流(打印流的概述和特点)(掌握)<br>43_IO流(标准输入输出流概述和输出语句)<br>44_IO流(修改标准输入输出流拷贝图片)(了解)<br>45_IO流(两种方式实现键盘录入)(了解)<br>46_IO流(Properties的特殊功能使用)(了解)<br>47_IO流(Properties的load()和store()功能)(了解)</strong><br>——————————————————–正文—————————————————————-</p>
+<h3 id="01-IO流-IO流概述及其分类"><a href="#01-IO流-IO流概述及其分类" class="headerlink" title="01_IO流(IO流概述及其分类)"></a>01_IO流(IO流概述及其分类)</h3><ul>
+<li>1.概念<ul>
+<li>IO流用来处理设备之间的数据传输</li>
+<li>Java对数据的操作是通过流的方式</li>
+<li>Java用于操作流的类都在IO包中</li>
+<li>流按流向分为两种：输入流，输出流。</li>
+<li>流按操作类型分为两种：<ul>
+<li>字节流 : 字节流可以操作任何数据,因为在计算机中任何数据都是以字节的形式存储的</li>
+<li>字符流 : 字符流只能操作纯字符数据，比较方便。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>2.IO流常用父类<ul>
+<li>字节流的抽象父类：<ul>
+<li>InputStream </li>
+<li>OutputStream</li>
+</ul>
+</li>
+<li>字符流的抽象父类：<ul>
+<li>Reader </li>
+<li>Writer        </li>
+</ul>
+</li>
+</ul>
+</li>
+<li>3.IO程序书写<ul>
+<li>使用前，导入IO包中的类</li>
+<li>使用时，进行IO异常处理</li>
+<li>使用后，释放资源</li>
+</ul>
+</li>
+</ul>
+<h3 id="02-IO流-FileInputStream"><a href="#02-IO流-FileInputStream" class="headerlink" title="02_IO流(FileInputStream)"></a>02_IO流(FileInputStream)</h3><ul>
+<li><p>read()一次读取一个字节</p>
+</li>
+<li><pre><code>FileInputStream fis = new FileInputStream(&quot;aaa.txt&quot;);    //创建一个文件输入流对象,并关联aaa.txt
+int b;                                                    //定义变量,记录每次读到的字节
+while((b = fis.read()) != -1) {                            //将每次读到的字节赋值给b并判断是否是-1
+    System.out.println(b);                                //打印每一个字节
+}
+
+fis.close();                                            //关闭流释放资源</code></pre><h3 id="03-IO流-read-方法返回值为什么是int"><a href="#03-IO流-read-方法返回值为什么是int" class="headerlink" title="03_IO流(read()方法返回值为什么是int)"></a>03_IO流(read()方法返回值为什么是int)</h3></li>
+<li><p>read()方法读取的是一个字节,为什么返回是int,而不是byte</p>
+</li>
+<li><pre><code>因为字节输入流可以操作任意类型的文件,比如图片音频等,这些文件底层都是以二进制形式的存储的,如果每次读取都返回byte,有可能在读到中间的时候遇到111111111
+那么这11111111是byte类型的-1,我们的程序是遇到-1就会停止不读了,后面的数据就读不到了,所以在读取的时候用int类型接收,如果11111111会在其前面补上
+24个0凑足4个字节,那么byte类型的-1就变成int类型的255了这样可以保证整个数据读完,而结束标记的-1就是int类型</code></pre><h3 id="04-IO流-FileOutputStream"><a href="#04-IO流-FileOutputStream" class="headerlink" title="04_IO流(FileOutputStream)"></a>04_IO流(FileOutputStream)</h3></li>
+<li><p>write()一次写出一个字节</p>
+</li>
+<li><pre><code>FileOutputStream fos = new FileOutputStream(&quot;bbb.txt&quot;);    //如果没有bbb.txt,会创建出一个
+//fos.write(97);                        //虽然写出的是一个int数,但是在写出的时候会将前面的24个0去掉,所以写出的是一个byte
+fos.write(98);
+fos.write(99);
+fos.close();</code></pre><h3 id="05-IO流-FileOutputStream追加"><a href="#05-IO流-FileOutputStream追加" class="headerlink" title="05_IO流(FileOutputStream追加)"></a>05_IO流(FileOutputStream追加)</h3></li>
+<li><p>A:案例演示</p>
+<ul>
+<li>FileOutputStream的构造方法写出数据如何实现数据的追加写入</li>
+</ul>
+</li>
+<li><pre><code>FileOutputStream fos = new FileOutputStream(&quot;bbb.txt&quot;,true);    //如果没有bbb.txt,会创建出一个
+//fos.write(97);                        //虽然写出的是一个int数,但是在写出的时候会将前面的24个0去掉,所以写出的一个byte
+fos.write(98);
+fos.write(99);
+fos.close();</code></pre></li>
+</ul>
+<h3 id="06-IO流-拷贝图片"><a href="#06-IO流-拷贝图片" class="headerlink" title="06_IO流(拷贝图片)"></a>06_IO流(拷贝图片)</h3><ul>
+<li><p>FileInputStream读取</p>
+</li>
+<li><p>FileOutputStream写出</p>
+<pre><code>FileInputStream fis = new FileInputStream(&quot;致青春.mp3&quot;);    //创建输入流对象,关联致青春.mp3
+FileOutputStream fos = new FileOutputStream(&quot;copy.mp3&quot;);//创建输出流对象,关联copy.mp3
+
+int b;
+while((b = fis.read()) != -1) {
+    fos.write(b);
+}
+
+fis.close();
+fos.close();</code></pre></li>
+</ul>
+<h3 id="07-IO流-拷贝音频文件画原理图"><a href="#07-IO流-拷贝音频文件画原理图" class="headerlink" title="07_IO流(拷贝音频文件画原理图)"></a>07_IO流(拷贝音频文件画原理图)</h3><ul>
+<li>A:案例演示<ul>
+<li>字节流一次读写一个字节复制音频</li>
+</ul>
+</li>
+<li>弊端:效率太低</li>
+</ul>
+<h3 id="08-IO流-字节数组拷贝之available-方法"><a href="#08-IO流-字节数组拷贝之available-方法" class="headerlink" title="08_IO流(字节数组拷贝之available()方法)"></a>08_IO流(字节数组拷贝之available()方法)</h3><ul>
+<li><p>A:案例演示</p>
+<ul>
+<li>int read(byte[] b):一次读取一个字节数组</li>
+<li>write(byte[] b):一次写出一个字节数组</li>
+<li>available()获取读的文件所有的字节个数</li>
+</ul>
+</li>
+<li><p>弊端:有可能会内存溢出 </p>
+<pre><code>FileInputStream fis = new FileInputStream(&quot;致青春.mp3&quot;);
+FileOutputStream fos = new FileOutputStream(&quot;copy.mp3&quot;);
+byte[] arr = new byte[fis.available()];                    //根据文件大小做一个字节数组
+fis.read(arr);                                            //将文件上的所有字节读取到数组中
+fos.write(arr);                                            //将数组中的所有字节一次写到了文件上
+fis.close();
+fos.close();</code></pre></li>
+</ul>
+<h3 id="09-IO流-定义小数组"><a href="#09-IO流-定义小数组" class="headerlink" title="09_IO流(定义小数组)"></a>09_IO流(定义小数组)</h3><ul>
+<li>write(byte[] b)</li>
+<li>write(byte[] b, int off, int len)写出有效的字节个数</li>
+</ul>
+<h3 id="10-IO流-定义小数组的标准格式"><a href="#10-IO流-定义小数组的标准格式" class="headerlink" title="10_IO流(定义小数组的标准格式)"></a>10_IO流(定义小数组的标准格式)</h3><ul>
+<li><p>A:案例演示</p>
+<ul>
+<li><p>字节流一次读写一个字节数组复制图片和视频<br>  FileInputStream fis = new FileInputStream(“致青春.mp3”);<br>  FileOutputStream fos = new FileOutputStream(“copy.mp3”);<br>  int len;<br>  byte[] arr = new byte[1024 * 8];                    //自定义字节数组</p>
+<p>  while((len = fis.read(arr)) != -1) {</p>
+<pre><code>//fos.write(arr);
+fos.write(arr, 0, len);                            //写出字节数组写出有效个字节个数</code></pre><p>  }</p>
+<p>  fis.close();<br>  fos.close();</p>
+<h3 id="11-IO流-BufferedInputStream和BufferOutputStream拷贝"><a href="#11-IO流-BufferedInputStream和BufferOutputStream拷贝" class="headerlink" title="11_IO流(BufferedInputStream和BufferOutputStream拷贝)"></a>11_IO流(BufferedInputStream和BufferOutputStream拷贝)</h3></li>
+</ul>
+</li>
+<li><p>A:缓冲思想</p>
+<ul>
+<li>字节流一次读写一个数组的速度明显比一次读写一个字节的速度快很多，</li>
+<li>这是加入了数组这样的缓冲区效果，java本身在设计的时候，</li>
+<li>也考虑到了这样的设计思想(装饰设计模式后面讲解)，所以提供了字节缓冲区流</li>
+</ul>
+</li>
+<li><p>B.BufferedInputStream</p>
+<ul>
+<li>BufferedInputStream内置了一个缓冲区(数组)</li>
+<li>从BufferedInputStream中读取一个字节时</li>
+<li>BufferedInputStream会一次性从文件中读取8192个, 存在缓冲区中, 返回给程序一个</li>
+<li>程序再次读取时, 就不用找文件了, 直接从缓冲区中获取</li>
+<li>直到缓冲区中所有的都被使用过, 才重新从文件中读取8192个</li>
+</ul>
+</li>
+<li><p>C.BufferedOutputStream</p>
+<ul>
+<li>BufferedOutputStream也内置了一个缓冲区(数组)</li>
+<li>程序向流中写出字节时, 不会直接写到文件, 先写到缓冲区中</li>
+<li>直到缓冲区写满, BufferedOutputStream才会把缓冲区中的数据一次性写到文件里</li>
+</ul>
+</li>
+<li><p>D.拷贝的代码 </p>
+<pre><code>FileInputStream fis = new FileInputStream(&quot;致青春.mp3&quot;);            //创建文件输入流对象,关联致青春.mp3
+BufferedInputStream bis = new BufferedInputStream(fis);            //创建缓冲区对fis装饰
+FileOutputStream fos = new FileOutputStream(&quot;copy.mp3&quot;);        //创建输出流对象,关联copy.mp3
+BufferedOutputStream bos = new BufferedOutputStream(fos);        //创建缓冲区对fos装饰
+
+int b;
+while((b = bis.read()) != -1) {        
+    bos.write(b);
+}
+
+bis.close();                        //只关装饰后的对象即可
+bos.close();</code></pre></li>
+<li><p>E.小数组的读写和带Buffered的读取哪个更快?</p>
+<ul>
+<li>定义小数组如果是8192个字节大小和Buffered比较的话</li>
+<li>定义小数组会略胜一筹,因为读和写操作的是同一个数组</li>
+<li>而Buffered操作的是两个数组</li>
+</ul>
+</li>
+</ul>
+<h3 id="12-IO流-flush和close方法的区别"><a href="#12-IO流-flush和close方法的区别" class="headerlink" title="12_IO流(flush和close方法的区别)"></a>12_IO流(flush和close方法的区别)</h3><ul>
+<li>flush()方法<ul>
+<li>用来刷新缓冲区的,刷新后可以再次写出 </li>
+</ul>
+</li>
+<li>close()方法<ul>
+<li>用来关闭流释放资源的的,如果是带缓冲区的流对象的close()方法,不但会关闭流,还会再关闭流之前刷新缓冲区,关闭后不能再写出 <h3 id="13-IO流-字节流读写中文"><a href="#13-IO流-字节流读写中文" class="headerlink" title="13_IO流(字节流读写中文)"></a>13_IO流(字节流读写中文)</h3></li>
+</ul>
+</li>
+<li>字节流读取中文的问题<ul>
+<li>字节流在读中文的时候有可能会读到半个中文,造成乱码 </li>
+</ul>
+</li>
+<li>字节流写出中文的问题<ul>
+<li>字节流直接操作的字节,所以写出中文必须将字符串转换成字节数组 </li>
+<li>写出回车换行 write(“\r\n”.getBytes());</li>
+</ul>
+</li>
+</ul>
+<h3 id="14-IO流-流的标准处理异常代码1-6版本及其以前"><a href="#14-IO流-流的标准处理异常代码1-6版本及其以前" class="headerlink" title="14_IO流(流的标准处理异常代码1.6版本及其以前)"></a>14_IO流(流的标准处理异常代码1.6版本及其以前)</h3><ul>
+<li><p>try finally嵌套</p>
+<pre><code>FileInputStream fis = null;
+FileOutputStream fos = null;
+try {
+    fis = new FileInputStream(&quot;aaa.txt&quot;);
+    fos = new FileOutputStream(&quot;bbb.txt&quot;);
+    int b;
+    while((b = fis.read()) != -1) {
+        fos.write(b);
+    }
+} finally {
+    try {
+        if(fis != null)
+            fis.close();
+    }finally {
+        if(fos != null)
+            fos.close();
+    }
+}</code></pre></li>
+</ul>
+<h3 id="15-IO流-流的标准处理异常代码1-7版本"><a href="#15-IO流-流的标准处理异常代码1-7版本" class="headerlink" title="15_IO流(流的标准处理异常代码1.7版本)"></a>15_IO流(流的标准处理异常代码1.7版本)</h3><ul>
+<li><p>try close</p>
+<pre><code>try(
+    FileInputStream fis = new FileInputStream(&quot;aaa.txt&quot;);
+    FileOutputStream fos = new FileOutputStream(&quot;bbb.txt&quot;);
+    MyClose mc = new MyClose();
+){
+    int b;
+    while((b = fis.read()) != -1) {
+        fos.write(b);
+    }
+}</code></pre></li>
+<li><p>原理</p>
+<ul>
+<li>在try()中创建的流对象必须实现了AutoCloseable这个接口,如果实现了,在try后面的{}(读写代码)执行后就会自动调用,流对象的close方法将流关掉 </li>
+</ul>
+</li>
+</ul>
+<h3 id="16-IO流-图片加密"><a href="#16-IO流-图片加密" class="headerlink" title="16_IO流(图片加密)"></a>16_IO流(图片加密)</h3><ul>
+<li><p>给图片加密</p>
+<pre><code>BufferedInputStream bis = new BufferedInputStream(new FileInputStream(&quot;a.jpg&quot;));
+BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(&quot;b.jpg&quot;));
+
+int b;
+while((b = bis.read()) != -1) {
+    bos.write(b ^ 123);
+}
+
+bis.close();
+bos.close();</code></pre></li>
+</ul>
+<h3 id="17-IO流-拷贝文件"><a href="#17-IO流-拷贝文件" class="headerlink" title="17_IO流(拷贝文件)"></a>17_IO流(拷贝文件)</h3><ul>
+<li><p>在控制台录入文件的路径,将文件拷贝到当前项目下</p>
+<pre><code>Scanner sc = new Scanner(System.in);
+System.out.println(&quot;请输入一个文件路径&quot;);
+String line = sc.nextLine();                //将键盘录入的文件路径存储在line中
+File file = new File(line);                    //封装成File对象
+FileInputStream fis = new FileInputStream(file);
+FileOutputStream fos = new FileOutputStream(file.getName());
+
+int len;
+byte[] arr = new byte[8192];                //定义缓冲区
+while((len = fis.read(arr)) != -1) {
+    fos.write(arr,0,len);
+}
+
+fis.close();
+fos.close();</code></pre></li>
+</ul>
+<h3 id="18-IO流-录入数据拷贝到文件"><a href="#18-IO流-录入数据拷贝到文件" class="headerlink" title="18_IO流(录入数据拷贝到文件)"></a>18_IO流(录入数据拷贝到文件)</h3><ul>
+<li><p>将键盘录入的数据拷贝到当前项目下的text.txt文件中,键盘录入数据当遇到quit时就退出</p>
+<pre><code>Scanner sc = new Scanner(System.in);
+FileOutputStream fos = new FileOutputStream(&quot;text.txt&quot;);
+System.out.println(&quot;请输入:&quot;);
+while(true) {
+    String line = sc.nextLine();
+    if(&quot;quit&quot;.equals(line))
+        break;
+    fos.write(line.getBytes());
+    fos.write(&quot;\r\n&quot;.getBytes());
+}
+
+fos.close();</code></pre></li>
+</ul>
+<h3 id="19-IO流-字符流FileReader"><a href="#19-IO流-字符流FileReader" class="headerlink" title="19_IO流(字符流FileReader)"></a>19_IO流(字符流FileReader)</h3><ul>
+<li><p>1.字符流是什么</p>
+<ul>
+<li>字符流是可以直接读写字符的IO流</li>
+<li>字符流读取字符, 就要先读取到字节数据, 然后转为字符. 如果要写出字符, 需要把字符转为字节再写出.    </li>
+</ul>
+</li>
+<li><p>2.FileReader</p>
+<ul>
+<li>FileReader类的read()方法可以按照字符大小读取</li>
+</ul>
+</li>
+<li><pre><code>FileReader fr = new FileReader(&quot;aaa.txt&quot;);                //创建输入流对象,关联aaa.txt
+int ch;
+while((ch = fr.read()) != -1) {                            //将读到的字符赋值给ch
+    System.out.println((char)ch);                        //将读到的字符强转后打印
+}
+
+fr.close();                                                //关流 </code></pre></li>
+</ul>
+<h3 id="20-IO流-字符流FileWriter"><a href="#20-IO流-字符流FileWriter" class="headerlink" title="20_IO流(字符流FileWriter)"></a>20_IO流(字符流FileWriter)</h3><ul>
+<li><p>FileWriter类的write()方法可以自动把字符转为字节写出</p>
+<pre><code>FileWriter fw = new FileWriter(&quot;aaa.txt&quot;);
+fw.write(&quot;aaa&quot;);
+fw.close();</code></pre></li>
+</ul>
+<p>###21.03_IO流(字符流的拷贝)<br>    FileReader fr = new FileReader(“a.txt”);<br>    FileWriter fw = new FileWriter(“b.txt”);</p>
+<pre><code>int ch;
+while((ch = fr.read()) != -1) {
+    fw.write(ch);
+}
+
+fr.close();
+fw.close();</code></pre><h3 id="21-IO流-什么情况下使用字符流"><a href="#21-IO流-什么情况下使用字符流" class="headerlink" title="21_IO流(什么情况下使用字符流)"></a>21_IO流(什么情况下使用字符流)</h3><ul>
+<li>字符流也可以拷贝文本文件, 但不推荐使用. 因为读取时会把字节转为字符, 写出时还要把字符转回字节.</li>
+<li>程序需要读取一段文本, 或者需要写出一段文本的时候可以使用字符流</li>
+<li>读取的时候是按照字符的大小读取的,不会出现半个中文</li>
+<li>写出的时候可以直接将字符串写出,不用转换为字节数组</li>
+</ul>
+<p>###21.05_IO流(字符流是否可以拷贝非纯文本的文件)</p>
+<ul>
+<li>不可以拷贝非纯文本的文件</li>
+<li>因为在读的时候会将字节转换为字符,在转换过程中,可能找不到对应的字符,就会用?代替,写出的时候会将字符转换成字节写出去</li>
+<li>如果是?,直接写出,这样写出之后的文件就乱了,看不了了  </li>
+</ul>
+<h3 id="22-IO流-自定义字符数组的拷贝"><a href="#22-IO流-自定义字符数组的拷贝" class="headerlink" title="22_IO流(自定义字符数组的拷贝)"></a>22_IO流(自定义字符数组的拷贝)</h3><ul>
+<li><p>   FileReader fr = new FileReader(“aaa.txt”);            //创建字符输入流,关联aaa.txt<br>   FileWriter fw = new FileWriter(“bbb.txt”);            //创建字符输出流,关联bbb.txt</p>
+<p>   int len;<br>   char[] arr = new char[1024*8];                        //创建字符数组<br>   while((len = fr.read(arr)) != -1) {                    //将数据读到字符数组中</p>
+<pre><code>fw.write(arr, 0, len);                            //从字符数组将数据写到文件上</code></pre><p>   }</p>
+<p>   fr.close();                                            //关流释放资源<br>   fw.close();    </p>
+</li>
+</ul>
+<h3 id="23-IO流-带缓冲的字符流"><a href="#23-IO流-带缓冲的字符流" class="headerlink" title="23_IO流(带缓冲的字符流)"></a>23_IO流(带缓冲的字符流)</h3><ul>
+<li><p>BufferedReader的read()方法读取字符时会一次读取若干字符到缓冲区, 然后逐个返回给程序, 降低读取文件的次数, 提高效率</p>
+</li>
+<li><p>BufferedWriter的write()方法写出字符时会先写到缓冲区, 缓冲区写满时才会写到文件, 降低写文件的次数, 提高效率</p>
+</li>
+<li><pre><code>BufferedReader br = new BufferedReader(new FileReader(&quot;aaa.txt&quot;));    //创建字符输入流对象,关联aaa.txt
+BufferedWriter bw = new BufferedWriter(new FileWriter(&quot;bbb.txt&quot;));    //创建字符输出流对象,关联bbb.txt
+
+int ch;                
+while((ch = br.read()) != -1) {        //read一次,会先将缓冲区读满,从缓冲去中一个一个的返给临时变量ch
+    bw.write(ch);                    //write一次,是将数据装到字符数组,装满后再一起写出去
+}
+
+br.close();                            //关流
+bw.close();  </code></pre></li>
+</ul>
+<h3 id="24-IO流-readLine-和newLine-方法"><a href="#24-IO流-readLine-和newLine-方法" class="headerlink" title="24_IO流(readLine()和newLine()方法)"></a>24_IO流(readLine()和newLine()方法)</h3><ul>
+<li><p>BufferedReader的readLine()方法可以读取一行字符(不包含换行符号)</p>
+</li>
+<li><p>BufferedWriter的newLine()可以输出一个跨平台的换行符号”\r\n”</p>
+</li>
+<li><pre><code>BufferedReader br = new BufferedReader(new FileReader(&quot;aaa.txt&quot;));
+BufferedWriter bw = new BufferedWriter(new FileWriter(&quot;bbb.txt&quot;));
+String line;
+while((line = br.readLine()) != null) {
+    bw.write(line);
+    //bw.write(&quot;\r\n&quot;);                    //只支持windows系统
+    bw.newLine();                        //跨平台的
+}
+
+br.close();
+bw.close(); </code></pre></li>
+</ul>
+<h3 id="25-IO流-将文本反转"><a href="#25-IO流-将文本反转" class="headerlink" title="25_IO流(将文本反转)"></a>25_IO流(将文本反转)</h3><ul>
+<li>将一个文本文档上的文本反转,第一行和倒数第一行交换,第二行和倒数第二行交换</li>
+</ul>
+<p>###21.10_IO流(LineNumberReader) </p>
+<ul>
+<li><p>LineNumberReader是BufferedReader的子类, 具有相同的功能, 并且可以统计行号</p>
+<ul>
+<li>调用getLineNumber()方法可以获取当前行号</li>
+<li>调用setLineNumber()方法可以设置当前行号</li>
+</ul>
+</li>
+<li><pre><code>LineNumberReader lnr = new LineNumberReader(new FileReader(&quot;aaa.txt&quot;));
+String line;
+lnr.setLineNumber(100);                                    //设置行号
+while((line = lnr.readLine()) != null) {
+    System.out.println(lnr.getLineNumber() + &quot;:&quot; + line);//获取行号
+}
+
+lnr.close(); </code></pre></li>
+</ul>
+<h3 id="26-IO流-装饰设计模式"><a href="#26-IO流-装饰设计模式" class="headerlink" title="26_IO流(装饰设计模式)"></a>26_IO流(装饰设计模式)</h3><ul>
+<li><pre><code>interface Coder {
+    public void code();
+}
+
+class Student implements Coder {
+
+    @Override
+    public void code() {
+        System.out.println(&quot;javase&quot;);
+        System.out.println(&quot;javaweb&quot;);
+    }
+
+}
+
+class HeiMaStudent implements Coder {
+    private Student s;                        //获取到被包装的类的引用
+    public HeiMaStudent(Student s) {        //通过构造函数创建对象的时候,传入被包装的对象
+        this.s = s;
+    }
+    @Override
+    public void code() {                    //对其原有功能进行升级
+        s.code();
+        System.out.println(&quot;数据库&quot;);
+        System.out.println(&quot;ssh&quot;);
+        System.out.println(&quot;安卓&quot;);
+        System.out.println(&quot;.....&quot;);
+    }
+
+} </code></pre></li>
+</ul>
+<h3 id="27-IO流-使用指定的码表读写字符"><a href="#27-IO流-使用指定的码表读写字符" class="headerlink" title="27_IO流(使用指定的码表读写字符)"></a>27_IO流(使用指定的码表读写字符)</h3><ul>
+<li><p>FileReader是使用默认码表读取文件, 如果需要使用指定码表读取, 那么可以使用InputStreamReader(字节流,编码表)</p>
+</li>
+<li><p>FileWriter是使用默认码表写出文件, 如果需要使用指定码表写出, 那么可以使用OutputStreamWriter(字节流,编码表)</p>
+</li>
+<li><pre><code>BufferedReader br =                                     //高效的用指定的编码表读
+        new BufferedReader(new InputStreamReader(new FileInputStream(&quot;UTF-8.txt&quot;), &quot;UTF-8&quot;));
+BufferedWriter bw =                                     //高效的用指定的编码表写
+        new BufferedWriter(new OutputStreamWriter(new FileOutputStream(&quot;GBK.txt&quot;), &quot;GBK&quot;));
+int ch;
+while((ch = br.read()) != -1) {
+    bw.write(ch);
+}
+
+br.close();
+bw.close();</code></pre><h3 id="28-IO流-转换流图解"><a href="#28-IO流-转换流图解" class="headerlink" title="28_IO流(转换流图解)"></a>28_IO流(转换流图解)</h3><p><img src="https://img-blog.csdnimg.cn/20190424161725483.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0RhbkJvX0M=,size_16,color_FFFFFF,t_70" alt></p>
+</li>
+</ul>
+<h3 id="29-IO流-获取文本上字符出现的次数-amp-amp-试用版软件"><a href="#29-IO流-获取文本上字符出现的次数-amp-amp-试用版软件" class="headerlink" title="29_IO流(获取文本上字符出现的次数)&amp;&amp;(试用版软件)"></a>29_IO流(获取文本上字符出现的次数)&amp;&amp;(试用版软件)</h3><ul>
+<li>获取一个文本上每个字符出现的次数,将结果写在times.txt上</li>
+<li>当我们下载一个试用版软件,没有购买正版的时候,每执行一次就会提醒我们还有多少次使用机会用学过的IO流知识,模拟试用版软件,试用10次机会,执行一次就提示一次您还有几次机会,如果次数到了提示请购买正版</li>
+</ul>
+<h3 id="30-File类-练习"><a href="#30-File类-练习" class="headerlink" title="30_File类(练习)"></a>30_File类(练习)</h3><ul>
+<li>需求:从键盘输入接收一个文件夹路径,打印出该文件夹下所有的.java文件名</li>
+</ul>
+<h3 id="31-IO流-总结"><a href="#31-IO流-总结" class="headerlink" title="31_IO流(总结)"></a>31_IO流(总结)</h3><ul>
+<li>1.会用BufferedReader读取GBK码表和UTF-8码表的字符</li>
+<li>2.会用BufferedWriter写出字符到GBK码表和UTF-8码表的文件中</li>
+<li>3.会使用BufferedReader从键盘读取一行</li>
+</ul>
+<h3 id="32-IO流-序列流-了解"><a href="#32-IO流-序列流-了解" class="headerlink" title="32_IO流(序列流)(了解)"></a>32_IO流(序列流)(了解)</h3><ul>
+<li><p>1.什么是序列流</p>
+<ul>
+<li>序列流可以把多个字节输入流整合成一个, 从序列流中读取数据时, 将从被整合的第一个流开始读, 读完一个之后继续读第二个, 以此类推.</li>
+</ul>
+</li>
+<li><p>2.使用方式</p>
+<ul>
+<li><p>整合两个: SequenceInputStream(InputStream, InputStream)</p>
+</li>
+<li><pre><code>FileInputStream fis1 = new FileInputStream(&quot;a.txt&quot;);            //创建输入流对象,关联a.txt
+FileInputStream fis2 = new FileInputStream(&quot;b.txt&quot;);            //创建输入流对象,关联b.txt
+SequenceInputStream sis = new SequenceInputStream(fis1, fis2);    //将两个流整合成一个流
+FileOutputStream fos = new FileOutputStream(&quot;c.txt&quot;);            //创建输出流对象,关联c.txt
+
+int b;
+while((b = sis.read()) != -1) {                                    //用整合后的读
+    fos.write(b);                                                //写到指定文件上
+}
+
+sis.close();
+fos.close(); </code></pre><h3 id="33-IO流-序列流整合多个-了解"><a href="#33-IO流-序列流整合多个-了解" class="headerlink" title="33_IO流(序列流整合多个)(了解)"></a>33_IO流(序列流整合多个)(了解)</h3></li>
+</ul>
+</li>
+<li><p>整合多个: SequenceInputStream(Enumeration)</p>
+</li>
+<li><pre><code>FileInputStream fis1 = new FileInputStream(&quot;a.txt&quot;);    //创建输入流对象,关联a.txt
+FileInputStream fis2 = new FileInputStream(&quot;b.txt&quot;);    //创建输入流对象,关联b.txt
+FileInputStream fis3 = new FileInputStream(&quot;c.txt&quot;);    //创建输入流对象,关联c.txt
+Vector&lt;InputStream&gt; v = new Vector&lt;&gt;();                    //创建vector集合对象
+v.add(fis1);                                            //将流对象添加
+v.add(fis2);
+v.add(fis3);
+Enumeration&lt;InputStream&gt; en = v.elements();                //获取枚举引用
+SequenceInputStream sis = new SequenceInputStream(en);    //传递给SequenceInputStream构造
+FileOutputStream fos = new FileOutputStream(&quot;d.txt&quot;);
+int b;
+while((b = sis.read()) != -1) {
+    fos.write(b);
+}
+
+sis.close();
+fos.close();</code></pre></li>
+</ul>
+<h3 id="34-IO流-内存输出流-掌握"><a href="#34-IO流-内存输出流-掌握" class="headerlink" title="34_IO流(内存输出流*****)(掌握)"></a>34_IO流(内存输出流*****)(掌握)</h3><ul>
+<li><p>1.什么是内存输出流</p>
+<ul>
+<li>该输出流可以向内存中写数据, 把内存当作一个缓冲区, 写出之后可以一次性获取出所有数据</li>
+</ul>
+</li>
+<li><p>2.使用方式</p>
+<ul>
+<li><p>创建对象: new ByteArrayOutputStream()</p>
+</li>
+<li><p>写出数据: write(int), write(byte[])</p>
+</li>
+<li><p>获取数据: toByteArray()</p>
+</li>
+<li><pre><code>FileInputStream fis = new FileInputStream(&quot;a.txt&quot;);
+ByteArrayOutputStream baos = new ByteArrayOutputStream();
+int b;
+while((b = fis.read()) != -1) {
+    baos.write(b);
+}
+
+//byte[] newArr = baos.toByteArray();                //将内存缓冲区中所有的字节存储在newArr中
+//System.out.println(new String(newArr));
+System.out.println(baos);
+fis.close();</code></pre><h3 id="35-IO流-内存输出流之黑马面试题-掌握"><a href="#35-IO流-内存输出流之黑马面试题-掌握" class="headerlink" title="35_IO流(内存输出流之黑马面试题)(掌握)"></a>35_IO流(内存输出流之黑马面试题)(掌握)</h3></li>
+</ul>
+</li>
+<li><p>定义一个文件输入流,调用read(byte[] b)方法,将a.txt文件中的内容打印出来(byte数组大小限制为5)</p>
+</li>
+<li><pre><code>FileInputStream fis = new FileInputStream(&quot;a.txt&quot;);                //创建字节输入流,关联a.txt
+ByteArrayOutputStream baos = new ByteArrayOutputStream();        //创建内存输出流
+byte[] arr = new byte[5];                                        //创建字节数组,大小为5
+int len;
+while((len = fis.read(arr)) != -1) {                            //将文件上的数据读到字节数组中
+    baos.write(arr, 0, len);                                    //将字节数组的数据写到内存缓冲区中
+}
+System.out.println(baos);                                        //将内存缓冲区的内容转换为字符串打印
+fis.close();</code></pre><h3 id="36-IO流-随机访问流概述和读写数据-了解"><a href="#36-IO流-随机访问流概述和读写数据-了解" class="headerlink" title="36_IO流(随机访问流概述和读写数据)(了解)"></a>36_IO流(随机访问流概述和读写数据)(了解)</h3></li>
+<li><p>A:随机访问流概述</p>
+<ul>
+<li>RandomAccessFile概述</li>
+<li>RandomAccessFile类不属于流，是Object类的子类。但它融合了InputStream和OutputStream的功能。</li>
+<li>支持对随机访问文件的读取和写入。</li>
+</ul>
+</li>
+<li><p>B:read(),write(),seek()</p>
+</li>
+</ul>
+<h3 id="37-IO流-对象操作流ObjecOutputStream-了解"><a href="#37-IO流-对象操作流ObjecOutputStream-了解" class="headerlink" title="37_IO流(对象操作流ObjecOutputStream)(了解)"></a>37_IO流(对象操作流ObjecOutputStream)(了解)</h3><ul>
+<li><p>1.什么是对象操作流</p>
+<ul>
+<li>该流可以将一个对象写出, 或者读取一个对象到程序中. 也就是执行了序列化和反序列化的操作.</li>
+</ul>
+</li>
+<li><p>2.使用方式</p>
+<ul>
+<li><p>写出: new ObjectOutputStream(OutputStream), writeObject()</p>
+<pre><code>public class Demo3_ObjectOutputStream {
+
+    /**
+     * @param args
+     * @throws IOException 
+     * 将对象写出,序列化
+     */
+    public static void main(String[] args) throws IOException {
+        Person p1 = new Person(&quot;张三&quot;, 23);
+        Person p2 = new Person(&quot;李四&quot;, 24);
+//        FileOutputStream fos = new FileOutputStream(&quot;e.txt&quot;);
+//        fos.write(p1);
+//        FileWriter fw = new FileWriter(&quot;e.txt&quot;);
+//        fw.write(p1);
+        //无论是字节输出流,还是字符输出流都不能直接写出对象
+        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(&quot;e.txt&quot;));//创建对象输出流
+        oos.writeObject(p1);
+        oos.writeObject(p2);
+        oos.close();
+    }
+
+}</code></pre><h3 id="38-IO流-对象操作流ObjectInputStream-了解"><a href="#38-IO流-对象操作流ObjectInputStream-了解" class="headerlink" title="38_IO流(对象操作流ObjectInputStream)(了解)"></a>38_IO流(对象操作流ObjectInputStream)(了解)</h3></li>
+</ul>
+</li>
+<li><p>读取: new ObjectInputStream(InputStream), readObject()</p>
+<ul>
+<li><pre><code>public class Demo3_ObjectInputStream {
+
+    /**
+     * @param args
+     * @throws IOException 
+     * @throws ClassNotFoundException 
+     * @throws FileNotFoundException 
+     * 读取对象,反序列化
+     */
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
+        ObjectInputStream ois = new ObjectInputStream(new FileInputStream(&quot;e.txt&quot;));
+        Person p1 = (Person) ois.readObject();
+        Person p2 = (Person) ois.readObject();
+        System.out.println(p1);
+        System.out.println(p2);
+        ois.close();
+    }
+
+}</code></pre></li>
+</ul>
+</li>
+</ul>
+<h3 id="39-IO流-对象操作流优化-了解"><a href="#39-IO流-对象操作流优化-了解" class="headerlink" title="39_IO流(对象操作流优化)(了解)"></a>39_IO流(对象操作流优化)(了解)</h3><p>*　将对象存储在集合中写出</p>
+<pre><code>Person p1 = new Person(&quot;张三&quot;, 23);
+Person p2 = new Person(&quot;李四&quot;, 24);
+Person p3 = new Person(&quot;马哥&quot;, 18);
+Person p4 = new Person(&quot;辉哥&quot;, 20);
+
+ArrayList&lt;Person&gt; list = new ArrayList&lt;&gt;();
+list.add(p1);
+list.add(p2);
+list.add(p3);
+list.add(p4);
+
+ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(&quot;f.txt&quot;));
+oos.writeObject(list);                                    //写出集合对象
+
+oos.close();</code></pre><ul>
+<li><p>读取到的是一个集合对象</p>
+<pre><code>ObjectInputStream ois = new ObjectInputStream(new FileInputStream(&quot;f.txt&quot;));
+    ArrayList&lt;Person&gt; list = (ArrayList&lt;Person&gt;)ois.readObject();    //泛型在运行期会被擦除,索引运行期相当于没有泛型
+//想去掉黄色可以加注解            
+@SuppressWarnings(&quot;unchecked&quot;)
+    for (Person person : list) {
+        System.out.println(person);
+    }
+
+ois.close();</code></pre><h3 id="40-IO流-加上id号-了解"><a href="#40-IO流-加上id号-了解" class="headerlink" title="40_IO流(加上id号)(了解)"></a>40_IO流(加上id号)(了解)</h3></li>
+<li><p>注意</p>
+<ul>
+<li>要写出的对象必须实现Serializable接口才能被序列化</li>
+<li>不用必须加id号</li>
+</ul>
+</li>
+</ul>
+<h3 id="41-IO流-数据输入输出流-了解"><a href="#41-IO流-数据输入输出流-了解" class="headerlink" title="41_IO流(数据输入输出流)(了解)"></a>41_IO流(数据输入输出流)(了解)</h3><ul>
+<li><p>1.什么是数据输入输出流</p>
+<ul>
+<li>DataInputStream, DataOutputStream可以按照基本数据类型大小读写数据</li>
+<li>例如按Long大小写出一个数字, 写出时该数据占8字节. 读取的时候也可以按照Long类型读取, 一次读取8个字节.</li>
+</ul>
+</li>
+<li><p>2.使用方式</p>
+<ul>
+<li><p>DataOutputStream(OutputStream), writeInt(), writeLong() </p>
+<pre><code>DataOutputStream dos = new DataOutputStream(new FileOutputStream(&quot;b.txt&quot;));
+dos.writeInt(997);
+dos.writeInt(998);
+dos.writeInt(999);
+
+dos.close();</code></pre></li>
+<li><p>DataInputStream(InputStream), readInt(), readLong()</p>
+<pre><code>DataInputStream dis = new DataInputStream(new FileInputStream(&quot;b.txt&quot;));
+int x = dis.readInt();
+int y = dis.readInt();
+int z = dis.readInt();
+System.out.println(x);
+System.out.println(y);
+System.out.println(z);
+dis.close();</code></pre></li>
+</ul>
+</li>
+</ul>
+<h3 id="42-IO流-打印流的概述和特点-掌握"><a href="#42-IO流-打印流的概述和特点-掌握" class="headerlink" title="42_IO流(打印流的概述和特点)(掌握)"></a>42_IO流(打印流的概述和特点)(掌握)</h3><ul>
+<li><p>1.什么是打印流</p>
+<ul>
+<li><p>该流可以很方便的将对象的toString()结果输出, 并且自动加上换行, 而且可以使用自动刷出的模式</p>
+</li>
+<li><p>System.out就是一个PrintStream, 其默认向控制台输出信息</p>
+<pre><code>PrintStream ps = System.out;
+ps.println(97);                    //其实底层用的是Integer.toString(x),将x转换为数字字符串打印
+ps.println(&quot;xxx&quot;);
+ps.println(new Person(&quot;张三&quot;, 23));
+Person p = null;
+ps.println(p);                    //如果是null,就返回null,如果不是null,就调用对象的toString()</code></pre></li>
+</ul>
+</li>
+<li><p>2.使用方式</p>
+<ul>
+<li><p>打印: print(), println()</p>
+</li>
+<li><p>自动刷出: PrintWriter(OutputStream out, boolean autoFlush, String encoding) </p>
+</li>
+<li><p>打印流只操作数据目的</p>
+<pre><code>PrintWriter pw = new PrintWriter(new FileOutputStream(&quot;g.txt&quot;), true);
+pw.write(97);
+pw.print(&quot;大家好&quot;);
+pw.println(&quot;你好&quot;);                //自动刷出,只针对的是println方法
+pw.close();</code></pre></li>
+</ul>
+</li>
+</ul>
+<h3 id="43-IO流-标准输入输出流概述和输出语句"><a href="#43-IO流-标准输入输出流概述和输出语句" class="headerlink" title="43_IO流(标准输入输出流概述和输出语句)"></a>43_IO流(标准输入输出流概述和输出语句)</h3><ul>
+<li><p>1.什么是标准输入输出流(掌握)</p>
+<ul>
+<li>System.in是InputStream, 标准输入流, 默认可以从键盘输入读取字节数据</li>
+<li>System.out是PrintStream, 标准输出流, 默认可以向Console中输出字符和字节数据</li>
+</ul>
+</li>
+<li><p>2.修改标准输入输出流(了解)</p>
+<ul>
+<li><p>修改输入流: System.setIn(InputStream)</p>
+</li>
+<li><p>修改输出流: System.setOut(PrintStream)</p>
+</li>
+<li><pre><code>System.setIn(new FileInputStream(&quot;a.txt&quot;));                //修改标准输入流
+System.setOut(new PrintStream(&quot;b.txt&quot;));                //修改标准输出流
+
+InputStream in = System.in;                                //获取标准输入流
+PrintStream ps = System.out;                            //获取标准输出流
+int b;
+while((b = in.read()) != -1) {                            //从a.txt上读取数据
+    ps.write(b);                                        //将数据写到b.txt上
+}
+
+in.close();
+ps.close();</code></pre></li>
+</ul>
+</li>
+</ul>
+<h3 id="44-IO流-修改标准输入输出流拷贝图片-了解"><a href="#44-IO流-修改标准输入输出流拷贝图片-了解" class="headerlink" title="44_IO流(修改标准输入输出流拷贝图片)(了解)"></a>44_IO流(修改标准输入输出流拷贝图片)(了解)</h3><pre><code>System.setIn(new FileInputStream(&quot;IO图片.png&quot;));        //改变标准输入流
+System.setOut(new PrintStream(&quot;copy.png&quot;));         //改变标准输出流
+
+InputStream is = System.in;                            //获取标准输入流
+PrintStream ps = System.out;                        //获取标准输出流
+
+int len;
+byte[] arr = new byte[1024 * 8];
+
+while((len = is.read(arr)) != -1) {
+    ps.write(arr, 0, len);
+}
+
+is.close();
+ps.close();</code></pre><h3 id="45-IO流-两种方式实现键盘录入-了解"><a href="#45-IO流-两种方式实现键盘录入-了解" class="headerlink" title="45_IO流(两种方式实现键盘录入)(了解)"></a>45_IO流(两种方式实现键盘录入)(了解)</h3><ul>
+<li>A:BufferedReader的readLine方法。<ul>
+<li>BufferedReader br = new BufferedReader(new InputStreamReader(System.in));</li>
+</ul>
+</li>
+<li>B:Scanner</li>
+</ul>
+<p>###22.15_IO流(Properties的概述和作为Map集合的使用)(了解)</p>
+<ul>
+<li>A:Properties的概述<ul>
+<li>Properties 类表示了一个持久的属性集。</li>
+<li>Properties 可保存在流中或从流中加载。</li>
+<li>属性列表中每个键及其对应值都是一个字符串。 </li>
+</ul>
+</li>
+<li>B:案例演示<ul>
+<li>Properties作为Map集合的使用</li>
+</ul>
+</li>
+</ul>
+<h3 id="46-IO流-Properties的特殊功能使用-了解"><a href="#46-IO流-Properties的特殊功能使用-了解" class="headerlink" title="46_IO流(Properties的特殊功能使用)(了解)"></a>46_IO流(Properties的特殊功能使用)(了解)</h3><ul>
+<li>A:Properties的特殊功能<ul>
+<li>public Object setProperty(String key,String value)</li>
+<li>public String getProperty(String key)</li>
+<li>public Enumeration<string> stringPropertyNames()</string></li>
+</ul>
+</li>
+<li>B:案例演示<ul>
+<li>Properties的特殊功能</li>
+</ul>
+</li>
+</ul>
+<h3 id="47-IO流-Properties的load-和store-功能-了解"><a href="#47-IO流-Properties的load-和store-功能-了解" class="headerlink" title="47_IO流(Properties的load()和store()功能)(了解)"></a>47_IO流(Properties的load()和store()功能)(了解)</h3><ul>
+<li>A:Properties的load()和store()功能</li>
+<li>B:案例演示<ul>
+<li>Properties的load()和store()功能</li>
+</ul>
+</li>
+</ul>
+</div><div class="post-copyright"><blockquote><p>原文作者: 冯亚杰(DanBoard·Feng)</p><p>原文链接: <a href="http://yoursite.com/2019/10/23/IO流 【超完整】/">http://yoursite.com/2019/10/23/IO流 【超完整】/</a></p><p>版权声明: 转载请注明出处(必须保留作者署名及链接)</p></blockquote></div><div class="tags"></div><div class="post-share"><div class="social-share"><span>分享到:</span></div></div><div class="post-nav"><a href="/2019/10/23/Java_面向对象01（ 构造方法、静态static ）【面向对象笔记】/" class="pre">Java_面向对象01（ 构造方法、静态static ）【面向对象笔记】</a><a href="/2019/10/23/GIS复习【VI】/" class="next">GIS复习【VI】</a></div><div id="comments"></div></div></div></div><div class="layout-r"><div id="sidebar"><div class="search-pla"></div><div id="toc" class="widget"><div class="widget-title"><i class="fa fa-fei">文章目录</i></div><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#目录"><span class="toc-text">目录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#01-IO流-IO流概述及其分类"><span class="toc-text">01_IO流(IO流概述及其分类)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#02-IO流-FileInputStream"><span class="toc-text">02_IO流(FileInputStream)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#03-IO流-read-方法返回值为什么是int"><span class="toc-text">03_IO流(read()方法返回值为什么是int)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#04-IO流-FileOutputStream"><span class="toc-text">04_IO流(FileOutputStream)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#05-IO流-FileOutputStream追加"><span class="toc-text">05_IO流(FileOutputStream追加)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#06-IO流-拷贝图片"><span class="toc-text">06_IO流(拷贝图片)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#07-IO流-拷贝音频文件画原理图"><span class="toc-text">07_IO流(拷贝音频文件画原理图)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#08-IO流-字节数组拷贝之available-方法"><span class="toc-text">08_IO流(字节数组拷贝之available()方法)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#09-IO流-定义小数组"><span class="toc-text">09_IO流(定义小数组)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-IO流-定义小数组的标准格式"><span class="toc-text">10_IO流(定义小数组的标准格式)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-IO流-BufferedInputStream和BufferOutputStream拷贝"><span class="toc-text">11_IO流(BufferedInputStream和BufferOutputStream拷贝)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#12-IO流-flush和close方法的区别"><span class="toc-text">12_IO流(flush和close方法的区别)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#13-IO流-字节流读写中文"><span class="toc-text">13_IO流(字节流读写中文)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#14-IO流-流的标准处理异常代码1-6版本及其以前"><span class="toc-text">14_IO流(流的标准处理异常代码1.6版本及其以前)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#15-IO流-流的标准处理异常代码1-7版本"><span class="toc-text">15_IO流(流的标准处理异常代码1.7版本)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#16-IO流-图片加密"><span class="toc-text">16_IO流(图片加密)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#17-IO流-拷贝文件"><span class="toc-text">17_IO流(拷贝文件)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#18-IO流-录入数据拷贝到文件"><span class="toc-text">18_IO流(录入数据拷贝到文件)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#19-IO流-字符流FileReader"><span class="toc-text">19_IO流(字符流FileReader)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#20-IO流-字符流FileWriter"><span class="toc-text">20_IO流(字符流FileWriter)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#21-IO流-什么情况下使用字符流"><span class="toc-text">21_IO流(什么情况下使用字符流)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#22-IO流-自定义字符数组的拷贝"><span class="toc-text">22_IO流(自定义字符数组的拷贝)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#23-IO流-带缓冲的字符流"><span class="toc-text">23_IO流(带缓冲的字符流)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#24-IO流-readLine-和newLine-方法"><span class="toc-text">24_IO流(readLine()和newLine()方法)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#25-IO流-将文本反转"><span class="toc-text">25_IO流(将文本反转)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#26-IO流-装饰设计模式"><span class="toc-text">26_IO流(装饰设计模式)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#27-IO流-使用指定的码表读写字符"><span class="toc-text">27_IO流(使用指定的码表读写字符)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#28-IO流-转换流图解"><span class="toc-text">28_IO流(转换流图解)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#29-IO流-获取文本上字符出现的次数-amp-amp-试用版软件"><span class="toc-text">29_IO流(获取文本上字符出现的次数)&amp;&amp;(试用版软件)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#30-File类-练习"><span class="toc-text">30_File类(练习)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#31-IO流-总结"><span class="toc-text">31_IO流(总结)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#32-IO流-序列流-了解"><span class="toc-text">32_IO流(序列流)(了解)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#33-IO流-序列流整合多个-了解"><span class="toc-text">33_IO流(序列流整合多个)(了解)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#34-IO流-内存输出流-掌握"><span class="toc-text">34_IO流(内存输出流*****)(掌握)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#35-IO流-内存输出流之黑马面试题-掌握"><span class="toc-text">35_IO流(内存输出流之黑马面试题)(掌握)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#36-IO流-随机访问流概述和读写数据-了解"><span class="toc-text">36_IO流(随机访问流概述和读写数据)(了解)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#37-IO流-对象操作流ObjecOutputStream-了解"><span class="toc-text">37_IO流(对象操作流ObjecOutputStream)(了解)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#38-IO流-对象操作流ObjectInputStream-了解"><span class="toc-text">38_IO流(对象操作流ObjectInputStream)(了解)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#39-IO流-对象操作流优化-了解"><span class="toc-text">39_IO流(对象操作流优化)(了解)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#40-IO流-加上id号-了解"><span class="toc-text">40_IO流(加上id号)(了解)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#41-IO流-数据输入输出流-了解"><span class="toc-text">41_IO流(数据输入输出流)(了解)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#42-IO流-打印流的概述和特点-掌握"><span class="toc-text">42_IO流(打印流的概述和特点)(掌握)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#43-IO流-标准输入输出流概述和输出语句"><span class="toc-text">43_IO流(标准输入输出流概述和输出语句)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#44-IO流-修改标准输入输出流拷贝图片-了解"><span class="toc-text">44_IO流(修改标准输入输出流拷贝图片)(了解)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#45-IO流-两种方式实现键盘录入-了解"><span class="toc-text">45_IO流(两种方式实现键盘录入)(了解)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#46-IO流-Properties的特殊功能使用-了解"><span class="toc-text">46_IO流(Properties的特殊功能使用)(了解)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#47-IO流-Properties的load-和store-功能-了解"><span class="toc-text">47_IO流(Properties的load()和store()功能)(了解)</span></a></li></ol></div><div class="widget"><div class="widget-title"><i class="fa fa-xie"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/计算机地图制图 知识总结/">计算机地图制图 知识总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/GIS程序设计 知识总结/">GIS程序设计 知识总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/空间数据库总结/">空间数据库总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/GPS测量原理及应用 知识总结/">GPS测量原理及应用 知识总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/github码云操作---合并分支，推送/">github/码云操作---合并分支，推送</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/IDEA连接Mysql数据库没有jar包，报错/">IDEA连接Mysql数据库没有jar包报错</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/07/Vue工程化环境(模块化规范、webpack、单文件组件、脚手架、Element-UI)/">Vue工程化</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/03/解决nodejs报错 Cannot find module/">完美解决nodejs报错 Cannot find module './application'</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/25/AE - 04.专题图绘制及打印功能实现/">AE - 04.专题图绘制及打印功能实现</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/25/AE - 01.空间书签的创建及调用/">AE - 01.空间书签的创建及调用</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-biao"> 标签</i></div><div class="tagcloud"></div></div><div class="widget"><div class="widget-title"><i class="fa fa-archive"> 归档</i></div><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-you"> 友情链接</i></div><ul></ul><a href="https://blog.csdn.net/DanBo_C" title="CSDN" target="_blank">CSDN</a></div></div></div></div><a id="totop" href="#top"></a><div id="footer"><div class="footer-info"><p><a href="/baidusitemap.xml">网站地图</a> |  <a href="/atom.xml">订阅本站</a> |  <a href="/about/">联系博主</a></p><p>本站总访问量：<i id="busuanzi_container_site_pv"><i id="busuanzi_value_site_pv"></i></i>次，本站总访客数:<i id="busuanzi_container_site_uv"><i id="busuanzi_value_site_uv"></i></i>人</p><p><span> Copyright &copy;<a href="/." rel="nofollow">冯亚杰(DanBoard·Feng).</a></span><span> Theme by<a rel="nofollow" target="_blank" href="https://github.com/chaooo/hexo-theme-BlueLake"> BlueLake.</a></span><span> Count by<a href="http://busuanzi.ibruce.info/"> busuanzi.</a></span><span> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a></span></p></div></div></div><script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script><script type="text/javascript" src="/js/search.json.js?v=2.0.4"></script><script type="text/javascript" src="/js/toctotop.js?v=2.0.4" async></script><link rel="stylesheet" type="text/css" href="/share/css/share.css"><script type="text/javascript" src="/share/js/social-share.js" charset="utf-8"></script><script type="text/javascript" src="/share/js/qrcode.js" charset="utf-8"></script></body></html>

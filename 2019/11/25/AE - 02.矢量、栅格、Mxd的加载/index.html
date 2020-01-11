@@ -1,0 +1,139 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta name="generator" content="Hexo 3.9.0"><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="GISer加油站"><meta name="keywords" content="DanBoCode, 代码, 程序, gis, js, 前端"><link rel="stylesheet" type="text/css" href="//fonts.loli.net/css?family=Source+Code+Pro"><link rel="stylesheet" type="text/css" href="/css/style.css?v=2.0.4"><link rel="stylesheet" type="text/css" href="/css/highlight.css?v=2.0.4"><link rel="Shortcut Icon" href="/favicon.ico"><link rel="bookmark" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><link rel="alternate" type="application/atom+xml" href="/atom.xml"><title>AE - 02.矢量、栅格、Mxd的加载 | DanBoCode</title></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">AE - 02.矢量、栅格、Mxd的加载</h1><a id="logo" href="/.">DanBoCode</a><p class="description">句子跟标点落入四个区间，有人能懂真理，有人读出文艺。</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div><div id="search-form"><div id="result-mask" class="hide"></div><label><input id="search-key" type="text" autocomplete="off" placeholder="搜索"></label><div id="result-wrap" class="hide"><div id="search-result"></div></div><div class="hide"><template id="search-tpl"><div class="item"><a href="/{path}" title="{title}"><div class="title">{title}</div><div class="time">{date}</div><div class="tags">{tags}</div></a></div></template></div></div></div><div id="layout" class="layout-g"><div class="layout-l"><div class="content_container"><div class="post"><h1 class="post-title">AE - 02.矢量、栅格、Mxd的加载</h1><div class="post-meta"><a href="/2019/11/25/AE - 02.矢量、栅格、Mxd的加载/#comments" class="comment-count"></a><p><span class="date">Nov 25, 2019</span><span><i id="busuanzi_container_page_pv"><i id="busuanzi_value_page_pv"></i><i>点击</i></i></span></p></div><div class="post-content"><h2 id="02-矢量、栅格、Mxd的加载"><a href="#02-矢量、栅格、Mxd的加载" class="headerlink" title="02.矢量、栅格、Mxd的加载"></a>02.矢量、栅格、Mxd的加载</h2><h5 id="流程图"><a href="#流程图" class="headerlink" title="流程图"></a>流程图</h5><p><img src="https://img-blog.csdnimg.cn/20191030163613363.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0RhbkJvX0M=,size_16,color_FFFFFF,t_70" alt></p>
+<p>#####引用类库及接口描述</p>
+<ul>
+<li>引用类库：</li>
+</ul>
+<pre><code>using ESRI.ArcGIS.Carto;
+using ESRI.ArcGIS.Geometry;
+using ESRI.ArcGIS.Geodatabase;
+using ESRI.ArcGIS.DataSourcesFile;
+using ESRI.ArcGIS.DataSourcesRaster;</code></pre><ul>
+<li>接口：</li>
+</ul>
+<pre><code>1. OpenFileDialog 接口：用于打开文件对话框
+2. IWorkspaceFactory 接口：工作空间工厂，工作空间的发布者，允许客户连接通过一组连接属性定义的工作空间。普通类。
+3. IWorkspace 接口：提供访问工作空间的通用属性和方法，如它的连接属性，以及包含的数据集的方法。
+4. IFeatureWorkspace 接口：用于访问和管理地理数据库中的要素的重要成分—数据集。
+5. IRasterWorkspace 接口：用于打开和建立基于文件的RasterDataset。
+6. IFeatureClass 接口：获取和设置要素类属性的主要接口。
+7. IFeatureLayer 接口：继承自ILayer,提供了访问基于矢量数据图层的属性和方法。、
+8. ILayer 接口：Layer 是图层对象，是数据的外壳，必须建立在数据的基础上才有意义。
+9. IMap 接口：许多图层的集合，由多个ILayer构成。</code></pre><h5 id="结构"><a href="#结构" class="headerlink" title="结构"></a>结构</h5><ul>
+<li>矢量<ol>
+<li>获取shp文件的路径和文件名称</li>
+<li>由工作空间工厂创建Shp工作空间工厂类，打开工作空间</li>
+<li>转换工作空间为要素工作空间，打开要素类</li>
+<li>创建要素图层，设置要素图层的FeatureClass为上面打开的要素类</li>
+<li>转换IFeatureLayer为ILayer，添加到mapcontorl中。</li>
+<li>刷新</li>
+</ol>
+</li>
+<li>栅格<ol>
+<li>获取shp文件的路径和文件名称</li>
+<li>由工作空间工厂创建Raster工作空间工厂类，打开工作空间</li>
+<li>转换工作空间为栅格工作空间，打开栅格数据集</li>
+<li>影像金字塔的判断和创建</li>
+<li>新建栅格图层，添加到mapcontorl中。</li>
+<li>刷新</li>
+</ol>
+</li>
+</ul>
+<h5 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h5><p>七、代码</p>
+<ol>
+<li><p>打开按钮的点击事件</p>
+<pre><code>private void menu_open_Click(object sender, EventArgs e)
+{
+    addMapFile();
+}</code></pre></li>
+<li><p>打开文件</p>
+<pre><code>private void addMapFile()
+{
+    OpenFileDialog pOpenfileDialog = new OpenFileDialog();
+    pOpenfileDialog.Filter = &quot;全部文件|*.*&quot; +
+        &quot;|Shape 文件|*.shp&quot; +
+        &quot;|Mxd 文件|*.mxd&quot; +
+        &quot;|栅格 文件|*.tif;*.tiff;*.jpep;*.jpg;*.png;*.bmp&quot;;
+    if (pOpenfileDialog.ShowDialog() == DialogResult.OK)
+    {
+        string path = pOpenfileDialog.FileName;
+        bool shp = path.EndsWith(&quot;.shp&quot;);
+        bool mxd = path.EndsWith(&quot;.mxd&quot;);
+        bool tif = path.EndsWith(&quot;.tif&quot;) || path.EndsWith(&quot;.tiff&quot;) || path.EndsWith(&quot;.jpep&quot;) 
+            || path.EndsWith(&quot;.jpg&quot;) || path.EndsWith(&quot;.png&quot;) || path.EndsWith(&quot;.bmp&quot;);
+
+        if (shp)
+            openShpFile(path);
+        else if (mxd)
+            openShpFile(path);
+        else if (tif)
+            openShanGe(path);
+    }
+}</code></pre></li>
+<li><p>打开shp</p>
+<pre><code>/// &lt;summary&gt;
+/// 打开shp数据
+/// &lt;/summary&gt;
+private void openShpFile(string file)
+{
+    int index = 0;
+    index = file.LastIndexOf(&quot;\\&quot;);
+    string filePath = file.Substring(0, index);
+    string fileName = file.Substring(index + 1, file.Length - (index + 1));
+    IWorkspaceFactory pWorkspaceFactory = new ShapefileWorkspaceFactory();
+    IWorkspace pWorkspace = pWorkspaceFactory.OpenFromFile(filePath, 0);
+    IFeatureWorkspace pFeatureWokkspace = pWorkspace as IFeatureWorkspace;
+    IFeatureClass pFC = pFeatureWokkspace.OpenFeatureClass(fileName);
+    IFeatureLayer pFLayer = new FeatureLayer();
+    pFLayer.FeatureClass = pFC;
+    pFLayer.Name = pFC.AliasName;
+    ILayer pLayer = pFLayer as ILayer;
+    IMap pMap = mapControl.Map;
+    pMap.AddLayer(pLayer);
+    mapControl.ActiveView.Refresh();
+}</code></pre></li>
+<li><p>打开栅格</p>
+<pre><code>/// &lt;summary&gt;
+/// 打开栅格数据
+/// &lt;/summary&gt;
+private void openShanGe(string Path)
+{
+    string RasterPath = System.IO.Path.GetDirectoryName(Path);
+    string RasterName = System.IO.Path.GetFileName(Path);
+    IWorkspaceFactory pRasterWsF = new RasterWorkspaceFactory();
+    IWorkspace pWs = pRasterWsF.OpenFromFile(RasterPath, 0);
+    IRasterWorkspace pRasterWs = pWs as IRasterWorkspace;
+    IRasterDataset pRasterDS = pRasterWs.OpenRasterDataset(RasterName);
+    IRasterPyramid pRasterPyramid = pRasterDS as IRasterPyramid;
+    if ((pRasterPyramid != null)&amp;&amp;(!pRasterPyramid.Present))
+    {
+        if (MessageBox.Show(&quot;是否开始创建金字塔？&quot;, &quot;提示&quot;, MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.OK)
+        {
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+               pRasterPyramid.Create();
+            sw.Stop();
+            MessageBox.Show(&quot;创建完成，Time：&quot;+ sw.ElapsedMilliseconds.ToString()+&quot;ms&quot;);
+        }
+        else
+                MessageBox.Show(&quot;放弃创建金字塔&quot;);
+    }
+    IRasterLayer pRasterLayer = new RasterLayer();
+    pRasterLayer.CreateFromRaster(pRasterDS.CreateDefaultRaster());
+    IMap pmap = mapControl.Map;
+    pmap.AddLayer(pRasterLayer);
+    mapControl.ActiveView.Refresh();
+    OpenStatus();
+}</code></pre></li>
+<li><p>打开mxd</p>
+<pre><code>/// &lt;summary&gt;
+/// 打开mxd数据
+/// &lt;/summary&gt;
+private void openMXD(string path)
+{
+    mapControl.MousePointer = esriControlsMousePointer.esriPointerHourglass;
+    mapControl.LoadMxFile(path, 0, Type.Missing);
+    mapControl.MousePointer = esriControlsMousePointer.esriPointerDefault;
+    OpenStatus();
+}</code></pre></li>
+</ol>
+</div><div class="post-copyright"><blockquote><p>原文作者: 冯亚杰(DanBoard·Feng)</p><p>原文链接: <a href="http://yoursite.com/2019/11/25/AE - 02.矢量、栅格、Mxd的加载/">http://yoursite.com/2019/11/25/AE - 02.矢量、栅格、Mxd的加载/</a></p><p>版权声明: 转载请注明出处(必须保留作者署名及链接)</p></blockquote></div><div class="tags"></div><div class="post-share"><div class="social-share"><span>分享到:</span></div></div><div class="post-nav"><a href="/2019/11/25/AE - 03.符号库设计与实现/" class="pre">AE - 03.符号库设计与实现</a><a href="/2019/11/23/Express+multer+Ajax 上传图片并加载/" class="next">Express+multer+Ajax 上传图片并加载</a></div><div id="comments"></div></div></div></div><div class="layout-r"><div id="sidebar"><div class="search-pla"></div><div id="toc" class="widget"><div class="widget-title"><i class="fa fa-fei">文章目录</i></div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#02-矢量、栅格、Mxd的加载"><span class="toc-text">02.矢量、栅格、Mxd的加载</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#流程图"><span class="toc-text">流程图</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#结构"><span class="toc-text">结构</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#代码"><span class="toc-text">代码</span></a></li></ol></li></ol></div><div class="widget"><div class="widget-title"><i class="fa fa-xie"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/计算机地图制图 知识总结/">计算机地图制图 知识总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/GIS程序设计 知识总结/">GIS程序设计 知识总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/空间数据库总结/">空间数据库总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/GPS测量原理及应用 知识总结/">GPS测量原理及应用 知识总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/github码云操作---合并分支，推送/">github/码云操作---合并分支，推送</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/IDEA连接Mysql数据库没有jar包，报错/">IDEA连接Mysql数据库没有jar包报错</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/07/Vue工程化环境(模块化规范、webpack、单文件组件、脚手架、Element-UI)/">Vue工程化</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/03/解决nodejs报错 Cannot find module/">完美解决nodejs报错 Cannot find module './application'</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/25/AE - 04.专题图绘制及打印功能实现/">AE - 04.专题图绘制及打印功能实现</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/25/AE - 01.空间书签的创建及调用/">AE - 01.空间书签的创建及调用</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-biao"> 标签</i></div><div class="tagcloud"></div></div><div class="widget"><div class="widget-title"><i class="fa fa-archive"> 归档</i></div><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-you"> 友情链接</i></div><ul></ul><a href="https://blog.csdn.net/DanBo_C" title="CSDN" target="_blank">CSDN</a></div></div></div></div><a id="totop" href="#top"></a><div id="footer"><div class="footer-info"><p><a href="/baidusitemap.xml">网站地图</a> |  <a href="/atom.xml">订阅本站</a> |  <a href="/about/">联系博主</a></p><p>本站总访问量：<i id="busuanzi_container_site_pv"><i id="busuanzi_value_site_pv"></i></i>次，本站总访客数:<i id="busuanzi_container_site_uv"><i id="busuanzi_value_site_uv"></i></i>人</p><p><span> Copyright &copy;<a href="/." rel="nofollow">冯亚杰(DanBoard·Feng).</a></span><span> Theme by<a rel="nofollow" target="_blank" href="https://github.com/chaooo/hexo-theme-BlueLake"> BlueLake.</a></span><span> Count by<a href="http://busuanzi.ibruce.info/"> busuanzi.</a></span><span> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a></span></p></div></div></div><script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script><script type="text/javascript" src="/js/search.json.js?v=2.0.4"></script><script type="text/javascript" src="/js/toctotop.js?v=2.0.4" async></script><link rel="stylesheet" type="text/css" href="/share/css/share.css"><script type="text/javascript" src="/share/js/social-share.js" charset="utf-8"></script><script type="text/javascript" src="/share/js/qrcode.js" charset="utf-8"></script></body></html>

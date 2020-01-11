@@ -1,0 +1,464 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta name="generator" content="Hexo 3.9.0"><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="GISer加油站"><meta name="keywords" content="DanBoCode, 代码, 程序, gis, js, 前端"><link rel="stylesheet" type="text/css" href="//fonts.loli.net/css?family=Source+Code+Pro"><link rel="stylesheet" type="text/css" href="/css/style.css?v=2.0.4"><link rel="stylesheet" type="text/css" href="/css/highlight.css?v=2.0.4"><link rel="Shortcut Icon" href="/favicon.ico"><link rel="bookmark" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><link rel="alternate" type="application/atom+xml" href="/atom.xml"><title>JDBC_DAO模式 | DanBoCode</title></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">JDBC_DAO模式</h1><a id="logo" href="/.">DanBoCode</a><p class="description">句子跟标点落入四个区间，有人能懂真理，有人读出文艺。</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div><div id="search-form"><div id="result-mask" class="hide"></div><label><input id="search-key" type="text" autocomplete="off" placeholder="搜索"></label><div id="result-wrap" class="hide"><div id="search-result"></div></div><div class="hide"><template id="search-tpl"><div class="item"><a href="/{path}" title="{title}"><div class="title">{title}</div><div class="time">{date}</div><div class="tags">{tags}</div></a></div></template></div></div></div><div id="layout" class="layout-g"><div class="layout-l"><div class="content_container"><div class="post"><h1 class="post-title">JDBC_DAO模式</h1><div class="post-meta"><a href="/2019/10/23/JDBC_DAO模式/#comments" class="comment-count"></a><p><span class="date">Oct 23, 2019</span><span><i id="busuanzi_container_page_pv"><i id="busuanzi_value_page_pv"></i><i>点击</i></i></span></p></div><div class="post-content"><h4 id="包结构"><a href="#包结构" class="headerlink" title="包结构"></a>包结构</h4><hr>
+<ul>
+<li>src<ul>
+<li>dao<ul>
+<li>UserDao.java</li>
+</ul>
+</li>
+<li>dao.impl<ul>
+<li>UserDaoimpl.java</li>
+</ul>
+</li>
+<li>util<ul>
+<li>JDBCUtil.java</li>
+</ul>
+</li>
+<li>test<ul>
+<li>Test.java</li>
+</ul>
+</li>
+<li>jdbc.properties.txt</li>
+</ul>
+</li>
+<li>lib<ul>
+<li>mysql-connector-java-bin.jar</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h4 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h4><p>jdbc.properties</p>
+<pre><code>#mysql
+driverClass = com.mysql.jdbc.Driver
+url = jdbc:mysql://localhost:3306/emp
+user = root
+password = 1230
+
+#oracl
+#driver = oracle.jdbc.driver.OracleDriver
+#jdbcUrl = jdbc:oracle:thin:@localhost:1521:orcl
+#user = root
+#password = 1230</code></pre><p>JDBCUtil.java</p>
+<pre><code>package util;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import  java.sql.Statement;
+import java.util.Properties;
+
+
+public class JDBCUtil {
+
+    static String driverClass= null;
+    static String url = null;
+    static String user = null;
+    static String password = null;
+
+    static {
+        try {
+            //创建一个属性配置对象
+            Properties properties = new Properties();
+            //根工程目录
+//            InputStream in = new FileInputStream(&quot;jdbc.properties&quot;);
+            //src路径
+            //使用类加载器，读取配置文件
+            InputStream in = JDBCUtil.class.getClassLoader().getResourceAsStream(&quot;jdbc.properties&quot;);
+            //输入流
+            properties.load(in);
+
+            driverClass = properties.getProperty(&quot;driverClass&quot;);
+            url = properties.getProperty(&quot;url&quot;);
+            user = properties.getProperty(&quot;user&quot;);
+            password = properties.getProperty(&quot;password&quot;);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public static Connection getConn() {
+        Connection conn = null;
+
+        try {
+            //4.0以上版本不用注册驱动
+            //Class.forName(driverClass);
+            conn = DriverManager.getConnection(url, user, password);
+
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        return conn;
+    }
+
+
+    /**
+     * 释放资源
+     * @param conn
+     * @param st
+     */
+    public static void release(Connection conn, Statement st, ResultSet rs) {
+        closeRs(rs);
+        closeSt(st);
+        closeConn(conn);
+    }
+
+    public static void release(Connection conn, Statement st) {
+
+        closeSt(st);
+        closeConn(conn);
+    }
+
+    public static void closeRs(ResultSet rs) {
+        try {
+            if(rs != null) {
+                rs.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            rs=null;
+        }
+    }
+
+    public static void closeSt(Statement st) {
+        try {
+            if(st != null) {
+                st.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            st=null;
+        }
+    }
+
+    public static void closeConn(Connection conn) {
+        try {
+            if(conn != null) {
+                conn.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            conn=null;
+        }
+    }
+}</code></pre><p>UserDao.java</p>
+<pre><code>package dao;
+
+public interface UserDao {
+
+    /**
+     * 根据id去更新具体的用户名
+     * @param id
+     * @param name
+     */
+    void update(int id , String name);
+
+    void delete(int id);
+
+    /**
+     * 执行添加
+     * @param userName
+     * @param password
+     */
+    void insert(String userName , String password);
+
+    /**
+     * 查询所有
+     */
+    void findAll();
+
+
+    /**
+     * 登录方法
+     * @param username
+     * @param password
+     */
+    void login(String username , String password);
+}</code></pre><p>UserDaoImpl.java</p>
+<pre><code>package dao.impl;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.PreparedStatement;
+
+import dao.UserDao;
+import util.JDBCUtil;
+
+public class UserDaoImpl  implements UserDao{
+
+    /**
+     * 查询所有
+     */
+    @Override
+    public void findAll() {
+        Connection conn = null;
+        Statement st = null;
+        ResultSet rs = null;
+        try {
+            //1. 创建连接对象
+            conn = JDBCUtil.getConn();
+
+            //2. 创建statement对象
+            st = conn.createStatement();
+
+            String sql=&quot;select * from tt&quot;;
+            rs = st.executeQuery(sql);
+
+            while(rs.next()){
+                String name = rs.getString(&quot;name&quot;);
+                String age = rs.getString(&quot;age&quot;);
+
+                System.out.println(name+&quot;:&quot;+age);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            JDBCUtil.release(conn, st, rs);
+        }
+    }
+
+    /**
+     * 登陆校验
+     */
+    /*@Override
+    public void login(String username, String password) {
+
+        Connection conn = null;
+        Statement st = null;
+        ResultSet rs = null;
+        try {
+            //1. 获取连接对象
+            conn = JDBCUtil.getConn();
+            //2. 创建statement对象
+            st = conn.createStatement();
+//            SELECT * FROM t_user WHERE username=&apos;admin&apos; AND PASSWORD=&apos;10086&apos;
+            String sql = &quot;select * from t_user where username=&apos;&quot;+ username  +&quot;&apos; and password=&apos;&quot;+ or +&quot;&apos;&quot;;
+            rs = st.executeQuery(sql);
+
+            if(rs.next()){
+                System.out.println(&quot;登录成功&quot;);
+            }else{
+                System.out.println(&quot;登录失败&quot;);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally {
+            JDBCUtil.release(conn, st, rs);
+        }
+    }*/
+
+
+    /**
+     * 登陆校验
+     */
+    @Override
+    public void login(String username,String password) {
+
+        Connection conn = null;
+        Statement st = null;
+        ResultSet rs = null;
+        PreparedStatement ps = null;
+        String sql = &quot;&quot;;
+
+        try {
+            conn = JDBCUtil.getConn();
+//            st = conn.createStatement();
+            //2.预先对sql语句执行语法校验， ？ 对应的内容，后面不管什么传递进来，都当做字符串
+            sql = &quot;select * from login where username=? and password=?&quot;;
+            ps = conn.prepareStatement(sql);
+
+            // ? 索引从1开始
+            ps.setString(1, username);
+            ps.setString(2, password);
+
+            rs = ps.executeQuery();
+
+            if(rs.next()) {
+                System.out.println(&quot;登陆成功&quot;);
+            }else {
+                System.out.println(&quot;登陆失败&quot;);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            JDBCUtil.release(conn, st, rs);
+        }
+    }
+
+    /**
+     * 插入
+     */
+    @Override
+    public void insert(String username, String password) {
+
+        Connection conn = null;
+        Statement st = null;
+        PreparedStatement ps = null;
+
+        String sql = &quot;&quot;;
+
+        try {
+            conn = JDBCUtil.getConn();
+
+            sql = &quot;insert into tt values(4 , ? , ?)&quot;;
+//            st = conn.createStatement();
+            //2.预先对sql语句执行语法校验， ？ 对应的内容，后面不管什么传递进来，都当做字符串
+            ps = conn.prepareStatement(sql);
+
+            //?索引从1开始
+            ps.setString(1, username);
+            ps.setString(2, password);
+
+            int result = ps.executeUpdate();
+
+            if(result&gt;0) {
+                System.out.println(&quot;插入成功&quot;);
+            }else {
+                System.out.println(&quot;插入失败&quot;);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            JDBCUtil.release(conn, ps);
+        }
+    }
+
+    /**
+     * 删除
+     */
+    @Override
+    public void delete(int id) {
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+
+        String sql = &quot;&quot;;
+
+        try {
+            conn = JDBCUtil.getConn();
+
+            sql = &quot;delete from tt where id=?&quot;;
+//            st = conn.createStatement();
+            //2.预先对sql语句执行语法校验， ？ 对应的内容，后面不管什么传递进来，都当做字符串
+            ps = conn.prepareStatement(sql);
+
+            //?索引从 1 开始
+            ps.setInt(1, id);
+
+            int result = ps.executeUpdate();
+
+            if(result&gt;0) {
+                System.out.println(&quot;删除成功&quot;);
+            }else {
+                System.out.println(&quot;删除失败&quot;);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            JDBCUtil.release(conn, ps);
+        }
+    }
+
+    /**
+     * 更新
+     */
+    @Override
+    public void update(int id, String name) {
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+
+        String sql = &quot;&quot;;
+
+        try {
+            conn = JDBCUtil.getConn();
+
+            sql = &quot;update tt set id=? where name=?&quot;;
+//            st = conn.createStatement();
+            //2.预先对sql语句执行语法校验， ？ 对应的内容，后面不管什么传递进来，都当做字符串
+            ps = conn.prepareStatement(sql);
+
+            //?索引从1开始
+            ps.setInt(1, id);
+            ps.setString(2, name);
+
+            int result = ps.executeUpdate();
+
+            if(result&gt;0) {
+                System.out.println(&quot;更新成功&quot;);
+            }else {
+                System.out.println(&quot;更新失败&quot;);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            JDBCUtil.release(conn, ps);
+        }
+    }
+}</code></pre><p>Test.java</p>
+<pre><code>package test;
+
+import org.junit.Test;
+
+import dao.UserDao;
+import dao.impl.UserDaoImpl;
+
+public class TestUserDaoImpl {
+
+
+    @Test
+    public void testFindAll(){
+
+        UserDao dao = new UserDaoImpl();
+
+        dao.findAll();
+    }
+    @Test
+    public void testlogin(){
+
+        UserDao dao = new UserDaoImpl();
+
+        dao.login(&quot;lishishi&quot;, &quot;45612213321&quot;);
+    }
+
+
+    @Test
+    public void testInsert(){
+
+        UserDao dao = new UserDaoImpl();
+
+        dao.insert(&quot;wangwuwu&quot;,&quot;789&quot;);
+    }
+    @Test
+    public void testDelete(){
+
+        UserDao dao = new UserDaoImpl();
+
+        dao.delete(4);
+    }
+
+    @Test
+    public void testUpdate(){
+
+        UserDao dao = new UserDaoImpl();
+
+        dao.update(99, &quot;gengxin&quot;);
+    }
+
+}</code></pre></div><div class="post-copyright"><blockquote><p>原文作者: 冯亚杰(DanBoard·Feng)</p><p>原文链接: <a href="http://yoursite.com/2019/10/23/JDBC_DAO模式/">http://yoursite.com/2019/10/23/JDBC_DAO模式/</a></p><p>版权声明: 转载请注明出处(必须保留作者署名及链接)</p></blockquote></div><div class="tags"></div><div class="post-share"><div class="social-share"><span>分享到:</span></div></div><div class="post-nav"><a href="/2019/10/23/jQuery集合/" class="pre">jQuery集合</a><a href="/2019/10/23/Java文件的读(写)汇总[ InputStream（Reader）、BufferedInputStream 、BufferedReader、FileInputStream、FileReader ]/" class="next">Java文件的读(写)汇总[ InputStream（Reader）、BufferedInputStream 、BufferedReader、FileInputStream、FileReader ]</a></div><div id="comments"></div></div></div></div><div class="layout-r"><div id="sidebar"><div class="search-pla"></div><div id="toc" class="widget"><div class="widget-title"><i class="fa fa-fei">文章目录</i></div><ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#包结构"><span class="toc-text">包结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#完整代码"><span class="toc-text">完整代码</span></a></li></ol></div><div class="widget"><div class="widget-title"><i class="fa fa-xie"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/计算机地图制图 知识总结/">计算机地图制图 知识总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/GIS程序设计 知识总结/">GIS程序设计 知识总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/空间数据库总结/">空间数据库总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/GPS测量原理及应用 知识总结/">GPS测量原理及应用 知识总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/github码云操作---合并分支，推送/">github/码云操作---合并分支，推送</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/IDEA连接Mysql数据库没有jar包，报错/">IDEA连接Mysql数据库没有jar包报错</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/07/Vue工程化环境(模块化规范、webpack、单文件组件、脚手架、Element-UI)/">Vue工程化</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/03/解决nodejs报错 Cannot find module/">完美解决nodejs报错 Cannot find module './application'</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/25/AE - 04.专题图绘制及打印功能实现/">AE - 04.专题图绘制及打印功能实现</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/25/AE - 01.空间书签的创建及调用/">AE - 01.空间书签的创建及调用</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-biao"> 标签</i></div><div class="tagcloud"></div></div><div class="widget"><div class="widget-title"><i class="fa fa-archive"> 归档</i></div><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-you"> 友情链接</i></div><ul></ul><a href="https://blog.csdn.net/DanBo_C" title="CSDN" target="_blank">CSDN</a></div></div></div></div><a id="totop" href="#top"></a><div id="footer"><div class="footer-info"><p><a href="/baidusitemap.xml">网站地图</a> |  <a href="/atom.xml">订阅本站</a> |  <a href="/about/">联系博主</a></p><p>本站总访问量：<i id="busuanzi_container_site_pv"><i id="busuanzi_value_site_pv"></i></i>次，本站总访客数:<i id="busuanzi_container_site_uv"><i id="busuanzi_value_site_uv"></i></i>人</p><p><span> Copyright &copy;<a href="/." rel="nofollow">冯亚杰(DanBoard·Feng).</a></span><span> Theme by<a rel="nofollow" target="_blank" href="https://github.com/chaooo/hexo-theme-BlueLake"> BlueLake.</a></span><span> Count by<a href="http://busuanzi.ibruce.info/"> busuanzi.</a></span><span> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a></span></p></div></div></div><script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script><script type="text/javascript" src="/js/search.json.js?v=2.0.4"></script><script type="text/javascript" src="/js/toctotop.js?v=2.0.4" async></script><link rel="stylesheet" type="text/css" href="/share/css/share.css"><script type="text/javascript" src="/share/js/social-share.js" charset="utf-8"></script><script type="text/javascript" src="/share/js/qrcode.js" charset="utf-8"></script></body></html>

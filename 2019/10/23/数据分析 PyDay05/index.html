@@ -1,0 +1,63 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta name="generator" content="Hexo 3.9.0"><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="GISer加油站"><meta name="keywords" content="DanBoCode, 代码, 程序, gis, js, 前端"><link rel="stylesheet" type="text/css" href="//fonts.loli.net/css?family=Source+Code+Pro"><link rel="stylesheet" type="text/css" href="/css/style.css?v=2.0.4"><link rel="stylesheet" type="text/css" href="/css/highlight.css?v=2.0.4"><link rel="Shortcut Icon" href="/favicon.ico"><link rel="bookmark" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><link rel="alternate" type="application/atom+xml" href="/atom.xml"><title>数据分析 PyDay05 | DanBoCode</title></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">数据分析 PyDay05</h1><a id="logo" href="/.">DanBoCode</a><p class="description">句子跟标点落入四个区间，有人能懂真理，有人读出文艺。</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div><div id="search-form"><div id="result-mask" class="hide"></div><label><input id="search-key" type="text" autocomplete="off" placeholder="搜索"></label><div id="result-wrap" class="hide"><div id="search-result"></div></div><div class="hide"><template id="search-tpl"><div class="item"><a href="/{path}" title="{title}"><div class="title">{title}</div><div class="time">{date}</div><div class="tags">{tags}</div></a></div></template></div></div></div><div id="layout" class="layout-g"><div class="layout-l"><div class="content_container"><div class="post"><h1 class="post-title">数据分析 PyDay05</h1><div class="post-meta"><a href="/2019/10/23/数据分析 PyDay05/#comments" class="comment-count"></a><p><span class="date">Oct 23, 2019</span><span><i id="busuanzi_container_page_pv"><i id="busuanzi_value_page_pv"></i><i>点击</i></i></span></p></div><div class="post-content"><h1 id="第九章-IPython科学计算库（有点像是py标准库的升级，更具有方向性，很多优点）"><a href="#第九章-IPython科学计算库（有点像是py标准库的升级，更具有方向性，很多优点）" class="headerlink" title="第九章 IPython科学计算库（有点像是py标准库的升级，更具有方向性，很多优点）"></a>第九章 IPython科学计算库（有点像是py标准库的升级，更具有方向性，很多优点）</h1><h2 id="IPython壳基础"><a href="#IPython壳基础" class="headerlink" title="IPython壳基础"></a>IPython壳基础</h2><h3 id="自动补全"><a href="#自动补全" class="headerlink" title="自动补全"></a>自动补全</h3><p>可以通过按下<strong>Tab键</strong>，搜索命名空间内的对象，并自动补全正在输入的字符。</p>
+<blockquote>
+<p>IPython会自动隐藏以双下划线开始的实体属性（私有属性）和方法（私有方法）</p>
+<p>访问私有属性或私有方法：输入点符号后，输入<strong>下画线</strong>，并按Tab键。</p>
+</blockquote>
+<h3 id="检查"><a href="#检查" class="headerlink" title="检查"></a>检查</h3><ol>
+<li><p>检查变量（函数、类）：变量名（函数名、类名）之前<strong>或</strong>之后使用”?”会给出该对象的基本信息</p>
+</li>
+<li><p>查看该类的构造函数的详细信息：在它之前或者之后输入两个问号”??”</p>
+</li>
+<li><p><strong>“?”</strong> 和 通配符（*） 结合起来。例如：搜索pandas库中所有含有”lo”的对象</p>
+</li>
+<li><pre><code>pandas.*lo*?</code></pre><h3 id="run命令"><a href="#run命令" class="headerlink" title="%run命令"></a>%run命令</h3><p>Python脚本都可以在IPython的环境下运行，工作路径下有一个test_run.py脚本文件，运行：</p>
+<p> %run test_run.py</p>
+</li>
+</ol>
+<blockquote>
+<p>通过Ctrl+C出发KeyboardInterrupt异常的方式来终止正在运行的程序。</p>
+</blockquote>
+<h3 id="快捷键"><a href="#快捷键" class="headerlink" title="快捷键"></a>快捷键</h3><p>C代表Ctrl</p>
+<blockquote>
+<p>C+P 从当前位置向前查找命令行历史</p>
+<p>C+N 从打开壳开始查找命令行</p>
+<p>C+C 终止程序运行</p>
+<p>C+A 把光标移动到命令行开始处</p>
+<p>C+E 把光标移动到命令行结尾处</p>
+<p>C+K 删除一行文本</p>
+<p>C+L 清楚屏幕</p>
+</blockquote>
+<h3 id="异常和错误定位"><a href="#异常和错误定位" class="headerlink" title="异常和错误定位"></a>异常和错误定位</h3><p>%run命令行的方式运行脚本，出错时，会打印整个错误路径和异常的详细信息。</p>
+<p><strong>IPython排除程序错误比python高效</strong></p>
+<p>%xmode魔法方法控制谁出错误信息（任何以%作为前缀的方法都可以被称作魔法方法） %timeit魔法方法来检查程序运行的时间。</p>
+<h2 id="融合Matplotlib库和Pylab模型"><a href="#融合Matplotlib库和Pylab模型" class="headerlink" title="融合Matplotlib库和Pylab模型"></a>融合Matplotlib库和Pylab模型</h2><ul>
+<li>Python标准库中，如果绘图，每次绘好图之后必须关闭图形窗口才能继续输入命令。</li>
+<li>Ipython库融合了Matplotlib库，而Pylab模型是Matplotlib库提供给用户的绘图接口，和Matlab的绘图语法很接近。</li>
+<li>可以在终端发起融合了Matplotlib库并以Pylab的方式绘图的IPython壳。</li>
+</ul>
+<blockquote>
+<p>ipython –pylab</p>
+</blockquote>
+<h2 id="输入输出变量"><a href="#输入输出变量" class="headerlink" title="输入输出变量"></a>输入输出变量</h2><ul>
+<li>当处理一个复杂问题的时候我们经常会用到多个变量和函数，可能会犯一些错误比如：忘记把函数的输出值赋给一个变量，而其他函数正好需要这个输出值作为输入值的时候。需要重新计算。</li>
+<li>在IPython中，使用_（单下画线）指代最近一次的输入值，使用__（双下画线）指代最近一次的输出值</li>
+</ul>
+<h2 id="交互式调试器"><a href="#交互式调试器" class="headerlink" title="交互式调试器"></a>交互式调试器</h2><ul>
+<li>代码运行错误时会按照代码的执行顺序打印全部调用路径，接着输入%debug，只打印出错的那部分代码。</li>
+<li>如果是调试（Debugger）模式，可以任意执行代码的一部分并且检查其中的函数，数据等对象。默认处于调用路径的最后一层。可以通过u（向上）或者d（向下）（操作左边箭头）改变路径的位置</li>
+</ul>
+<h2 id="计时"><a href="#计时" class="headerlink" title="计时"></a>计时</h2><p>通常我们需要通过计时知道哪一部分用到的时间多，以便对代码进行优化。</p>
+<ul>
+<li>Python的time模块可以记录时间，但是当代码量十分大的时候，会有很多重复工作。</li>
+<li>IPyhon的%time和%timeit魔法方法可以避免这其中的重复工作<br>使用%time多次测试同一个代码的时候会发现运行时间会有轻微的变化，因为这不是一个精确的方法。%timeit在多次运行后，报告平均时间。</li>
+</ul>
+<p>%timeit是多次运行同一个声明或者函数并计算均值。如果代码的运行时间比较短，比如在微妙或者纳米级别，那么每次的时间波动会比较大，取多次运行的平均值，更恒反映实际。</p>
+<h2 id="重新载入模块"><a href="#重新载入模块" class="headerlink" title="重新载入模块"></a>重新载入模块</h2><p>经常导入一个库后，如果对里面的函数进行了修改，再次运行脚本Python会使用之前的函数而不是最新的。因为IPython只导入一次库。Matlab会自动更新导入的库函数。</p>
+<p>解决：</p>
+<ol>
+<li>退出IPython壳，重新进入。</li>
+<li>Python的函数reload()可以保证每次运行脚本的时候都的到最后的库函数。当依赖的库比较多的时候，会比较麻烦。</li>
+<li>Ipython提供了dreload()函数。 dreload（lib_name）函数会寻找lib_name模块内的所有其它库，并且重新导入。</li>
+</ol>
+<p><code>新的比较凌乱，欢迎大家的讨论，留下建议，小白新手上路，不喜勿喷。谢谢</code></p>
+</div><div class="post-copyright"><blockquote><p>原文作者: 冯亚杰(DanBoard·Feng)</p><p>原文链接: <a href="http://yoursite.com/2019/10/23/数据分析 PyDay05/">http://yoursite.com/2019/10/23/数据分析 PyDay05/</a></p><p>版权声明: 转载请注明出处(必须保留作者署名及链接)</p></blockquote></div><div class="tags"></div><div class="post-share"><div class="social-share"><span>分享到:</span></div></div><div class="post-nav"><a href="/2019/10/23/小部件---绑定小部件/" class="pre">小部件---绑定小部件</a><a href="/2019/10/23/数据分析 PyDay04/" class="next">数据分析 PyDay04</a></div><div id="comments"></div></div></div></div><div class="layout-r"><div id="sidebar"><div class="search-pla"></div><div id="toc" class="widget"><div class="widget-title"><i class="fa fa-fei">文章目录</i></div><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#第九章-IPython科学计算库（有点像是py标准库的升级，更具有方向性，很多优点）"><span class="toc-text">第九章 IPython科学计算库（有点像是py标准库的升级，更具有方向性，很多优点）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#IPython壳基础"><span class="toc-text">IPython壳基础</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#自动补全"><span class="toc-text">自动补全</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#检查"><span class="toc-text">检查</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#run命令"><span class="toc-text">%run命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#快捷键"><span class="toc-text">快捷键</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#异常和错误定位"><span class="toc-text">异常和错误定位</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#融合Matplotlib库和Pylab模型"><span class="toc-text">融合Matplotlib库和Pylab模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#输入输出变量"><span class="toc-text">输入输出变量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#交互式调试器"><span class="toc-text">交互式调试器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#计时"><span class="toc-text">计时</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#重新载入模块"><span class="toc-text">重新载入模块</span></a></li></ol></li></ol></div><div class="widget"><div class="widget-title"><i class="fa fa-xie"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/计算机地图制图 知识总结/">计算机地图制图 知识总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/GIS程序设计 知识总结/">GIS程序设计 知识总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/空间数据库总结/">空间数据库总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/GPS测量原理及应用 知识总结/">GPS测量原理及应用 知识总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/github码云操作---合并分支，推送/">github/码云操作---合并分支，推送</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/IDEA连接Mysql数据库没有jar包，报错/">IDEA连接Mysql数据库没有jar包报错</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/07/Vue工程化环境(模块化规范、webpack、单文件组件、脚手架、Element-UI)/">Vue工程化</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/03/解决nodejs报错 Cannot find module/">完美解决nodejs报错 Cannot find module './application'</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/25/AE - 04.专题图绘制及打印功能实现/">AE - 04.专题图绘制及打印功能实现</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/25/AE - 01.空间书签的创建及调用/">AE - 01.空间书签的创建及调用</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-biao"> 标签</i></div><div class="tagcloud"></div></div><div class="widget"><div class="widget-title"><i class="fa fa-archive"> 归档</i></div><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-you"> 友情链接</i></div><ul></ul><a href="https://blog.csdn.net/DanBo_C" title="CSDN" target="_blank">CSDN</a></div></div></div></div><a id="totop" href="#top"></a><div id="footer"><div class="footer-info"><p><a href="/baidusitemap.xml">网站地图</a> |  <a href="/atom.xml">订阅本站</a> |  <a href="/about/">联系博主</a></p><p>本站总访问量：<i id="busuanzi_container_site_pv"><i id="busuanzi_value_site_pv"></i></i>次，本站总访客数:<i id="busuanzi_container_site_uv"><i id="busuanzi_value_site_uv"></i></i>人</p><p><span> Copyright &copy;<a href="/." rel="nofollow">冯亚杰(DanBoard·Feng).</a></span><span> Theme by<a rel="nofollow" target="_blank" href="https://github.com/chaooo/hexo-theme-BlueLake"> BlueLake.</a></span><span> Count by<a href="http://busuanzi.ibruce.info/"> busuanzi.</a></span><span> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a></span></p></div></div></div><script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script><script type="text/javascript" src="/js/search.json.js?v=2.0.4"></script><script type="text/javascript" src="/js/toctotop.js?v=2.0.4" async></script><link rel="stylesheet" type="text/css" href="/share/css/share.css"><script type="text/javascript" src="/share/js/social-share.js" charset="utf-8"></script><script type="text/javascript" src="/share/js/qrcode.js" charset="utf-8"></script></body></html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="GISer加油站"><meta name="keywords" content="DanBoCode, 代码, 程序, gis, js, 前端"><link rel="stylesheet" type="text/css" href="//fonts.loli.net/css?family=Source+Code+Pro"><link rel="stylesheet" type="text/css" href="/css/style.css?v=2.0.4"><link rel="stylesheet" type="text/css" href="/css/highlight.css?v=2.0.4"><link rel="Shortcut Icon" href="/favicon.ico"><link rel="bookmark" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><link rel="alternate" type="application/atom+xml" href="/atom.xml"><title>分析---影像分析 | DanBoCode</title></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">分析---影像分析</h1><a id="logo" href="/.">DanBoCode</a><p class="description">句子跟标点落入四个区间，有人能懂真理，有人读出文艺。</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div><div id="search-form"><div id="result-mask" class="hide"></div><label><input id="search-key" type="text" autocomplete="off" placeholder="搜索"></label><div id="result-wrap" class="hide"><div id="search-result"></div></div><div class="hide"><template id="search-tpl"><div class="item"><a href="/{path}" title="{title}"><div class="title">{title}</div><div class="time">{date}</div><div class="tags">{tags}</div></a></div></template></div></div></div><div id="layout" class="layout-g"><div class="layout-l"><div class="content_container"><div class="post"><h1 class="post-title">分析---影像分析</h1><div class="post-meta"><a href="/2019/10/23/分析---影像分析/#comments" class="comment-count"></a><p><span class="date">Oct 23, 2019</span><span><i id="busuanzi_container_page_pv"><i id="busuanzi_value_page_pv"></i><i>点击</i></i></span></p></div><div class="post-content"><h5 id="1-效果图"><a href="#1-效果图" class="headerlink" title="1.效果图"></a>1.效果图</h5><p><img src="https://img-blog.csdnimg.cn/20190811132344134.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0RhbkJvX0M=,size_16,color_FFFFFF,t_70" alt></p>
+<h5 id="2-发布服务"><a href="#2-发布服务" class="headerlink" title="2.发布服务"></a>2.发布服务</h5><ul>
+<li>在Arccatalog中共享为影像服务<br><img src="https://img-blog.csdnimg.cn/20190811131812319.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0RhbkJvX0M=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20190811131956593.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0RhbkJvX0M=,size_16,color_FFFFFF,t_70" alt></li>
+<li>发布成功之后查看<br><img src="https://img-blog.csdnimg.cn/20190811132056388.png" alt></li>
+<li>说明发布成功</li>
+</ul>
+<h5 id="3-引入模块"><a href="#3-引入模块" class="headerlink" title="3.引入模块"></a>3.引入模块</h5><p>查询影像数据<code>esri/tasks/ImageServiceIdentifyTask</code></p>
+<p>参数：<code>esri/tasks/ImageServiceIdentifyParameters   esri/tasks/ImageServiceIdentifyResult</code><br><code>esri/tasks/ImageServiceIdentifyResult</code>接收返回的参数</p>
+<p>影像测量<code>esri/tasks/ImageServiceMeasureTask</code></p>
+<p>参数：<code>esri/tasks/ImageServiceMeasureParameters</code></p>
+<h5 id="4-步骤"><a href="#4-步骤" class="headerlink" title="4.步骤"></a>4.步骤</h5><ol>
+<li><p>加载图层（不使用动态，使用影像服务）</p>
+</li>
+<li><p>创建影像分析和分析方法的参数对象</p>
+</li>
+<li><p>绑定事件，获取高程值并弹出</p>
+</li>
+<li><p>其中的掩模规则等可以封装为接口，方便以后使用</p>
+<h5 id="5-代码"><a href="#5-代码" class="headerlink" title="5.代码"></a>5.代码</h5><!DOCTYPE html>
+<html>
+  <head><meta name="generator" content="Hexo 3.9.0">
+    <title>影像分析</title>
+
+<pre><code>&lt;meta http-equiv=&quot;keywords&quot; content=&quot;keyword1,keyword2,keyword3&quot;&gt;
+&lt;meta http-equiv=&quot;description&quot; content=&quot;this is my page&quot;&gt;
+&lt;meta http-equiv=&quot;content-type&quot; content=&quot;text/html; charset=utf-8&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://js.arcgis.com/3.28/esri/css/esri.css&quot; /&gt;
+&lt;script src=&quot;https://js.arcgis.com/3.28/&quot;&gt;&lt;/script&gt;
+&lt;script  src=&quot;https://code.jquery.com/jquery-1.12.4.js&quot;&gt;&lt;/script&gt;
+&lt;style&gt;
+    .MapClass{
+        width:100%;
+        height:700px;
+        border:1px solid #000;
+    }
+&lt;/style&gt;
+&lt;script&gt;
+    require([&quot;esri/map&quot;,&quot;esri/layers/ArcGISImageServiceLayer&quot;,&quot;dojo/on&quot;,
+    &quot;dojo/dom&quot;,&quot;esri/toolbars/draw&quot;,
+    &quot;esri/tasks/ImageServiceIdentifyTask&quot;,&quot;esri/tasks/ImageServiceIdentifyParameters&quot;,
+    &quot;esri/symbols/SimpleLineSymbol&quot;,&quot;esri/graphic&quot;,&quot;esri/symbols/SimpleMarkerSymbol&quot;, &quot;esri/symbols/SimpleFillSymbol&quot;,
+    &quot;esri/layers/MosaicRule&quot;,
+    &quot;dojo/domReady!&quot;],function(Map,ArcGISImageServiceLayer,on,dom,Draw,ImageServiceIdentifyTask,
+    ImageServiceIdentifyParameters,SimpleLineSymbol,
+    Graphic,SimpleMarkerSymbol,SimpleFillSymbol,MosaicRule){
+        var map=new Map(&quot;mapDiv&quot;)
+
+        //注意这里是影像服务
+        var layer=new ArcGISImageServiceLayer(&quot;http://localhost:6080/arcgis/rest/services/demo/ImageService_qingdao/ImageServer&quot;)
+        map.addLayer(layer);
+        //用于绘制点
+        var toolbar =new Draw(map);
+
+        //创建影像分析对象
+        var task=new ImageServiceIdentifyTask(&quot;http://localhost:6080/arcgis/rest/services/demo/ImageService_qingdao/ImageServer&quot;);
+        //创建影像分析参数对象
+        var params=new ImageServiceIdentifyParameters();
+        var lineSymbol = new SimpleLineSymbol(SimpleLineSymbol.STYLE_DASH, new dojo.Color([255, 0, 0]), 3);
+        var marker= new SimpleMarkerSymbol(SimpleMarkerSymbol.STYLE_CIRCLE,10, lineSymbol, new dojo.Color([255, 0, 0]));
+        var fill= new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID, lineSymbol,  new dojo.Color([255, 0, 0]));
+        //给绘制折线按钮绑定事件
+        on(dom.byId(&quot;drawp&quot;),&quot;click&quot;,function(){
+            toolbar.activate(Draw.POINT, {
+                    showTooltips:true
+            })
+        })
+        //给draw工具的绘制完成事件绑定函数
+        on(toolbar,&quot;draw-complete&quot;, function (result) {
+            map.graphics.clear();
+            var geometry=result.geometry;
+            //给参数对象的几何属性赋值
+            params.geometry =geometry;
+            graphic= new Graphic(geometry, marker);
+            map.graphics.add(graphic);
+            toolbar.deactivate();
+
+        })
+
+        on(dom.byId(&quot;btn&quot;),&quot;click&quot;,function(){
+            //设置掩膜规则
+            var mosaicRule=new MosaicRule();
+            mosaicRule.ascending=false;
+            mosaicRule.method=MosaicRule.METHOD_CENTER
+            params.mosaicRule=mosaicRule
+            params.pixelSizeX=layer.pixelSizeX;
+            params.pixelSizeY=layer.pixelSizeY;
+            task.execute(params,function(result){
+                //弹出改点的高程值
+                alert(result.value)
+            })
+        })
+
+    });
+&lt;/script&gt;</code></pre>  </head>
+
+  <body>
+    <div id="mapDiv" class="MapClass"></div>
+    <button id="drawp">绘制点</button>
+    <button id="btn">查询</button>
+  </body>
+</html>
+
+
+
+</li>
+</ol>
+</div><div class="post-copyright"><blockquote><p>原文作者: 冯亚杰(DanBoard·Feng)</p><p>原文链接: <a href="http://yoursite.com/2019/10/23/分析---影像分析/">http://yoursite.com/2019/10/23/分析---影像分析/</a></p><p>版权声明: 转载请注明出处(必须保留作者署名及链接)</p></blockquote></div><div class="tags"></div><div class="post-share"><div class="social-share"><span>分享到:</span></div></div><div class="post-nav"><a href="/2019/10/23/基础功能---地理编码/" class="pre">基础功能---地理编码</a><a href="/2019/10/23/分析---网络分析/" class="next">分析---网络分析</a></div><div id="comments"></div></div></div></div><div class="layout-r"><div id="sidebar"><div class="search-pla"></div><div id="toc" class="widget"><div class="widget-title"><i class="fa fa-fei">文章目录</i></div><ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-效果图"><span class="toc-text">1.效果图</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-发布服务"><span class="toc-text">2.发布服务</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-引入模块"><span class="toc-text">3.引入模块</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-步骤"><span class="toc-text">4.步骤</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#5-代码"><span class="toc-text">5.代码</span></a></li></ol></div><div class="widget"><div class="widget-title"><i class="fa fa-xie"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/计算机地图制图 知识总结/">计算机地图制图 知识总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/GIS程序设计 知识总结/">GIS程序设计 知识总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/空间数据库总结/">空间数据库总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/GPS测量原理及应用 知识总结/">GPS测量原理及应用 知识总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/github码云操作---合并分支，推送/">github/码云操作---合并分支，推送</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/IDEA连接Mysql数据库没有jar包，报错/">IDEA连接Mysql数据库没有jar包报错</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/07/Vue工程化环境(模块化规范、webpack、单文件组件、脚手架、Element-UI)/">Vue工程化</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/03/解决nodejs报错 Cannot find module/">完美解决nodejs报错 Cannot find module './application'</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/25/AE - 04.专题图绘制及打印功能实现/">AE - 04.专题图绘制及打印功能实现</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/25/AE - 01.空间书签的创建及调用/">AE - 01.空间书签的创建及调用</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-biao"> 标签</i></div><div class="tagcloud"></div></div><div class="widget"><div class="widget-title"><i class="fa fa-archive"> 归档</i></div><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-you"> 友情链接</i></div><ul></ul><a href="https://blog.csdn.net/DanBo_C" title="CSDN" target="_blank">CSDN</a></div></div></div></div><a id="totop" href="#top"></a><div id="footer"><div class="footer-info"><p><a href="/baidusitemap.xml">网站地图</a> |  <a href="/atom.xml">订阅本站</a> |  <a href="/about/">联系博主</a></p><p>本站总访问量：<i id="busuanzi_container_site_pv"><i id="busuanzi_value_site_pv"></i></i>次，本站总访客数:<i id="busuanzi_container_site_uv"><i id="busuanzi_value_site_uv"></i></i>人</p><p><span> Copyright &copy;<a href="/." rel="nofollow">冯亚杰(DanBoard·Feng).</a></span><span> Theme by<a rel="nofollow" target="_blank" href="https://github.com/chaooo/hexo-theme-BlueLake"> BlueLake.</a></span><span> Count by<a href="http://busuanzi.ibruce.info/"> busuanzi.</a></span><span> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a></span></p></div></div></div><script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script><script type="text/javascript" src="/js/search.json.js?v=2.0.4"></script><script type="text/javascript" src="/js/toctotop.js?v=2.0.4" async></script><link rel="stylesheet" type="text/css" href="/share/css/share.css"><script type="text/javascript" src="/share/js/social-share.js" charset="utf-8"></script><script type="text/javascript" src="/share/js/qrcode.js" charset="utf-8"></script></body></html>

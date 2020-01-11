@@ -1,0 +1,299 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta name="generator" content="Hexo 3.9.0"><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="GISer加油站"><meta name="keywords" content="DanBoCode, 代码, 程序, gis, js, 前端"><link rel="stylesheet" type="text/css" href="//fonts.loli.net/css?family=Source+Code+Pro"><link rel="stylesheet" type="text/css" href="/css/style.css?v=2.0.4"><link rel="stylesheet" type="text/css" href="/css/highlight.css?v=2.0.4"><link rel="Shortcut Icon" href="/favicon.ico"><link rel="bookmark" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><link rel="alternate" type="application/atom+xml" href="/atom.xml"><title>Java文件的读(写)汇总[ InputStream（Reader）、BufferedInputStream 、BufferedReader、FileInputStream、FileReader ] | DanBoCode</title></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">Java文件的读(写)汇总[ InputStream（Reader）、BufferedInputStream 、BufferedReader、FileInputStream、FileReader ]</h1><a id="logo" href="/.">DanBoCode</a><p class="description">句子跟标点落入四个区间，有人能懂真理，有人读出文艺。</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div><div id="search-form"><div id="result-mask" class="hide"></div><label><input id="search-key" type="text" autocomplete="off" placeholder="搜索"></label><div id="result-wrap" class="hide"><div id="search-result"></div></div><div class="hide"><template id="search-tpl"><div class="item"><a href="/{path}" title="{title}"><div class="title">{title}</div><div class="time">{date}</div><div class="tags">{tags}</div></a></div></template></div></div></div><div id="layout" class="layout-g"><div class="layout-l"><div class="content_container"><div class="post"><h1 class="post-title">Java文件的读(写)汇总[ InputStream（Reader）、BufferedInputStream 、BufferedReader、FileInputStream、FileReader ]</h1><div class="post-meta"><a href="/2019/10/23/Java文件的读(写)汇总[ InputStream（Reader）、BufferedInputStream 、BufferedReader、FileInputStream、FileReader ]/#comments" class="comment-count"></a><p><span class="date">Oct 23, 2019</span><span><i id="busuanzi_container_page_pv"><i id="busuanzi_value_page_pv"></i><i>点击</i></i></span></p></div><div class="post-content"><h5 id="InputStream-、InputStreamReader、BufferedInputStream-、BufferedReader、FileInputStream、FileReader"><a href="#InputStream-、InputStreamReader、BufferedInputStream-、BufferedReader、FileInputStream、FileReader" class="headerlink" title="[ InputStream 、InputStreamReader、BufferedInputStream 、BufferedReader、FileInputStream、FileReader ]"></a>[ InputStream 、InputStreamReader、BufferedInputStream 、BufferedReader、FileInputStream、FileReader ]</h5><h3 id="amp-amp"><a href="#amp-amp" class="headerlink" title="&amp;&amp;"></a>&amp;&amp;</h3><h5 id="OutputStream、OutputStreamWriter、BufferedOutputStream、BufferedWriter、FileOutputStream、FileWriter"><a href="#OutputStream、OutputStreamWriter、BufferedOutputStream、BufferedWriter、FileOutputStream、FileWriter" class="headerlink" title="[ OutputStream、OutputStreamWriter、BufferedOutputStream、BufferedWriter、FileOutputStream、FileWriter ]"></a>[ OutputStream、OutputStreamWriter、BufferedOutputStream、BufferedWriter、FileOutputStream、FileWriter ]</h5><hr>
+<p><strong>InputStream &amp;&amp; OutputStream：</strong></p>
+<ul>
+<li>是老大！！！</li>
+<li>将字节流转换成字符流 </li>
+</ul>
+<p><strong>InputStreamReader&amp;&amp; OutputStreamWriter：</strong></p>
+<ul>
+<li>将字节流转换成字符流 —&gt; 创建字符流缓冲区</li>
+</ul>
+<p><strong>BufferedInputStream &amp;&amp; BufferedOutputStream：</strong></p>
+<ul>
+<li>数据流的缓存，没有缓冲的操作</li>
+<li>读一个字节，写一个。磁盘的IO比内存的操作慢</li>
+<li>所以不带缓冲的额流会比带缓冲的流慢</li>
+</ul>
+<p><strong>BufferedReader &amp;&amp; BufferedWriter</strong></p>
+<ul>
+<li>高效读取</li>
+<li>从字符输入流中读取文本，缓冲各个字符</li>
+</ul>
+<p><strong>FileInputStream &amp;&amp; FileOutputStream</strong></p>
+<ul>
+<li>老大InputSream的子类</li>
+<li>一般用来读取二进制文件</li>
+<li>文本文件使用read(byte[] b)方法读取整个文件，再byte数组转换为String</li>
+</ul>
+<p><strong>FileReader &amp;&amp; FileWriter</strong></p>
+<ul>
+<li>InputStreamReader的子类</li>
+<li>按字符读取流中数据</li>
+</ul>
+<blockquote>
+<p>还有很多。。。更新中。。。</p>
+</blockquote>
+<hr>
+<h3 id="InputStream-amp-amp-OutputStream"><a href="#InputStream-amp-amp-OutputStream" class="headerlink" title="InputStream &amp;&amp; OutputStream"></a>InputStream &amp;&amp; OutputStream</h3><pre><code>private static void rwIOStream() throws Exception {
+    InputStream in =new FileInputStream(&quot;fileIn\\txt1&quot;);
+    OutputStream out = new FileOutputStream(&quot;fileOut\\txt1&quot;);
+    int len;
+    long begin = System.currentTimeMillis();
+    while((len=in.read())!=-1)
+    {
+        out.write(len);
+    }
+    long end = System.currentTimeMillis();
+    System.out.println(end-begin);
+    in.close();
+    out.close();
+}</code></pre><hr>
+<h3 id="InputStreamReader-amp-amp-OutputStreamWriter"><a href="#InputStreamReader-amp-amp-OutputStreamWriter" class="headerlink" title="InputStreamReader&amp;&amp; OutputStreamWriter"></a>InputStreamReader&amp;&amp; OutputStreamWriter</h3><pre><code>private static void rwIOStreamRW() throws Exception {
+    InputStreamReader inReader =new InputStreamReader(new FileInputStream(&quot;fileIn\\txt1&quot;));
+    OutputStreamWriter outWriter =new OutputStreamWriter(new FileOutputStream(&quot;fileIn\\txt1&quot;));
+    int len;
+    long begin = System.currentTimeMillis();
+    while((len=inReader.read())!=-1)
+    {
+        outWriter.write(len);
+    }
+    long end = System.currentTimeMillis();
+    System.out.println(end-begin);
+    inReader.close();
+    outWriter.close();
+}</code></pre><hr>
+<h3 id="BufferedInputStream-amp-amp-BufferedOutputStream"><a href="#BufferedInputStream-amp-amp-BufferedOutputStream" class="headerlink" title="BufferedInputStream &amp;&amp; BufferedOutputStream"></a>BufferedInputStream &amp;&amp; BufferedOutputStream</h3><pre><code>private static void rwBufferedIOStram() throws Exception {
+    BufferedInputStream in = new BufferedInputStream(new FileInputStream(&quot;fileIn\\txt1&quot;));
+    BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(&quot;fileOut\\txt1&quot;));
+    long begin = System.currentTimeMillis();
+    int len;
+    while((len=in.read())!=-1)
+    {
+        out.write(len);
+        //System.out.print((char)len);    //    字符打印
+    }
+    long end = System.currentTimeMillis();
+    System.out.println(end-begin);
+    in.close();
+    out.close();
+}</code></pre><hr>
+<h3 id="BufferedReader-amp-amp-BufferedWriter"><a href="#BufferedReader-amp-amp-BufferedWriter" class="headerlink" title="BufferedReader &amp;&amp; BufferedWriter"></a>BufferedReader &amp;&amp; BufferedWriter</h3><pre><code>private static void rwBufferedRWr() throws Exception {
+    BufferedReader reader = new BufferedReader(new FileReader(&quot;fileIn\\txt1&quot;));
+    BufferedWriter writer = new BufferedWriter(new FileWriter(&quot;fileIn\\txt1&quot;));
+    int len;
+    long begin = System.currentTimeMillis();
+    while((len = reader.read())!=-1)
+    {
+        writer.write(len);
+        //System.out.print((char)len);
+    }
+    long end = System.currentTimeMillis();
+    System.out.println(end-begin);
+    reader.close();
+    writer.close();
+}</code></pre><hr>
+<h3 id="FileInputStream-amp-amp-FileOutputStream"><a href="#FileInputStream-amp-amp-FileOutputStream" class="headerlink" title="FileInputStream &amp;&amp; FileOutputStream"></a>FileInputStream &amp;&amp; FileOutputStream</h3><pre><code>private static void rwFileIOStream() throws Exception {
+    FileInputStream reader = new FileInputStream(&quot;fileIn\\txt1&quot;);
+    FileOutputStream writer = new FileOutputStream(&quot;fileIn\\txt1&quot;);
+    int len;
+    long begin = System.currentTimeMillis();
+    while((len = reader.read())!=-1)
+    {
+        writer.write(len);
+        //System.out.print((char)len);
+    }
+    long end = System.currentTimeMillis();
+    System.out.println(end-begin);
+    reader.close();
+    writer.close();
+}</code></pre><hr>
+<h3 id="FileReader-amp-amp-FileWriter"><a href="#FileReader-amp-amp-FileWriter" class="headerlink" title="FileReader &amp;&amp; FileWriter"></a>FileReader &amp;&amp; FileWriter</h3><pre><code>private static void rwFile() throws Exception {
+    FileReader reader = new FileReader(&quot;fileIn\\txt1&quot;);
+    FileWriter writer = new FileWriter(&quot;fileOut\\txt1&quot;);
+    int len;
+    long begin = System.currentTimeMillis();
+    while((len = reader.read())!=-1)
+    {
+        writer.write(len);
+        //System.out.print((char)len);
+    }
+    long end = System.currentTimeMillis();
+    System.out.println(end-begin);
+    reader.close();
+    writer.close();
+}</code></pre><hr>
+<h3 id="程序"><a href="#程序" class="headerlink" title="程序"></a>程序</h3><pre><code>package file;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+
+public class filecopy {
+
+    public static void main(String[] avg) throws Exception
+    {
+        try {
+
+            //复制例
+            song();
+            //字符读写 切割处理
+            rwFileSplitEnglish();
+
+            //InputStream &amp;&amp; OutputStream
+            rwIOStream();
+            //InputStreamReader &amp;&amp; OutputStreamWriter
+            rwIOStreamRW();
+            //BufferedInputStream &amp;&amp; BufferedOutputStream
+            rwBufferedIOStram();
+            //BufferedReader &amp;&amp; BufferedWriter
+            rwBufferedRWr();
+            //FileInputStream &amp;&amp; FileOutputStream
+            rwFileIOStream();
+            //FileReader &amp;&amp; FileWriter
+            rwFile();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void rwIOStream() throws Exception {
+        InputStream in =new FileInputStream(&quot;fileIn\\txt1&quot;);
+        OutputStream out = new FileOutputStream(&quot;fileOut\\txt1&quot;);
+        int len;
+        long begin = System.currentTimeMillis();
+        while((len=in.read())!=-1)
+        {
+            out.write(len);
+        }
+        long end = System.currentTimeMillis();
+        System.out.println(end-begin);
+        in.close();
+        out.close();
+    }
+
+    private static void rwIOStreamRW() throws Exception {
+        InputStreamReader inReader =new InputStreamReader(new FileInputStream(&quot;fileIn\\txt1&quot;));
+        OutputStreamWriter outWriter =new OutputStreamWriter(new FileOutputStream(&quot;fileIn\\txt1&quot;));
+        int len;
+        long begin = System.currentTimeMillis();
+        while((len=inReader.read())!=-1)
+        {
+            outWriter.write(len);
+        }
+        long end = System.currentTimeMillis();
+        System.out.println(end-begin);
+        inReader.close();
+        outWriter.close();
+    }
+
+    private static void rwBufferedIOStram() throws Exception {
+        BufferedInputStream in = new BufferedInputStream(new FileInputStream(&quot;fileIn\\txt1&quot;));
+        BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(&quot;fileOut\\txt1&quot;));
+        long begin = System.currentTimeMillis();
+        int len;
+        while((len=in.read())!=-1)
+        {
+            out.write(len);
+            //System.out.print((char)len);    //    字符打印
+        }
+        long end = System.currentTimeMillis();
+        System.out.println(end-begin);
+        in.close();
+        out.close();
+    }
+
+    private static void rwBufferedRWr() throws Exception {
+        BufferedReader reader = new BufferedReader(new FileReader(&quot;fileIn\\txt1&quot;));
+        BufferedWriter writer = new BufferedWriter(new FileWriter(&quot;fileIn\\txt1&quot;));
+        int len;
+        long begin = System.currentTimeMillis();
+        while((len = reader.read())!=-1)
+        {
+            writer.write(len);
+            //System.out.print((char)len);
+        }
+        long end = System.currentTimeMillis();
+        System.out.println(end-begin);
+        reader.close();
+        writer.close();
+    }
+
+    private static void rwFileIOStream() throws Exception {
+        FileInputStream reader = new FileInputStream(&quot;fileIn\\txt1&quot;);
+        FileOutputStream writer = new FileOutputStream(&quot;fileIn\\txt1&quot;);
+        int len;
+        long begin = System.currentTimeMillis();
+        while((len = reader.read())!=-1)
+        {
+            writer.write(len);
+            //System.out.print((char)len);
+        }
+        long end = System.currentTimeMillis();
+        System.out.println(end-begin);
+        reader.close();
+        writer.close();
+    }
+
+    private static void rwFile() throws Exception {
+        FileReader reader = new FileReader(&quot;fileIn\\txt1&quot;);
+        FileWriter writer = new FileWriter(&quot;fileOut\\txt1&quot;);
+        int len;
+        long begin = System.currentTimeMillis();
+        while((len = reader.read())!=-1)
+        {
+            writer.write(len);
+            //System.out.print((char)len);
+        }
+        long end = System.currentTimeMillis();
+        System.out.println(end-begin);
+        reader.close();
+        writer.close();
+    }
+
+    private static void rwFileSplitEnglish() throws Exception {
+        String str = &quot;&quot;;
+        FileReader reader = new FileReader(&quot;fileIn\\txt1&quot;);
+        int len;
+        while((len = reader.read())!=-1)
+            str +=(char)len;
+        reader.close();
+
+        System.out.println(str);
+
+        String re  = &quot; &quot;;
+        String s[] = str.split(re);
+
+        for (int i = 0; i &lt; s.length; i++) {
+            System.out.print(s[i]);
+        }
+        System.out.println(str.length());
+    }
+
+    private static void song() throws Exception {
+        InputStream in = new FileInputStream(&quot;fileIn\\你一生的故事.mp3&quot;);
+
+        OutputStream out =  new FileOutputStream(&quot;fileOut\\你一生的故事2.mp3&quot;);
+        int len;
+        long begintime = System.currentTimeMillis();
+        while((len=in.read())!=-1)
+        {
+            out.write(len);
+        }
+        long endtime = System.currentTimeMillis();
+        System.out.println(endtime-begintime);
+        in.close();
+        out.close();
+    }
+}</code></pre></div><div class="post-copyright"><blockquote><p>原文作者: 冯亚杰(DanBoard·Feng)</p><p>原文链接: <a href="http://yoursite.com/2019/10/23/Java文件的读(写)汇总[ InputStream（Reader）、BufferedInputStream 、BufferedReader、FileInputStream、FileReader ]/">http://yoursite.com/2019/10/23/Java文件的读(写)汇总[ InputStream（Reader）、BufferedInputStream 、BufferedReader、FileInputStream、FileReader ]/</a></p><p>版权声明: 转载请注明出处(必须保留作者署名及链接)</p></blockquote></div><div class="tags"></div><div class="post-share"><div class="social-share"><span>分享到:</span></div></div><div class="post-nav"><a href="/2019/10/23/JDBC_DAO模式/" class="pre">JDBC_DAO模式</a><a href="/2019/10/23/Java程序设计复习总结/" class="next">Java程序设计复习总结</a></div><div id="comments"></div></div></div></div><div class="layout-r"><div id="sidebar"><div class="search-pla"></div><div id="toc" class="widget"><div class="widget-title"><i class="fa fa-fei">文章目录</i></div><ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#InputStream-、InputStreamReader、BufferedInputStream-、BufferedReader、FileInputStream、FileReader"><span class="toc-text">[ InputStream 、InputStreamReader、BufferedInputStream 、BufferedReader、FileInputStream、FileReader ]</span></a></li></ol><li class="toc-item toc-level-3"><a class="toc-link" href="#amp-amp"><span class="toc-text">&amp;&amp;</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#OutputStream、OutputStreamWriter、BufferedOutputStream、BufferedWriter、FileOutputStream、FileWriter"><span class="toc-text">[ OutputStream、OutputStreamWriter、BufferedOutputStream、BufferedWriter、FileOutputStream、FileWriter ]</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#InputStream-amp-amp-OutputStream"><span class="toc-text">InputStream &amp;&amp; OutputStream</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#InputStreamReader-amp-amp-OutputStreamWriter"><span class="toc-text">InputStreamReader&amp;&amp; OutputStreamWriter</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#BufferedInputStream-amp-amp-BufferedOutputStream"><span class="toc-text">BufferedInputStream &amp;&amp; BufferedOutputStream</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#BufferedReader-amp-amp-BufferedWriter"><span class="toc-text">BufferedReader &amp;&amp; BufferedWriter</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#FileInputStream-amp-amp-FileOutputStream"><span class="toc-text">FileInputStream &amp;&amp; FileOutputStream</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#FileReader-amp-amp-FileWriter"><span class="toc-text">FileReader &amp;&amp; FileWriter</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#程序"><span class="toc-text">程序</span></a></li></div><div class="widget"><div class="widget-title"><i class="fa fa-xie"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/计算机地图制图 知识总结/">计算机地图制图 知识总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/GIS程序设计 知识总结/">GIS程序设计 知识总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/空间数据库总结/">空间数据库总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/GPS测量原理及应用 知识总结/">GPS测量原理及应用 知识总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/github码云操作---合并分支，推送/">github/码云操作---合并分支，推送</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/IDEA连接Mysql数据库没有jar包，报错/">IDEA连接Mysql数据库没有jar包报错</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/07/Vue工程化环境(模块化规范、webpack、单文件组件、脚手架、Element-UI)/">Vue工程化</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/03/解决nodejs报错 Cannot find module/">完美解决nodejs报错 Cannot find module './application'</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/25/AE - 04.专题图绘制及打印功能实现/">AE - 04.专题图绘制及打印功能实现</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/25/AE - 01.空间书签的创建及调用/">AE - 01.空间书签的创建及调用</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-biao"> 标签</i></div><div class="tagcloud"></div></div><div class="widget"><div class="widget-title"><i class="fa fa-archive"> 归档</i></div><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-you"> 友情链接</i></div><ul></ul><a href="https://blog.csdn.net/DanBo_C" title="CSDN" target="_blank">CSDN</a></div></div></div></div><a id="totop" href="#top"></a><div id="footer"><div class="footer-info"><p><a href="/baidusitemap.xml">网站地图</a> |  <a href="/atom.xml">订阅本站</a> |  <a href="/about/">联系博主</a></p><p>本站总访问量：<i id="busuanzi_container_site_pv"><i id="busuanzi_value_site_pv"></i></i>次，本站总访客数:<i id="busuanzi_container_site_uv"><i id="busuanzi_value_site_uv"></i></i>人</p><p><span> Copyright &copy;<a href="/." rel="nofollow">冯亚杰(DanBoard·Feng).</a></span><span> Theme by<a rel="nofollow" target="_blank" href="https://github.com/chaooo/hexo-theme-BlueLake"> BlueLake.</a></span><span> Count by<a href="http://busuanzi.ibruce.info/"> busuanzi.</a></span><span> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a></span></p></div></div></div><script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script><script type="text/javascript" src="/js/search.json.js?v=2.0.4"></script><script type="text/javascript" src="/js/toctotop.js?v=2.0.4" async></script><link rel="stylesheet" type="text/css" href="/share/css/share.css"><script type="text/javascript" src="/share/js/social-share.js" charset="utf-8"></script><script type="text/javascript" src="/share/js/qrcode.js" charset="utf-8"></script></body></html>

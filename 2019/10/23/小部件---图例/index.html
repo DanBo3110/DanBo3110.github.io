@@ -1,0 +1,166 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta name="generator" content="Hexo 3.9.0"><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="GISer加油站"><meta name="keywords" content="DanBoCode, 代码, 程序, gis, js, 前端"><link rel="stylesheet" type="text/css" href="//fonts.loli.net/css?family=Source+Code+Pro"><link rel="stylesheet" type="text/css" href="/css/style.css?v=2.0.4"><link rel="stylesheet" type="text/css" href="/css/highlight.css?v=2.0.4"><link rel="Shortcut Icon" href="/favicon.ico"><link rel="bookmark" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><link rel="alternate" type="application/atom+xml" href="/atom.xml"><title>小部件---图例 | DanBoCode</title></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">小部件---图例</h1><a id="logo" href="/.">DanBoCode</a><p class="description">句子跟标点落入四个区间，有人能懂真理，有人读出文艺。</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div><div id="search-form"><div id="result-mask" class="hide"></div><label><input id="search-key" type="text" autocomplete="off" placeholder="搜索"></label><div id="result-wrap" class="hide"><div id="search-result"></div></div><div class="hide"><template id="search-tpl"><div class="item"><a href="/{path}" title="{title}"><div class="title">{title}</div><div class="time">{date}</div><div class="tags">{tags}</div></a></div></template></div></div></div><div id="layout" class="layout-g"><div class="layout-l"><div class="content_container"><div class="post"><h1 class="post-title">小部件---图例</h1><div class="post-meta"><a href="/2019/10/23/小部件---图例/#comments" class="comment-count"></a><p><span class="date">Oct 23, 2019</span><span><i id="busuanzi_container_page_pv"><i id="busuanzi_value_page_pv"></i><i>点击</i></i></span></p></div><div class="post-content"><h5 id="1-效果图"><a href="#1-效果图" class="headerlink" title="1. 效果图"></a>1. 效果图</h5><p><img src="https://img-blog.csdnimg.cn/20190809193823493.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0RhbkJvX0M=,size_16,color_FFFFFF,t_70" alt></p>
+<h5 id="2-引用模块"><a href="#2-引用模块" class="headerlink" title="2. 引用模块"></a>2. 引用模块</h5><p>图例 <code>&quot;esri/dijit/Legend&quot;,</code></p>
+<h5 id="3-右侧增加的图例框会不会对div有一定的影响？"><a href="#3-右侧增加的图例框会不会对div有一定的影响？" class="headerlink" title="3. 右侧增加的图例框会不会对div有一定的影响？"></a>3. 右侧增加的图例框会不会对div有一定的影响？</h5><p>先看一下HTML结构</p>
+<pre><code>&lt;body class=&quot;claro&quot;&gt;
+&lt;div id=&quot;content&quot;
+     data-dojo-type=&quot;dijit/layout/BorderContainer&quot;
+     data-dojo-props=&quot;design:&apos;headline&apos;, gutters:true&quot;
+     style=&quot;width: 100%; height: 100%; margin: 0;&quot;&gt;
+
+  &lt;div id=&quot;rightPane&quot;
+       data-dojo-type=&quot;dijit/layout/ContentPane&quot;
+       data-dojo-props=&quot;region:&apos;right&apos;&quot;&gt;
+
+    &lt;div data-dojo-type=&quot;dijit/layout/AccordionContainer&quot;&gt;
+      &lt;div data-dojo-type=&quot;dijit/layout/ContentPane&quot; id=&quot;legendPane&quot;
+           data-dojo-props=&quot;title:&apos;Legend&apos;, selected:true&quot;&gt;
+        &lt;div id=&quot;legendDiv&quot;&gt;&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div data-dojo-type=&quot;dijit/layout/ContentPane&quot;
+           data-dojo-props=&quot;title:&apos;Pane 2&apos;&quot;&gt;
+        This pane could contain tools or additional content
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div id=&quot;map&quot;
+       data-dojo-type=&quot;dijit/layout/ContentPane&quot;
+       data-dojo-props=&quot;region:&apos;center&apos;&quot;
+       style=&quot;overflow:hidden;&quot;&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;/body&gt;</code></pre><p>好吧，很乱。大致分为四层。如图<br><img src="https://img-blog.csdnimg.cn/20190809211343606.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0RhbkJvX0M=,size_16,color_FFFFFF,t_70" alt><br><strong>与之对应的图例中：</strong><br><img src="https://img-blog.csdnimg.cn/2019080921244124.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0RhbkJvX0M=,size_16,color_FFFFFF,t_70" alt><br><strong>解释一下</strong>：<br>①：获取的图例对象的内容即框中的数据<br>②：显示图例的标签卡及其平行标签卡，可以当作是对图例对象显示上的改进<br>④：与map平行的同级div，border: solid #CCC 1px（灰色边框）<br>③：②和④中间的间隙，它取决于②，换句话说，如果②为空，那么③的存在就没有意义。</p>
+<p>除了①中的是必须获取的数据之外，剩余的有都是由Esri官方提供的方便开发的方法。不妨尝试进一步美化。这样看来，右侧增加的图例框的真实存在的div，但是它也是获取map中的数据。所以它更像是map对象的一种方法，而非属性。这也是和鹰眼图比较根本上的区别。</p>
+<h5 id="4-大概因为都与map对象密切相关，所以鹰眼图和图例在启动上都十分相似，看一眼JS代码"><a href="#4-大概因为都与map对象密切相关，所以鹰眼图和图例在启动上都十分相似，看一眼JS代码" class="headerlink" title="4. 大概因为都与map对象密切相关，所以鹰眼图和图例在启动上都十分相似，看一眼JS代码"></a>4. 大概因为都与map对象密切相关，所以鹰眼图和图例在启动上都十分相似，看一眼JS代码</h5><pre><code>//add the legend
+var legend = new Legend({
+    map:map
+  },&quot;legendDiv&quot;);
+  legend.startup();</code></pre><p>相比而言，图例只是不用设置它的可见性。但我认为它们还是由本质上的区别。（个人拙见）</p>
+<h5 id="5-贴代码"><a href="#5-贴代码" class="headerlink" title="5. 贴代码"></a>5. 贴代码</h5><h6 id="动态图层"><a href="#动态图层" class="headerlink" title="动态图层"></a>动态图层</h6><pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot;&gt;
+
+  &lt;meta name=&quot;viewport&quot; content=&quot;initial-scale=1, maximum-scale=1,user-scalable=no&quot;&gt;
+  &lt;title&gt;Map with legend&lt;/title&gt;
+
+  &lt;link rel=&quot;stylesheet&quot; href=&quot;https://js.arcgis.com/3.29/dijit/themes/claro/claro.css&quot;&gt;
+  &lt;link rel=&quot;stylesheet&quot; href=&quot;https://js.arcgis.com/3.29/esri/css/esri.css&quot;&gt;
+
+  &lt;style&gt;
+    html, body {
+      height: 99%;
+      width: 99%;
+    }
+
+    #rightPane {
+      width: 20%;
+    }
+
+    #legendPane {
+      border: solid #97DCF2 1px;
+    }
+  &lt;/style&gt;
+
+  &lt;script src=&quot;https://js.arcgis.com/3.29/&quot;&gt;&lt;/script&gt;
+  &lt;script&gt;
+    var map;
+    require([
+      &quot;esri/map&quot;, &quot;esri/layers/ArcGISDynamicMapServiceLayer&quot;, &quot;esri/dijit/Legend&quot;,
+      &quot;dojo/_base/array&quot;, &quot;dojo/parser&quot;,
+      &quot;dijit/layout/BorderContainer&quot;, &quot;dijit/layout/ContentPane&quot;, 
+      &quot;dijit/layout/AccordionContainer&quot;, &quot;dojo/domReady!&quot;
+    ], function(
+      Map, ArcGISDynamicMapServiceLayer, Legend,
+      arrayUtils, parser
+    ) {
+      parser.parse();
+
+      map = new Map(&quot;map&quot;, {
+        logo:false
+      });
+      var layer = new ArcGISDynamicMapServiceLayer
+            (&quot;http://localhost:6080/arcgis/rest/services/ecology/beijing_2012_3/MapServer&quot;);
+        map.addLayer(layer)
+        //不设置显示图层，默认显示&apos;[0]&apos;的图层
+        layer.setVisibleLayers([0]);
+
+        //add the legend
+        var legend = new Legend({
+            map:map
+          },&quot;legendDiv&quot;);
+      legend.startup();
+
+    });
+  &lt;/script&gt;
+&lt;/head&gt;
+
+&lt;body class=&quot;claro&quot;&gt;
+&lt;div id=&quot;content&quot;
+     data-dojo-type=&quot;dijit/layout/BorderContainer&quot;
+     data-dojo-props=&quot;design:&apos;headline&apos;, gutters:true&quot;
+     style=&quot;width: 100%; height: 100%; margin: 0;&quot;&gt;
+
+  &lt;div id=&quot;rightPane&quot;
+       data-dojo-type=&quot;dijit/layout/ContentPane&quot;
+       data-dojo-props=&quot;region:&apos;right&apos;&quot;&gt;
+
+    &lt;div data-dojo-type=&quot;dijit/layout/AccordionContainer&quot;&gt;
+      &lt;div data-dojo-type=&quot;dijit/layout/ContentPane&quot; id=&quot;legendPane&quot;
+           data-dojo-props=&quot;title:&apos;Legend&apos;, selected:true&quot;&gt;
+        &lt;div id=&quot;legendDiv&quot;&gt;&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div data-dojo-type=&quot;dijit/layout/ContentPane&quot;
+           data-dojo-props=&quot;title:&apos;Pane 2&apos;&quot;&gt;
+        This pane could contain tools or additional content
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div id=&quot;map&quot;
+       data-dojo-type=&quot;dijit/layout/ContentPane&quot;
+       data-dojo-props=&quot;region:&apos;center&apos;&quot;
+       style=&quot;overflow:hidden;&quot;&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;/body&gt;
+
+&lt;/html&gt;</code></pre><h5 id="要素图层"><a href="#要素图层" class="headerlink" title="要素图层"></a>要素图层</h5><p>将其中的对应的改为下面的代码即可<br><strong>注意：需要引入模块：<code>&quot;esri/layers/FeatureLayer&quot;</code></strong><br>注意加载的时候为单图层，及动态图层后加显示序号</p>
+<pre><code>&lt;script&gt;
+    var map;
+    require([
+      &quot;esri/map&quot;, &quot;esri/layers/FeatureLayer&quot;, &quot;esri/dijit/Legend&quot;,
+      &quot;dojo/_base/array&quot;, &quot;dojo/parser&quot;,
+      &quot;dijit/layout/BorderContainer&quot;, &quot;dijit/layout/ContentPane&quot;, 
+      &quot;dijit/layout/AccordionContainer&quot;, &quot;dojo/domReady!&quot;
+    ], function(
+      Map, FeatureLayer, Legend,
+      arrayUtils, parser
+    ) {
+      parser.parse();
+
+      map = new Map(&quot;map&quot;, {
+        logo:false
+      });
+
+      var rivers = new FeatureLayer(&quot;http://localhost:6080/arcgis/rest/services/ecology/beijing_2012_3/MapServer/1&quot;, {
+        mode: FeatureLayer.MODE_ONDEMAND,
+        outFields: [&quot;*&quot;]
+      });
+      var waterbodies = new FeatureLayer(&quot;http://localhost:6080/arcgis/rest/services/ecology/beijing_2012_3/MapServer/0&quot;, {
+        mode: FeatureLayer.MODE_ONDEMAND,
+        outFields: [&quot;*&quot;]
+      });
+      map.addLayers([waterbodies, rivers]);
+
+      //add the legend
+      var legend = new Legend({
+        map:map
+      },&quot;legendDiv&quot;);
+      legend.startup();
+      s
+    });
+  &lt;/script&gt;</code></pre><p><strong>要素图层显示效果：</strong><br>加载了两个要素图层，所以也会显示两个图例信息。<br>个人认为交互性的动态图层更加方便，单一展示的要素图层更加方便。<br><img src="https://img-blog.csdnimg.cn/20190809214446380.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0RhbkJvX0M=,size_16,color_FFFFFF,t_70" alt></p>
+<h5 id="7-拓展："><a href="#7-拓展：" class="headerlink" title="7. 拓展："></a>7. 拓展：</h5><p>上面贴的代码中引入模块中多了三个<code>&quot;dijit/layout/BorderContainer&quot;, &quot;dijit/layout/ContentPane&quot;, 
+&quot;dijit/layout/AccordionContainer&quot;</code></p>
+<p>如果删掉这三个模块，最终结果没有变化，但是在加载过程中，显示最终结果之前出现了一个过度样式，如下图：<br><img src="https://img-blog.csdnimg.cn/20190809215031387.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0RhbkJvX0M=,size_16,color_FFFFFF,t_70" alt><br>显然图里位置改变了，并且注意图最下方的地方<br><img src="https://img-blog.csdnimg.cn/20190809215139701.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0RhbkJvX0M=,size_16,color_FFFFFF,t_70" alt><br>可见图幅的大小也改变了。</p>
+<p>为什么呢？后解。</p>
+<h6 id="文章中不正确的地方，麻烦大家指出，一起改进"><a href="#文章中不正确的地方，麻烦大家指出，一起改进" class="headerlink" title="文章中不正确的地方，麻烦大家指出，一起改进"></a>文章中不正确的地方，麻烦大家指出，一起改进</h6></div><div class="post-copyright"><blockquote><p>原文作者: 冯亚杰(DanBoard·Feng)</p><p>原文链接: <a href="http://yoursite.com/2019/10/23/小部件---图例/">http://yoursite.com/2019/10/23/小部件---图例/</a></p><p>版权声明: 转载请注明出处(必须保留作者署名及链接)</p></blockquote></div><div class="tags"></div><div class="post-share"><div class="social-share"><span>分享到:</span></div></div><div class="post-nav"><a href="/2019/10/23/小部件---鹰眼图/" class="pre">小部件---鹰眼图</a><a href="/2019/10/23/小部件---绑定小部件/" class="next">小部件---绑定小部件</a></div><div id="comments"></div></div></div></div><div class="layout-r"><div id="sidebar"><div class="search-pla"></div><div id="toc" class="widget"><div class="widget-title"><i class="fa fa-fei">文章目录</i></div><ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-效果图"><span class="toc-text">1. 效果图</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-引用模块"><span class="toc-text">2. 引用模块</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-右侧增加的图例框会不会对div有一定的影响？"><span class="toc-text">3. 右侧增加的图例框会不会对div有一定的影响？</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-大概因为都与map对象密切相关，所以鹰眼图和图例在启动上都十分相似，看一眼JS代码"><span class="toc-text">4. 大概因为都与map对象密切相关，所以鹰眼图和图例在启动上都十分相似，看一眼JS代码</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#5-贴代码"><span class="toc-text">5. 贴代码</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#动态图层"><span class="toc-text">动态图层</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#要素图层"><span class="toc-text">要素图层</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#7-拓展："><span class="toc-text">7. 拓展：</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#文章中不正确的地方，麻烦大家指出，一起改进"><span class="toc-text">文章中不正确的地方，麻烦大家指出，一起改进</span></a></li></ol></li></ol></div><div class="widget"><div class="widget-title"><i class="fa fa-xie"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/计算机地图制图 知识总结/">计算机地图制图 知识总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/GIS程序设计 知识总结/">GIS程序设计 知识总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/空间数据库总结/">空间数据库总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/GPS测量原理及应用 知识总结/">GPS测量原理及应用 知识总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/github码云操作---合并分支，推送/">github/码云操作---合并分支，推送</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/IDEA连接Mysql数据库没有jar包，报错/">IDEA连接Mysql数据库没有jar包报错</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/07/Vue工程化环境(模块化规范、webpack、单文件组件、脚手架、Element-UI)/">Vue工程化</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/03/解决nodejs报错 Cannot find module/">完美解决nodejs报错 Cannot find module './application'</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/25/AE - 04.专题图绘制及打印功能实现/">AE - 04.专题图绘制及打印功能实现</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/25/AE - 01.空间书签的创建及调用/">AE - 01.空间书签的创建及调用</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-biao"> 标签</i></div><div class="tagcloud"></div></div><div class="widget"><div class="widget-title"><i class="fa fa-archive"> 归档</i></div><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-you"> 友情链接</i></div><ul></ul><a href="https://blog.csdn.net/DanBo_C" title="CSDN" target="_blank">CSDN</a></div></div></div></div><a id="totop" href="#top"></a><div id="footer"><div class="footer-info"><p><a href="/baidusitemap.xml">网站地图</a> |  <a href="/atom.xml">订阅本站</a> |  <a href="/about/">联系博主</a></p><p>本站总访问量：<i id="busuanzi_container_site_pv"><i id="busuanzi_value_site_pv"></i></i>次，本站总访客数:<i id="busuanzi_container_site_uv"><i id="busuanzi_value_site_uv"></i></i>人</p><p><span> Copyright &copy;<a href="/." rel="nofollow">冯亚杰(DanBoard·Feng).</a></span><span> Theme by<a rel="nofollow" target="_blank" href="https://github.com/chaooo/hexo-theme-BlueLake"> BlueLake.</a></span><span> Count by<a href="http://busuanzi.ibruce.info/"> busuanzi.</a></span><span> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a></span></p></div></div></div><script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script><script type="text/javascript" src="/js/search.json.js?v=2.0.4"></script><script type="text/javascript" src="/js/toctotop.js?v=2.0.4" async></script><link rel="stylesheet" type="text/css" href="/share/css/share.css"><script type="text/javascript" src="/share/js/social-share.js" charset="utf-8"></script><script type="text/javascript" src="/share/js/qrcode.js" charset="utf-8"></script></body></html>

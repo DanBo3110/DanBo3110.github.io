@@ -1,0 +1,136 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta name="generator" content="Hexo 3.9.0"><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="GISer加油站"><meta name="keywords" content="DanBoCode, 代码, 程序, gis, js, 前端"><link rel="stylesheet" type="text/css" href="//fonts.loli.net/css?family=Source+Code+Pro"><link rel="stylesheet" type="text/css" href="/css/style.css?v=2.0.4"><link rel="stylesheet" type="text/css" href="/css/highlight.css?v=2.0.4"><link rel="Shortcut Icon" href="/favicon.ico"><link rel="bookmark" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><link rel="alternate" type="application/atom+xml" href="/atom.xml"><title>15 - 命名空间，委托，移入移出 | DanBoCode</title></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">15 - 命名空间，委托，移入移出</h1><a id="logo" href="/.">DanBoCode</a><p class="description">句子跟标点落入四个区间，有人能懂真理，有人读出文艺。</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div><div id="search-form"><div id="result-mask" class="hide"></div><label><input id="search-key" type="text" autocomplete="off" placeholder="搜索"></label><div id="result-wrap" class="hide"><div id="search-result"></div></div><div class="hide"><template id="search-tpl"><div class="item"><a href="/{path}" title="{title}"><div class="title">{title}</div><div class="time">{date}</div><div class="tags">{tags}</div></a></div></template></div></div></div><div id="layout" class="layout-g"><div class="layout-l"><div class="content_container"><div class="post"><h1 class="post-title">15 - 命名空间，委托，移入移出</h1><div class="post-meta"><a href="/2019/10/23/15 - 命名空间，委托，移入移出/#comments" class="comment-count"></a><p><span class="date">Oct 23, 2019</span><span><i id="busuanzi_container_page_pv"><i id="busuanzi_value_page_pv"></i><i>点击</i></i></span></p></div><div class="post-content"><h4 id="命名空间"><a href="#命名空间" class="headerlink" title="命名空间"></a>命名空间</h4><ol>
+<li>事件是通过on来绑定的</li>
+<li>通过trigger触发事件</li>
+</ol>
+<pre><code>$(&quot;.son&quot;).on(&quot;click.ls&quot;, function () {
+    alert(&quot;click2&quot;);
+});
+$(&quot;.son&quot;).trigger(&quot;click.ls&quot;);</code></pre><h5 id="PS："><a href="#PS：" class="headerlink" title="PS："></a>PS：</h5><ul>
+<li>利用trigger触发子元素带命名空间的事件, 那么父元素带<strong>相同</strong>命名空间的事件也会被触发. 而父元素没有命名空间的事件不会被触发</li>
+<li>利用trigger触发子元素<strong>不</strong>带命名空间的事件,那么子元素所有相同类型的事件和父元素所有相同类型的事件都会被触发</li>
+</ul>
+<h6 id="示例代码："><a href="#示例代码：" class="headerlink" title="示例代码："></a>示例代码：</h6><script>
+        $(function () {
+
+            $(".father").on("click.ls", function () {
+                alert("father click1");
+            });
+            $(".father").on("click", function () {
+                alert("father click2");
+            });
+            $(".son").on("click.ls", function () {
+                alert("son click1");
+            });
+            // $(".son").trigger("click.ls");
+            $(".son").trigger("click");
+        });
+    </script>
+
+<h4 id="委托"><a href="#委托" class="headerlink" title="委托"></a>委托</h4><ol>
+<li>什么是事件委托?<br>请别人帮忙做事情, 然后将做完的结果反馈给我们</li>
+</ol>
+<p><strong>PS：</strong><br>如果通过核心函数找到的元素不止一个, 那么在添加事件的时候,jQuery会遍历所有找到的元素,给所有找到的元素添加事件</p>
+<pre><code>$(&quot;ul&gt;li&quot;).click(function () {
+    console.log($(this).html());
+});</code></pre><h5 id="示例："><a href="#示例：" class="headerlink" title="示例："></a>示例：</h5><p>让ul帮li监听click事件</p>
+<ul>
+<li>之所以能够监听, 是因为入口函数执行的时候ul就已经存在了, 所以能够添加事件</li>
+<li>之所以this是li,是因为点击的是li, 而li没有click事件, 所以事件冒泡传递给了ul,ul响应了事件, 既然事件是从li传递过来的,所以ul必然知道this是谁</li>
+</ul>
+<pre><code>$(&quot;ul&quot;).delegate(&quot;li&quot;, &quot;click&quot;, function () {
+    console.log($(this).html());
+});</code></pre><h6 id="委托联系"><a href="#委托联系" class="headerlink" title="委托联系"></a>委托联系</h6><pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;title&gt;32-jQuery事件委托练习&lt;/title&gt;
+    &lt;style&gt;
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        html,body{
+            width: 100%;
+            height: 100%;
+        }
+        .mask{
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+        .login{
+            width: 522px;
+            height: 290px;
+            margin: 100px auto;
+            position: relative;
+        }
+        .login&gt;span{
+            width: 50px;
+            height: 50px;
+            /*background: red;*/
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+    &lt;/style&gt;
+    &lt;script src=&quot;js/jquery-1.12.4.js&quot;&gt;&lt;/script&gt;
+    &lt;script&gt;
+        $(function () {
+            // 编写jQuery相关代码
+            $(&quot;a&quot;).click(function () {
+                var $mask = $(&quot;&lt;div class=\&quot;mask\&quot;&gt;\n&quot; +
+                    &quot;    &lt;div class=\&quot;login\&quot;&gt;\n&quot; +
+                    &quot;        &lt;img src=\&quot;images/login.png\&quot; alt=\&quot;\&quot;&gt;\n&quot; +
+                    &quot;        &lt;span&gt;&lt;/span&gt;\n&quot; +
+                    &quot;    &lt;/div&gt;\n&quot; +
+                    &quot;&lt;/div&gt;&quot;);
+                // 添加蒙版
+                $(&quot;body&quot;).append($mask);
+                $(&quot;body&quot;).delegate(&quot;.login&gt;span&quot;, &quot;click&quot;, function () {
+                    // 移除蒙版
+                    $mask.remove();
+                });
+                return false;
+            });
+        });
+    &lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;!--&lt;div class=&quot;mask&quot;&gt;--&gt;
+    &lt;!--&lt;div class=&quot;login&quot;&gt;--&gt;
+        &lt;!--&lt;images src=&quot;images/login.png&quot; alt=&quot;&quot;&gt;--&gt;
+        &lt;!--&lt;span&gt;&lt;/span&gt;--&gt;
+    &lt;!--&lt;/div&gt;--&gt;
+&lt;!--&lt;/div&gt;--&gt;
+&lt;a href=&quot;http://www.baidu.com&quot;&gt;点击登录&lt;/a&gt;
+&lt;div&gt;我是段落...（此处省略1W字）...我是段落&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre><h4 id="移入移出"><a href="#移入移出" class="headerlink" title="移入移出"></a>移入移出</h4><ol>
+<li>mouseover/mouseout事件, 子元素被移入移出也会触发父元素的事件</li>
+</ol>
+<pre><code>$(&quot;.father&quot;).mouseover(function () {
+    console.log(&quot;father被移入了&quot;);
+});
+$(&quot;.father&quot;).mouseout(function () {
+    console.log(&quot;father被移出了&quot;);
+});</code></pre><ol start="2">
+<li>mouseenter/mouseleave事件, 子元素被移入移出不会触发父元素的事件</li>
+</ol>
+<pre><code>$(&quot;.father&quot;).mouseenter(function () {
+    console.log(&quot;father被移入了&quot;);
+});
+$(&quot;.father&quot;).mouseleave(function () {
+    console.log(&quot;father被移出了&quot;);
+});</code></pre><p><strong>简便写法：</strong></p>
+<pre><code>$(&quot;.father&quot;).hover(function () {
+    console.log(&quot;father被移入了&quot;);
+},function () {
+    console.log(&quot;father被移出了&quot;);
+});
+
+$(&quot;.father&quot;).hover(function () {
+    console.log(&quot;father被移入移出了&quot;);
+});</code></pre></div><div class="post-copyright"><blockquote><p>原文作者: 冯亚杰(DanBoard·Feng)</p><p>原文链接: <a href="http://yoursite.com/2019/10/23/15 - 命名空间，委托，移入移出/">http://yoursite.com/2019/10/23/15 - 命名空间，委托，移入移出/</a></p><p>版权声明: 转载请注明出处(必须保留作者署名及链接)</p></blockquote></div><div class="tags"></div><div class="post-share"><div class="social-share"><span>分享到:</span></div></div><div class="post-nav"><a href="/2019/10/23/16 - 动画合集（显示隐藏，展开收起，淡入淡出，自定义）/" class="pre">16 - 动画合集（显示隐藏，展开收起，淡入淡出，自定义）</a><a href="/2019/10/23/14 - 冒泡，默认行为，自动触发，自定义事件/" class="next">14 - 冒泡，默认行为，自动触发，自定义事件</a></div><div id="comments"></div></div></div></div><div class="layout-r"><div id="sidebar"><div class="search-pla"></div><div id="toc" class="widget"><div class="widget-title"><i class="fa fa-fei">文章目录</i></div><ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#命名空间"><span class="toc-text">命名空间</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#PS："><span class="toc-text">PS：</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#示例代码："><span class="toc-text">示例代码：</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#委托"><span class="toc-text">委托</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#示例："><span class="toc-text">示例：</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#委托联系"><span class="toc-text">委托联系</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#移入移出"><span class="toc-text">移入移出</span></a></li></ol></div><div class="widget"><div class="widget-title"><i class="fa fa-xie"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/计算机地图制图 知识总结/">计算机地图制图 知识总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/GIS程序设计 知识总结/">GIS程序设计 知识总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/空间数据库总结/">空间数据库总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/GPS测量原理及应用 知识总结/">GPS测量原理及应用 知识总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/github码云操作---合并分支，推送/">github/码云操作---合并分支，推送</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/IDEA连接Mysql数据库没有jar包，报错/">IDEA连接Mysql数据库没有jar包报错</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/07/Vue工程化环境(模块化规范、webpack、单文件组件、脚手架、Element-UI)/">Vue工程化</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/03/解决nodejs报错 Cannot find module/">完美解决nodejs报错 Cannot find module './application'</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/25/AE - 04.专题图绘制及打印功能实现/">AE - 04.专题图绘制及打印功能实现</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/25/AE - 01.空间书签的创建及调用/">AE - 01.空间书签的创建及调用</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-biao"> 标签</i></div><div class="tagcloud"></div></div><div class="widget"><div class="widget-title"><i class="fa fa-archive"> 归档</i></div><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-you"> 友情链接</i></div><ul></ul><a href="https://blog.csdn.net/DanBo_C" title="CSDN" target="_blank">CSDN</a></div></div></div></div><a id="totop" href="#top"></a><div id="footer"><div class="footer-info"><p><a href="/baidusitemap.xml">网站地图</a> |  <a href="/atom.xml">订阅本站</a> |  <a href="/about/">联系博主</a></p><p>本站总访问量：<i id="busuanzi_container_site_pv"><i id="busuanzi_value_site_pv"></i></i>次，本站总访客数:<i id="busuanzi_container_site_uv"><i id="busuanzi_value_site_uv"></i></i>人</p><p><span> Copyright &copy;<a href="/." rel="nofollow">冯亚杰(DanBoard·Feng).</a></span><span> Theme by<a rel="nofollow" target="_blank" href="https://github.com/chaooo/hexo-theme-BlueLake"> BlueLake.</a></span><span> Count by<a href="http://busuanzi.ibruce.info/"> busuanzi.</a></span><span> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a></span></p></div></div></div><script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script><script type="text/javascript" src="/js/search.json.js?v=2.0.4"></script><script type="text/javascript" src="/js/toctotop.js?v=2.0.4" async></script><link rel="stylesheet" type="text/css" href="/share/css/share.css"><script type="text/javascript" src="/share/js/social-share.js" charset="utf-8"></script><script type="text/javascript" src="/share/js/qrcode.js" charset="utf-8"></script></body></html>

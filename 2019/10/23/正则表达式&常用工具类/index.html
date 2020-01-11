@@ -1,0 +1,282 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta name="generator" content="Hexo 3.9.0"><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="GISer加油站"><meta name="keywords" content="DanBoCode, 代码, 程序, gis, js, 前端"><link rel="stylesheet" type="text/css" href="//fonts.loli.net/css?family=Source+Code+Pro"><link rel="stylesheet" type="text/css" href="/css/style.css?v=2.0.4"><link rel="stylesheet" type="text/css" href="/css/highlight.css?v=2.0.4"><link rel="Shortcut Icon" href="/favicon.ico"><link rel="bookmark" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><link rel="alternate" type="application/atom+xml" href="/atom.xml"><title>正则表达式&amp;常用工具类 | DanBoCode</title></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">正则表达式&amp;常用工具类</h1><a id="logo" href="/.">DanBoCode</a><p class="description">句子跟标点落入四个区间，有人能懂真理，有人读出文艺。</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div><div id="search-form"><div id="result-mask" class="hide"></div><label><input id="search-key" type="text" autocomplete="off" placeholder="搜索"></label><div id="result-wrap" class="hide"><div id="search-result"></div></div><div class="hide"><template id="search-tpl"><div class="item"><a href="/{path}" title="{title}"><div class="title">{title}</div><div class="time">{date}</div><div class="tags">{tags}</div></a></div></template></div></div></div><div id="layout" class="layout-g"><div class="layout-l"><div class="content_container"><div class="post"><h1 class="post-title">正则表达式&amp;常用工具类</h1><div class="post-meta"><a href="/2019/10/23/正则表达式&amp;常用工具类/#comments" class="comment-count"></a><p><span class="date">Oct 23, 2019</span><span><i id="busuanzi_container_page_pv"><i id="busuanzi_value_page_pv"></i><i>点击</i></i></span></p></div><div class="post-content"><h3 id="正则表达式的概述和简单使用"><a href="#正则表达式的概述和简单使用" class="headerlink" title="(正则表达式的概述和简单使用)"></a>(正则表达式的概述和简单使用)</h3><ul>
+<li><p>A:正则表达式</p>
+<ul>
+<li>是指一个用来描述或者匹配一系列符合某个语法规则的字符串的单个字符串。其实就是一种规则。有自己特殊的应用。</li>
+<li>作用:比如注册邮箱,邮箱有用户名和密码,一般会对其限制长度,这个限制长度的事情就是正则表达式做的</li>
+</ul>
+</li>
+<li><p>B:案例演示</p>
+<ul>
+<li><p>需求：校验qq号码.</p>
+<ul>
+<li>1:要求必须是5-15位数字</li>
+<li>2:0不能开头</li>
+<li>3:必须都是数字</li>
+</ul>
+</li>
+<li><p>a:非正则表达式实现</p>
+</li>
+<li><p>b:正则表达式实现</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="字符类演示"><a href="#字符类演示" class="headerlink" title="(字符类演示)"></a>(字符类演示)</h3><ul>
+<li>A:字符类<ul>
+<li>[abc] a、b 或 c（简单类） </li>
+<li>[^abc] 任何字符，除了 a、b 或 c（否定） </li>
+<li>[a-zA-Z] a到 z 或 A到 Z，两头的字母包括在内（范围） </li>
+<li>[0-9] 0到9的字符都包括<h3 id="预定义字符类演示"><a href="#预定义字符类演示" class="headerlink" title="(预定义字符类演示)"></a>(预定义字符类演示)</h3></li>
+</ul>
+</li>
+<li>A:预定义字符类<ul>
+<li>. 任何字符。</li>
+<li>\d 数字：[0-9]</li>
+<li>\w 单词字符：[a-zA-Z_0-9]<h3 id="数量词"><a href="#数量词" class="headerlink" title="(数量词)"></a>(数量词)</h3></li>
+</ul>
+</li>
+<li>A:Greedy 数量词 <ul>
+<li>X? X，一次或一次也没有</li>
+<li>X* X，零次或多次</li>
+<li>X+ X，一次或多次</li>
+<li>X{n} X，恰好 n 次 </li>
+<li>X{n,} X，至少 n 次 </li>
+<li>X{n,m} X，至少 n 次，但是不超过 m 次 </li>
+</ul>
+</li>
+</ul>
+<h3 id="正则表达式的分割功能"><a href="#正则表达式的分割功能" class="headerlink" title="(正则表达式的分割功能)"></a>(正则表达式的分割功能)</h3><ul>
+<li>A:正则表达式的分割功能<ul>
+<li>String类的功能：public String[] split(String regex)</li>
+</ul>
+</li>
+<li>B:案例演示<ul>
+<li>正则表达式的分割功能</li>
+</ul>
+</li>
+</ul>
+<h3 id="把给定字符串中的数字排序"><a href="#把给定字符串中的数字排序" class="headerlink" title="(把给定字符串中的数字排序)"></a>(把给定字符串中的数字排序)</h3><ul>
+<li>A:案例演示<ul>
+<li>需求：我有如下一个字符串:”91 27 46 38 50”，请写代码实现最终输出结果是：”27 38 46 50 91”</li>
+</ul>
+</li>
+</ul>
+<h3 id="正则表达式的替换功能"><a href="#正则表达式的替换功能" class="headerlink" title="(正则表达式的替换功能)"></a>(正则表达式的替换功能)</h3><ul>
+<li>A:正则表达式的替换功能<ul>
+<li>String类的功能：public String replaceAll(String regex,String replacement)</li>
+</ul>
+</li>
+<li>B:案例演示<ul>
+<li>正则表达式的替换功能</li>
+</ul>
+</li>
+</ul>
+<h3 id="正则表达式的分组功能"><a href="#正则表达式的分组功能" class="headerlink" title="(正则表达式的分组功能)"></a>(正则表达式的分组功能)</h3><ul>
+<li><p>A:正则表达式的分组功能</p>
+<ul>
+<li>捕获组可以通过从左到右计算其开括号来编号。例如，在表达式 ((A)(B(C))) 中，存在四个这样的组： </li>
+</ul>
+</li>
+<li><pre><code>1     ((A)(B(C))) 
+2     (A 
+3     (B(C)) 
+4     (C) 
+
+组零始终代表整个表达式。</code></pre></li>
+<li><p>B:案例演示<br>  a:切割</p>
+<pre><code>需求：请按照叠词切割： &quot;sdqqfgkkkhjppppkl&quot;;</code></pre><p>  b:替换</p>
+<pre><code>需求：我我....我...我.要...要要...要学....学学..学.编..编编.编.程.程.程..程
+将字符串还原成:“我要学编程”。</code></pre><h3 id="Pattern和Matcher的概述"><a href="#Pattern和Matcher的概述" class="headerlink" title="(Pattern和Matcher的概述)"></a>(Pattern和Matcher的概述)</h3></li>
+<li><p>A:Pattern和Matcher的概述</p>
+</li>
+<li><p>B:模式和匹配器的典型调用顺序</p>
+<ul>
+<li><p>通过JDK提供的API，查看Pattern类的说明</p>
+</li>
+<li><p>典型的调用顺序是 </p>
+</li>
+<li><p>Pattern p = Pattern.compile(“a*b”);</p>
+</li>
+<li><p>Matcher m = p.matcher(“aaaaab”);</p>
+</li>
+<li><p>boolean b = m.matches();</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="正则表达式的获取功能"><a href="#正则表达式的获取功能" class="headerlink" title="(正则表达式的获取功能)"></a>(正则表达式的获取功能)</h3><ul>
+<li>A:正则表达式的获取功能<ul>
+<li>Pattern和Matcher的结合使用</li>
+</ul>
+</li>
+<li>B:案例演示<ul>
+<li>需求：把一个字符串中的手机号码获取出来</li>
+</ul>
+</li>
+</ul>
+<h3 id="Math类概述和方法使用"><a href="#Math类概述和方法使用" class="headerlink" title="(Math类概述和方法使用)"></a>(Math类概述和方法使用)</h3><ul>
+<li>A:Math类概述<ul>
+<li>Math 类包含用于执行基本数学运算的方法，如初等指数、对数、平方根和三角函数。 </li>
+</ul>
+</li>
+<li>B:成员方法<ul>
+<li>public static int abs(int a)</li>
+<li>public static double ceil(double a)</li>
+<li>public static double floor(double a)</li>
+<li>public static int max(int a,int b) min自学</li>
+<li>public static double pow(double a,double b)</li>
+<li>public static double random()</li>
+<li>public static int round(float a) 参数为double的自学</li>
+<li>public static double sqrt(double a)</li>
+</ul>
+</li>
+</ul>
+<h3 id="Random类的概述和方法使用"><a href="#Random类的概述和方法使用" class="headerlink" title="(Random类的概述和方法使用)"></a>(Random类的概述和方法使用)</h3><ul>
+<li>A:Random类的概述<ul>
+<li>此类用于产生随机数如果用相同的种子创建两个 Random 实例，</li>
+<li>则对每个实例进行相同的方法调用序列，它们将生成并返回相同的数字序列。</li>
+</ul>
+</li>
+<li>B:构造方法<ul>
+<li>public Random()</li>
+<li>public Random(long seed)</li>
+</ul>
+</li>
+<li>C:成员方法<ul>
+<li>public int nextInt()</li>
+<li>public int nextInt(int n)(重点掌握)</li>
+</ul>
+</li>
+</ul>
+<h3 id="System类的概述和方法使用"><a href="#System类的概述和方法使用" class="headerlink" title="(System类的概述和方法使用)"></a>(System类的概述和方法使用)</h3><ul>
+<li>A:System类的概述<ul>
+<li>System 类包含一些有用的类字段和方法。它不能被实例化。 </li>
+</ul>
+</li>
+<li>B:成员方法<ul>
+<li>public static void gc()</li>
+<li>public static void exit(int status)</li>
+<li>public static long currentTimeMillis()</li>
+<li>pubiic static void arraycopy(Object src, int srcPos, Object dest, int destPos, int length) </li>
+</ul>
+</li>
+<li>C:案例演示<ul>
+<li>System类的成员方法使用</li>
+</ul>
+</li>
+</ul>
+<h3 id="BigInteger类的概述和方法使用"><a href="#BigInteger类的概述和方法使用" class="headerlink" title="(BigInteger类的概述和方法使用)"></a>(BigInteger类的概述和方法使用)</h3><ul>
+<li>A:BigInteger的概述<ul>
+<li>可以让超过Integer范围内的数据进行运算</li>
+</ul>
+</li>
+<li>B:构造方法<ul>
+<li>public BigInteger(String val)</li>
+</ul>
+</li>
+<li>C:成员方法<ul>
+<li>public BigInteger add(BigInteger val)</li>
+<li>public BigInteger subtract(BigInteger val)</li>
+<li>public BigInteger multiply(BigInteger val)</li>
+<li>public BigInteger divide(BigInteger val)</li>
+<li>public BigInteger[] divideAndRemainder(BigInteger val)</li>
+</ul>
+</li>
+</ul>
+<h3 id="BigDecimal类的概述和方法使用"><a href="#BigDecimal类的概述和方法使用" class="headerlink" title="(BigDecimal类的概述和方法使用)"></a>(BigDecimal类的概述和方法使用)</h3><ul>
+<li><p>A:BigDecimal的概述</p>
+<ul>
+<li><p>由于在运算的时候，float类型和double很容易丢失精度，演示案例。</p>
+</li>
+<li><p>所以，为了能精确的表示、计算浮点数，Java提供了BigDecimal</p>
+</li>
+<li><p>不可变的、任意精度的有符号十进制数。</p>
+</li>
+</ul>
+</li>
+<li><p>B:构造方法</p>
+<ul>
+<li>public BigDecimal(String val)</li>
+</ul>
+</li>
+<li><p>C:成员方法</p>
+<ul>
+<li>public BigDecimal add(BigDecimal augend)</li>
+<li>public BigDecimal subtract(BigDecimal subtrahend)</li>
+<li>public BigDecimal multiply(BigDecimal multiplicand)</li>
+<li>public BigDecimal divide(BigDecimal divisor)</li>
+</ul>
+</li>
+<li><p>D:案例演示</p>
+<ul>
+<li>BigDecimal类的构造方法和成员方法使用</li>
+</ul>
+</li>
+</ul>
+<h3 id="Date类的概述和方法使用-掌握"><a href="#Date类的概述和方法使用-掌握" class="headerlink" title="(Date类的概述和方法使用)(掌握)"></a>(Date类的概述和方法使用)(掌握)</h3><ul>
+<li>A:Date类的概述<ul>
+<li>类 Date 表示特定的瞬间，精确到毫秒。 </li>
+</ul>
+</li>
+<li>B:构造方法<ul>
+<li>public Date()</li>
+<li>public Date(long date)</li>
+</ul>
+</li>
+<li>C:成员方法<ul>
+<li>public long getTime()</li>
+<li>public void setTime(long time)</li>
+</ul>
+</li>
+</ul>
+<h3 id="SimpleDateFormat类实现日期和字符串的相互转换-掌握"><a href="#SimpleDateFormat类实现日期和字符串的相互转换-掌握" class="headerlink" title="(SimpleDateFormat类实现日期和字符串的相互转换)(掌握)"></a>(SimpleDateFormat类实现日期和字符串的相互转换)(掌握)</h3><ul>
+<li>A:DateFormat类的概述<ul>
+<li>DateFormat 是日期/时间格式化子类的抽象类，它以与语言无关的方式格式化并解析日期或时间。是抽象类，所以使用其子类SimpleDateFormat</li>
+</ul>
+</li>
+<li>B:SimpleDateFormat构造方法<ul>
+<li>public SimpleDateFormat()</li>
+<li>public SimpleDateFormat(String pattern)</li>
+</ul>
+</li>
+<li>C:成员方法<ul>
+<li>public final String format(Date date)</li>
+<li>public Date parse(String source)</li>
+</ul>
+</li>
+</ul>
+<h3 id="你来到这个世界多少天案例-掌握"><a href="#你来到这个世界多少天案例-掌握" class="headerlink" title="(你来到这个世界多少天案例)(掌握)"></a>(你来到这个世界多少天案例)(掌握)</h3><ul>
+<li>A:案例演示<ul>
+<li>需求：算一下你来到这个世界多少天?</li>
+</ul>
+</li>
+</ul>
+<h3 id="（Calendar类的概述和获取日期的方法-掌握"><a href="#（Calendar类的概述和获取日期的方法-掌握" class="headerlink" title="（Calendar类的概述和获取日期的方法)(掌握)"></a>（Calendar类的概述和获取日期的方法)(掌握)</h3><ul>
+<li>A:Calendar类的概述<ul>
+<li>Calendar 类是一个抽象类，它为特定瞬间与一组诸如 YEAR、MONTH、DAY_OF_MONTH、HOUR 等日历字段之间的转换提供了一些方法，并为操作日历字段（例如获得下星期的日期）提供了一些方法。</li>
+</ul>
+</li>
+<li>B:成员方法<ul>
+<li>public static Calendar getInstance()</li>
+<li>public int get(int field)</li>
+</ul>
+</li>
+</ul>
+<h3 id="Calendar类的add-和set-方法-掌握"><a href="#Calendar类的add-和set-方法-掌握" class="headerlink" title="(Calendar类的add()和set()方法)(掌握)"></a>(Calendar类的add()和set()方法)(掌握)</h3><ul>
+<li>A:成员方法<ul>
+<li>public void add(int field,int amount)</li>
+<li>public final void set(int year,int month,int date)</li>
+</ul>
+</li>
+<li>B:案例演示<ul>
+<li>Calendar类的成员方法使用</li>
+</ul>
+</li>
+</ul>
+<h3 id="如何获取任意年份是平年还是闰年-掌握"><a href="#如何获取任意年份是平年还是闰年-掌握" class="headerlink" title="如何获取任意年份是平年还是闰年)(掌握)"></a>如何获取任意年份是平年还是闰年)(掌握)</h3><ul>
+<li>A:案例演示<ul>
+<li>需求：键盘录入任意一个年份，判断该年是闰年还是平年</li>
+</ul>
+</li>
+</ul>
+</div><div class="post-copyright"><blockquote><p>原文作者: 冯亚杰(DanBoard·Feng)</p><p>原文链接: <a href="http://yoursite.com/2019/10/23/正则表达式&amp;常用工具类/">http://yoursite.com/2019/10/23/正则表达式&amp;常用工具类/</a></p><p>版权声明: 转载请注明出处(必须保留作者署名及链接)</p></blockquote></div><div class="tags"></div><div class="post-share"><div class="social-share"><span>分享到:</span></div></div><div class="post-nav"><a href="/2019/10/23/01 - jQuery的Hello World/" class="pre">01 - jQuery的Hello World</a><a href="/2019/10/23/异常&amp;File类/" class="next">异常&amp;File类</a></div><div id="comments"></div></div></div></div><div class="layout-r"><div id="sidebar"><div class="search-pla"></div><div id="toc" class="widget"><div class="widget-title"><i class="fa fa-fei">文章目录</i></div><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#正则表达式的概述和简单使用"><span class="toc-text">(正则表达式的概述和简单使用)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#字符类演示"><span class="toc-text">(字符类演示)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#预定义字符类演示"><span class="toc-text">(预定义字符类演示)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数量词"><span class="toc-text">(数量词)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#正则表达式的分割功能"><span class="toc-text">(正则表达式的分割功能)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#把给定字符串中的数字排序"><span class="toc-text">(把给定字符串中的数字排序)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#正则表达式的替换功能"><span class="toc-text">(正则表达式的替换功能)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#正则表达式的分组功能"><span class="toc-text">(正则表达式的分组功能)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pattern和Matcher的概述"><span class="toc-text">(Pattern和Matcher的概述)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#正则表达式的获取功能"><span class="toc-text">(正则表达式的获取功能)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Math类概述和方法使用"><span class="toc-text">(Math类概述和方法使用)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Random类的概述和方法使用"><span class="toc-text">(Random类的概述和方法使用)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#System类的概述和方法使用"><span class="toc-text">(System类的概述和方法使用)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#BigInteger类的概述和方法使用"><span class="toc-text">(BigInteger类的概述和方法使用)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#BigDecimal类的概述和方法使用"><span class="toc-text">(BigDecimal类的概述和方法使用)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Date类的概述和方法使用-掌握"><span class="toc-text">(Date类的概述和方法使用)(掌握)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SimpleDateFormat类实现日期和字符串的相互转换-掌握"><span class="toc-text">(SimpleDateFormat类实现日期和字符串的相互转换)(掌握)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#你来到这个世界多少天案例-掌握"><span class="toc-text">(你来到这个世界多少天案例)(掌握)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#（Calendar类的概述和获取日期的方法-掌握"><span class="toc-text">（Calendar类的概述和获取日期的方法)(掌握)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Calendar类的add-和set-方法-掌握"><span class="toc-text">(Calendar类的add()和set()方法)(掌握)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何获取任意年份是平年还是闰年-掌握"><span class="toc-text">如何获取任意年份是平年还是闰年)(掌握)</span></a></li></ol></div><div class="widget"><div class="widget-title"><i class="fa fa-xie"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/计算机地图制图 知识总结/">计算机地图制图 知识总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/GIS程序设计 知识总结/">GIS程序设计 知识总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/空间数据库总结/">空间数据库总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/GPS测量原理及应用 知识总结/">GPS测量原理及应用 知识总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/github码云操作---合并分支，推送/">github/码云操作---合并分支，推送</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/11/IDEA连接Mysql数据库没有jar包，报错/">IDEA连接Mysql数据库没有jar包报错</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/07/Vue工程化环境(模块化规范、webpack、单文件组件、脚手架、Element-UI)/">Vue工程化</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/03/解决nodejs报错 Cannot find module/">完美解决nodejs报错 Cannot find module './application'</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/25/AE - 04.专题图绘制及打印功能实现/">AE - 04.专题图绘制及打印功能实现</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/11/25/AE - 01.空间书签的创建及调用/">AE - 01.空间书签的创建及调用</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-biao"> 标签</i></div><div class="tagcloud"></div></div><div class="widget"><div class="widget-title"><i class="fa fa-archive"> 归档</i></div><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-you"> 友情链接</i></div><ul></ul><a href="https://blog.csdn.net/DanBo_C" title="CSDN" target="_blank">CSDN</a></div></div></div></div><a id="totop" href="#top"></a><div id="footer"><div class="footer-info"><p><a href="/baidusitemap.xml">网站地图</a> |  <a href="/atom.xml">订阅本站</a> |  <a href="/about/">联系博主</a></p><p>本站总访问量：<i id="busuanzi_container_site_pv"><i id="busuanzi_value_site_pv"></i></i>次，本站总访客数:<i id="busuanzi_container_site_uv"><i id="busuanzi_value_site_uv"></i></i>人</p><p><span> Copyright &copy;<a href="/." rel="nofollow">冯亚杰(DanBoard·Feng).</a></span><span> Theme by<a rel="nofollow" target="_blank" href="https://github.com/chaooo/hexo-theme-BlueLake"> BlueLake.</a></span><span> Count by<a href="http://busuanzi.ibruce.info/"> busuanzi.</a></span><span> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a></span></p></div></div></div><script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script><script type="text/javascript" src="/js/search.json.js?v=2.0.4"></script><script type="text/javascript" src="/js/toctotop.js?v=2.0.4" async></script><link rel="stylesheet" type="text/css" href="/share/css/share.css"><script type="text/javascript" src="/share/js/social-share.js" charset="utf-8"></script><script type="text/javascript" src="/share/js/qrcode.js" charset="utf-8"></script></body></html>

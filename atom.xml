@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-02-18T11:08:54.632Z</updated>
+  <updated>2020-02-18T12:14:34.437Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -17,19 +17,21 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title></title>
+    <title>WebGIS应用分析 [Ⅰ]</title>
     <link href="http://yoursite.com/2020/02/18/WebGIS%E5%BA%94%E7%94%A8%E5%88%86%E6%9E%90%20%5B%E2%85%A0%5D/"/>
     <id>http://yoursite.com/2020/02/18/WebGIS应用分析 [Ⅰ]/</id>
     <published>2020-02-18T11:09:22.126Z</published>
-    <updated>2020-02-18T11:08:54.632Z</updated>
+    <updated>2020-02-18T12:14:34.437Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="WebGIS应用分析-Ⅰ"><a href="#WebGIS应用分析-Ⅰ" class="headerlink" title="WebGIS应用分析 [Ⅰ]"></a>WebGIS应用分析 [Ⅰ]</h2><h3 id="智能交通管理指挥调度系统"><a href="#智能交通管理指挥调度系统" class="headerlink" title="智能交通管理指挥调度系统"></a>智能交通管理指挥调度系统</h3><ul><li>主题：智能交通管理系统</li><li>C/S模式的管理系统：<ul><li>功能单一</li><li>冗余大</li><li>缺少集成</li><li>效率低</li><li>局限性强（局域网）</li></ul></li></ul><blockquote><p>B/S系统（WebGIS）旨在解决C/S中存在的已知问题。</p></blockquote><ul><li>B/S模式的管理系统：<ul><li>访问范围广泛</li><li>平台独立</li><li>平衡高效的计算负载</li><li>良好的可扩展性</li></ul></li></ul><h4 id="系统功能"><a href="#系统功能" class="headerlink" title="系统功能"></a>系统功能</h4><ol><li><p>地图管理及交通状况监视功能。</p><ul><li><p>对地图图层的管理</p></li><li><p>基本的地图操作</p></li><li><p>道路交通流状况显示与分析</p></li><li><p>检测并报警</p></li></ul></li><li><p>视频监视功能</p><ul><li>查看交通实时监控</li><li>自动弹出与报警地点相关的视频图像</li><li>指挥调度时，实时点击视频标记查看实时视频图像</li></ul></li><li><p>信息诱导功能</p><ul><li>诱导屏分组管理</li><li>发布诱导信息</li><li>评价诱导信息</li><li>诱导信息屏群组优化及信息发布</li></ul></li><li><p>动/静态交通组织及预案管理</p><ul><li>对活动或灾害等的预案生成、修改、实施及辅助决策</li><li>预案管理及评价</li></ul></li><li><p>指挥调整</p><ul><li>通过GPS系统实时调度警力配置</li><li>实时调整监控</li><li>发布实时诱导信息及调整信号控制</li></ul></li><li><p>其他</p><ul><li>系统管理</li><li>日志管理</li></ul></li></ol><h4 id="WebGIS功能设计"><a href="#WebGIS功能设计" class="headerlink" title="WebGIS功能设计"></a>WebGIS功能设计</h4><ol><li>显示层（用户层）<ul><li>向Web服务器发送查询等请求</li><li>接收服务器返回的HTML</li></ul></li><li>Web服务层<ul><li>Web服务器（IIS、Apache、tomcat）内置系统有关交通管理的专业组件（路况评价，交通流仿真等）</li><li>接收显示层的请求，并封装请求为命令发送给WebGIS服务器</li><li>接受返回的信息在组件中进行处理，将结果返回给显示层</li></ul></li><li>WebGIS服务层<ul><li>接收上层命令，与数据库交互。</li><li>返回为用户地理信息GIS服务，实现用户与服务器的动态交互</li><li>负载平衡、服务管理</li></ul></li><li>数据资源层<ul><li>通过网络连接并集成异构分布的计算资源、数据服务器、文件系统等</li></ul></li></ol><blockquote><p>XML进行数据交换（目前使用Geojson合适）</p><p>Oracle9i实现数据存储与管理</p><p>ArcGIS作为GIS开发工具</p><p>ArcSDE实现对空间数据的管理</p><p>ArcIMS实现WebGIS功能</p><p>开发环境为.NET</p><p>开发语言为C#</p></blockquote>]]></content>
+    <content type="html"><![CDATA[<h3 id="智能交通管理指挥调度系统"><a href="#智能交通管理指挥调度系统" class="headerlink" title="智能交通管理指挥调度系统"></a>智能交通管理指挥调度系统</h3><ul><li>主题：智能交通管理系统</li><li>C/S模式的管理系统：<ul><li>功能单一</li><li>冗余大</li><li>缺少集成</li><li>效率低</li><li>局限性强（局域网）</li></ul></li></ul><blockquote><p>B/S系统（WebGIS）旨在解决C/S中存在的已知问题。</p></blockquote><ul><li>B/S模式的管理系统：<ul><li>访问范围广泛</li><li>平台独立</li><li>平衡高效的计算负载</li><li>良好的可扩展性</li></ul></li></ul><h4 id="系统功能"><a href="#系统功能" class="headerlink" title="系统功能"></a>系统功能</h4><ol><li><p>地图管理及交通状况监视功能。</p><ul><li><p>对地图图层的管理</p></li><li><p>基本的地图操作</p></li><li><p>道路交通流状况显示与分析</p></li><li><p>检测并报警</p></li></ul></li><li><p>视频监视功能</p><ul><li>查看交通实时监控</li><li>自动弹出与报警地点相关的视频图像</li><li>指挥调度时，实时点击视频标记查看实时视频图像</li></ul></li><li><p>信息诱导功能</p><ul><li>诱导屏分组管理</li><li>发布诱导信息</li><li>评价诱导信息</li><li>诱导信息屏群组优化及信息发布</li></ul></li><li><p>动/静态交通组织及预案管理</p><ul><li>对活动或灾害等的预案生成、修改、实施及辅助决策</li><li>预案管理及评价</li></ul></li><li><p>指挥调整</p><ul><li>通过GPS系统实时调度警力配置</li><li>实时调整监控</li><li>发布实时诱导信息及调整信号控制</li></ul></li><li><p>其他</p><ul><li>系统管理</li><li>日志管理</li></ul></li></ol><h4 id="WebGIS功能设计"><a href="#WebGIS功能设计" class="headerlink" title="WebGIS功能设计"></a>WebGIS功能设计</h4><ol><li>显示层（用户层）<ul><li>向Web服务器发送查询等请求</li><li>接收服务器返回的HTML</li></ul></li><li>Web服务层<ul><li>Web服务器（IIS、Apache、tomcat）内置系统有关交通管理的专业组件（路况评价，交通流仿真等）</li><li>接收显示层的请求，并封装请求为命令发送给WebGIS服务器</li><li>接受返回的信息在组件中进行处理，将结果返回给显示层</li></ul></li><li>WebGIS服务层<ul><li>接收上层命令，与数据库交互。</li><li>返回为用户地理信息GIS服务，实现用户与服务器的动态交互</li><li>负载平衡、服务管理</li></ul></li><li>数据资源层<ul><li>通过网络连接并集成异构分布的计算资源、数据服务器、文件系统等</li></ul></li></ol><blockquote><p>XML进行数据交换（目前使用Geojson合适）</p><p>Oracle9i实现数据存储与管理</p><p>ArcGIS作为GIS开发工具</p><p>ArcSDE实现对空间数据的管理</p><p>ArcIMS实现WebGIS功能</p><p>开发环境为.NET</p><p>开发语言为C#</p></blockquote>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;h2 id=&quot;WebGIS应用分析-Ⅰ&quot;&gt;&lt;a href=&quot;#WebGIS应用分析-Ⅰ&quot; class=&quot;headerlink&quot; title=&quot;WebGIS应用分析 [Ⅰ]&quot;&gt;&lt;/a&gt;WebGIS应用分析 [Ⅰ]&lt;/h2&gt;&lt;h3 id=&quot;智能交通管理指挥调度系统&quot;&gt;&lt;a href
+        &lt;h3 id=&quot;智能交通管理指挥调度系统&quot;&gt;&lt;a href=&quot;#智能交通管理指挥调度系统&quot; class=&quot;headerlink&quot; title=&quot;智能交通管理指挥调度系统&quot;&gt;&lt;/a&gt;智能交通管理指挥调度系统&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;主题：智能交通管理系统&lt;/li&gt;
+&lt;li&gt;C/S
       
     
     </summary>
